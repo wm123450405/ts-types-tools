@@ -1,10 +1,14 @@
 export declare namespace TypesTools {
 	/**
-	 * 反转一个字符串
-	 * Reverse string
+	 * 反转一个字符串或字符串
+	 * Reverse a string or an array
 	 * @example Reverse<'abc'> // 'cba'
+	 * @example Reverse<[1, 2]> // [2, 1]
 	 */
-	export type Reverse<T extends string> = T extends `${infer F}${infer Rest}` ? `${Reverse<Rest>}${F}` : '';
+	export type Reverse<T extends string | any[]> = 
+		T extends string ?
+			T extends `${infer F}${infer Rest}` ? `${Reverse<Rest>}${F}` : '' :
+			T extends [ infer F, ...infer Rest ] ? [ ...Reverse<Rest>, F ] : [];
 
 	/**
 	 * 数字字符串类型转为数字类型
@@ -199,5 +203,7 @@ export declare namespace TypesTools {
 		never;
 
 	// type Substring<S extends string, B extends number, E extends number> = 
+	// 	S extends `${string}${infer V}` ?
 	// type Slice<T, A extends T[], B extends number, E extends number> =
+
 }
