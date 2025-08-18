@@ -1,7 +1,11 @@
 {
-  "name": "ts-type-tools",
+  "name": "ts-types-tools",
+  "version": "0.0.4",
   "module": "index.ts",
   "type": "module",
+  "keywords": [
+    "ts", "typescript", "type", "utils", "tools", "ttt"
+  ],
   "devDependencies": {
     "@types/bun": "latest"
   },
