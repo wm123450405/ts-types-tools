@@ -12,10 +12,12 @@
     "tools",
     "ttt"
   ],
-  "scripts": {
-    "preinstall": "tsc --checkJS && cases.ts",
-    "precommit": "tsc --checkJS && cases.ts"
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsc --checkJS && cases.ts"
+    }
   },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wm123450405/ts-types-tools.git"
@@ -27,7 +29,8 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
     "@types/bun": "latest",
-    "@typescript-eslint/eslint-plugin": "^8.40.0"
+    "@typescript-eslint/eslint-plugin": "^8.40.0",
+    "husky": "^9.1.7"
   },
   "peerDependencies": {
     "typescript": "^5"
