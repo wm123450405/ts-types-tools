@@ -1,11 +1,66 @@
-import type { UnionOrIntersectionType, UnionType } from "typescript";
-
 export declare namespace TypesTools {
+
+	type BinarySize = 32;
+	
+	/** 32位 */
+	type Binarys = [
+		0b10000000000000000000000000000000, 
+		0b1000000000000000000000000000000, 
+		0b100000000000000000000000000000, 
+		0b10000000000000000000000000000, 
+		0b1000000000000000000000000000, 
+		0b100000000000000000000000000, 
+		0b10000000000000000000000000, 
+		0b1000000000000000000000000, 
+		0b100000000000000000000000, 
+		0b10000000000000000000000, 
+		0b1000000000000000000000, 
+		0b100000000000000000000, 
+		0b10000000000000000000, 
+		0b1000000000000000000, 
+		0b100000000000000000, 
+		0b10000000000000000, 
+
+		0b1000000000000000, 
+		0b100000000000000, 
+		0b10000000000000, 
+		0b1000000000000, 
+		0b100000000000, 
+		0b10000000000, 
+		0b1000000000, 
+		0b100000000, 
+		0b10000000, 
+		0b1000000, 
+		0b100000, 
+		0b10000, 
+		0b1000, 
+		0b100, 
+		0b10, 
+		0b1
+	];
+
+	type HexSize = 8;
+
+	type Hexes = [
+		0x10000000, 
+		0x1000000, 
+		0x100000, 
+		0x10000, 
+		0x1000, 
+		0x100, 
+		0x10, 
+		0x1
+	];
+	
 	type Signal = -1 | 1;
 
 	type IntChars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 
 	type IntChar = IntChars[number];
+
+	type HexChars = [...IntChars, 'A', 'B', 'C', 'D', 'E', 'F']
+
+	type HexChar = HexChars[number];
 
 	type IntCharAdd<C extends IntChar, N extends IntChar = '1'> = 
 		N extends '1' ?
@@ -288,8 +343,8 @@ export declare namespace TypesTools {
 			O extends true ? true :
 				C extends '9' ? false : true :
 		O extends true ?
-			true :
-			C extends '0' ? false : true;
+			C extends '0' ? true : false :
+			false;
 
 	type SignalGreanThen<A extends Signal, B extends Signal> =
 		A extends B ? false :
@@ -374,13 +429,13 @@ export declare namespace TypesTools {
 					//不借位
 					`${IntCharMinus<AF, BF>}${MinusIntReverseString<AR, BR, IntCharBorrow<AF, BF>>}` :
 			BORROW extends true ?
-				`${IntCharMinus<AF>}${MinusIntReverseString<AR, '', IntCharCarry<AF, '0', BORROW>>}` :
+				`${IntCharMinus<AF>}${MinusIntReverseString<AR, '', IntCharBorrow<AF, '0', BORROW>>}` :
 				`${AF}${MinusIntReverseString<AR, ''>}` :
 		B extends `${infer BF extends IntChar}${infer BR}` ?
 			BORROW extends true ?
-				`${IntCharMinus<BF>}${MinusIntReverseString<'', BR, IntCharCarry<'0', BF, BORROW>>}` :
+				`${IntCharMinus<BF>}${MinusIntReverseString<'', BR, IntCharBorrow<'0', BF, BORROW>>}` :
 				`${BF}${MinusIntReverseString<'', BR>}` :
-		BORROW extends true ? '-' : '';
+		BORROW extends true ? never : '';
 
 	/**
 	 * 取否
@@ -394,7 +449,7 @@ export declare namespace TypesTools {
 	/**
 	 * 反转一个字符串
 	 * Reverse a string or an array
-	 * @example Reverse<'abc'> // 'cba'
+	 * @example ReverseString<'abc'> // 'cba'
 	 */
 	export type ReverseString<T extends string> = 
 			T extends `${infer F}${infer Rest}` ? `${Reverse<Rest>}${F}` : '';
@@ -402,7 +457,7 @@ export declare namespace TypesTools {
 	/**
 	 * 反转一个数组
 	 * Reverse an array
-	 * @example Reverse<[1, 2]> // [2, 1]
+	 * @example ReverseArray<[1, 2]> // [2, 1]
 	 */
 	export type ReverseArray<T extends any[]> = 
 			T extends [ infer F, ...infer Rest ] ? [ ...Reverse<Rest>, F ] : [];
@@ -420,14 +475,18 @@ export declare namespace TypesTools {
 	/**
 	 * 数字字符串类型转为数字类型
 	 * string -> number
-	 * @example ToNumber<'123'> // 123
+	 * @example StringToNumber<'123'> // 123
 	 */
-	export type StringToNumber<T extends string> = T extends `${infer N extends number}` ? N : never;
+	export type StringToNumber<T extends string> = 
+		T extends `0b${number}` ? 
+			BinaryStringToNumber<T>
+		:
+			T extends `${infer N extends number}` ? N : never;
 
 	/**
 	 * 数字类型转为数字字符串类型
 	 * number -> string
-	 * @example ToString<123> // '123'
+	 * @example NumberToString<123> // '123'
 	 */
 	export type NumberToString<T extends number> = `${T}`;
 
@@ -625,7 +684,7 @@ export declare namespace TypesTools {
 	 * @example ArrayLength<[1,2,3]> // 3
 	 * @example ArrayLength<any[]> // number
 	 */
-	export type ArrayLength<A extends T[], T = any> = A['length'];
+	export type ArrayLength<A extends any[]> = A['length'];
 
 	/**
 	 * 获取字符串的长度的数字类型
@@ -638,7 +697,7 @@ export declare namespace TypesTools {
 	/**
 	 * 数组前 N 项组成的新的类型数组
 	 * A new array type composed of the first N items
-	 * @example PrefixArray<[1, 2, 3], 2> // [1, 2]
+	 * @example TakeArray<[1, 2, 3], 2> // [1, 2]
 	 */
 	export type TakeArray<A extends T[], N extends number, T = any> =
 		A extends { length: N } ? A : A extends [ ...infer P, T ] ? TakeArray<P, N> : never;
@@ -670,7 +729,7 @@ export declare namespace TypesTools {
 	/**
 	 * 字符串从 N 项开始往后的所有字符组成的新字符串
 	 * A new string composed of all characters after N
-	 * @example SkipString<'abcdefg', 3> // 'fg'
+	 * @example SkipString<'abcdefg', 3> // 'defg'
 	 */
 	export type SkipString<A extends string, N extends number> =
 		N extends 0 ? A : A extends `${ string }${ infer R }` ? SkipString<R, MinusOne<N>> : '';
@@ -678,7 +737,7 @@ export declare namespace TypesTools {
 	/**
 	 * 字符串从 N 开始到 M 的所有字符组成的新字符串
 	 * A new string composed of all characters from N to M
-	 * @example Substring<'abcdefg', 2, 4> // 'cde'
+	 * @example Substring<'abcdefg', 2, 4> // 'cd'
 	 */
 	export type Substring<S extends string, B extends number, E extends number> = 
 		TakeString<SkipString<S, B>, E>;
@@ -700,7 +759,7 @@ export declare namespace TypesTools {
 	 * @example Nagative<2> // -2
 	 * @example Nagative<0> // 0
 	 */
-	export type Negative<N extends number> = NumberToString<N> extends `-${infer AN extends number}` ? AN : StringToNumber<`-${NumberToString<N>}`>;
+	export type Negative<N extends number> = NumberToString<N> extends `-${infer AN extends number}` ? AN : `-${NumberToString<N>}` extends `${infer NN extends number}` ? NN : never;
 
 	/**
 	 * 比较数字A是否大于B, 若A大于B则返回true, 否则返回false
@@ -788,12 +847,25 @@ export declare namespace TypesTools {
 	 * If A and B are not same, return true, otherwise return false
 	 * @param A - 待比较的数据A
 	 * @param B - 待比较的数据B
-	 * @example Equals<5, 5> // false
-	 * @example Equals<5, 2> // true
+	 * @example NotEquals<5, 5> // false
+	 * @example NotEquals<5, 2> // true
 	 */
 	export type NotEquals<A extends any, B extends any> = Not<Equals<A, B>>;
 	/** @see {@link NotEquals} */
 	export type NE<A extends number, B extends number> = NotEquals<A, B>;
+
+	/**
+	 * 向数组左侧添加指定类型，获取一个指定长度的新数组
+	 */
+	export type FillLeft<T extends V[], L extends number, I extends V, V = any, R extends V[] = T> = 
+		GreatThenOrEquals<ArrayLength<R>, L> extends true ? R : FillLeft<T, L, I, V, [I, ...R]>;
+
+	/**
+	 * 向数组右侧添加指定类型，获取一个指定长度的新数组
+	 */
+	export type FillRight<T extends V[], L extends number, I extends V, V = any, R extends V[] = T> = 
+		GreatThenOrEquals<ArrayLength<T>, L> extends true ? R : FillRight<T, L, I, V, [...R, I]>;
+
 
 	/**
 	 * 填充字符串左边
@@ -947,5 +1019,83 @@ export declare namespace TypesTools {
 			R extends [] ? F : Min<Min<R>, F> 
 		: never ;
 
+	/**
+	 * 生成指定长度的数组类型
+	 * @param T 数组元素的类型
+	 * @param L 数组的长度
+	 * @example GenerateArray<any, 2> // [any, any]
+	 * @example GenerateArray<any, 0> // []
+	 * @example GenerateArray<boolean, 1> // [boolean]
+	 */
+	export type GenerateArray<T, L extends number, R extends T[] = []> = 
+		GreatThenOrEquals<L, 0> extends true ?
+			ArrayLength<R> extends L ? R : GenerateArray<T, L, [...R, T]>
+		: never;
+
+	/**
+	 * 数字二进制格式
+	 */
+	export type Binary = GenerateArray<boolean, ArrayLength<Binarys>>;
+
+	/**
+	 * 数字转二进制格式
+	 */
+	export type NumberToBinary<N extends number, BS extends number[] = Binarys> = 
+		BS extends [ infer H extends number, ...infer L extends number[] ] ?
+			GreatThenOrEquals<N, H> extends true ?
+				[ true, ...NumberToBinary<MinusInt<N, H>, L> ]
+			:
+				[ false, ...NumberToBinary<N, L> ]
+		: []
+
+	/** 
+	 * 二进制转化为数字
+	 */
+	export type BinaryToNumber<B extends Binary, L extends boolean[] = B, BS extends number[] = Binarys, R extends number = 0> = 
+		L extends [ infer F extends boolean, ...infer RL extends boolean[] ] ?
+			BS extends [ infer H extends number, ...infer RB extends number[] ] ?
+				F extends true ?
+					RL extends [] ? AddInt<R, H> : BinaryToNumber<B, RL, RB, AddInt<R, H>>
+				:
+					RL extends [] ? R : BinaryToNumber<B, RL, RB, R>
+			: R
+		: R ;
+
 	
+	/**
+	 * 二进制转二进制字符串
+	 */
+	export type NumberToBinaryString<B extends Binary | number, L extends boolean[] = B extends number ? NumberToBinary<B> : B, R extends string = ''> =
+		L extends [ infer F extends boolean, ...infer Rest extends boolean[] ] ?
+			Rest extends [] ?
+				`${R}${F extends true ? 1 : 0}`
+			:
+				R extends '' ? 
+					NumberToBinaryString<B, Rest, `0b${F extends true ? 1 : 0}`>
+				:
+					NumberToBinaryString<B, Rest, `${R}${F extends true ? 1 : 0}`>
+		: never;
+
+	type BinaryStringToBinary<T extends string, R extends boolean[] = []> = 
+		T extends `0b${infer RT extends string}` ?
+			BinaryStringToBinary<RT>
+		:
+			T extends `${infer F extends '0' | '1'}${infer O extends string}` ?
+				F extends '0' ?
+					BinaryStringToBinary<O, [...R, false]>
+				:
+					BinaryStringToBinary<O, [...R, true]>
+			:
+				GreatThen<ArrayLength<R>, BinarySize> extends true ?
+					Slice<R, MinusInt<ArrayLength<R>, BinarySize>, ArrayLength<R>>
+				: FillLeft<R, BinarySize, false>;
+			
+
+	/**
+	 * 二进制字符串转为数字
+	 */
+	export type BinaryStringToNumber<T extends string> = BinaryToNumber<BinaryStringToBinary<T>>;
+
+	export type Hex = GenerateArray<HexChar, 8>;
+
 }
