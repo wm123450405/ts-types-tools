@@ -1,0 +1,16 @@
+{
+  "root": true,
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+  ],
+  "overrides": [
+    {
+      "files": ["cases.ts"],
+    //   extends: [require.resolve('@vercel/style-guide/eslint/jest')],
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-unsafe-assignment": "off"
+      }
+    }
+  ]
+}

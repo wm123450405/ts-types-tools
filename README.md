@@ -10,11 +10,11 @@ npm install ts-type-tools --save-dev
 ## 2. 使用
 
 ```typescript
-import type { TypesTools } from 'ts-type-tools';
+import type { IntRange } from 'ts-type-tools';
 ```
 
 ```typescript
-type Status = TypesTools.IntRange<0, 5>;  // 0 | 1 | 2 | 3 | 4
+type Status = IntRange<0, 5>;  // 0 | 1 | 2 | 3 | 4
 ```
 
 ## 3. api

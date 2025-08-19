@@ -1,11 +1,21 @@
 {
   "name": "ts-types-tools",
+  "author": "wm123450405",
   "version": "0.0.6",
   "module": "index.ts",
   "type": "module",
   "keywords": [
-    "ts", "typescript", "type", "utils", "tools", "ttt"
+    "ts",
+    "typescript",
+    "type",
+    "utils",
+    "tools",
+    "ttt"
   ],
+  "scripts": {
+    "preinstall": "tsc --checkJS && cases.ts",
+    "precommit": "tsc --checkJS && cases.ts"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wm123450405/ts-types-tools.git"
@@ -15,9 +25,16 @@
   },
   "homepage": "https://github.com/wm123450405/ts-types-tools#readme",
   "devDependencies": {
-    "@types/bun": "latest"
+    "@eslint/eslintrc": "^3.3.1",
+    "@types/bun": "latest",
+    "@typescript-eslint/eslint-plugin": "^8.40.0"
   },
   "peerDependencies": {
     "typescript": "^5"
-  }
+  },
+  "dependencies": {
+    "@type-challenges/utils": "^0.1.1",
+    "eslint": "^9.33.0"
+  },
+  "packageManager": "bun@1.2.19"
 }
