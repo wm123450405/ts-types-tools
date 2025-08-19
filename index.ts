@@ -1,6 +1,299 @@
 export declare namespace TypesTools {
+	type Signal = -1 | 1;
 
-	type IntChar = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9';
+	type IntChars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+
+	type IntChar = IntChars[number];
+
+	type IntCharAdd<C extends IntChar, N extends IntChar = '1'> = 
+		N extends '1' ?
+			C extends '0' ? '1' :
+			C extends '1' ? '2' :
+			C extends '2' ? '3' :
+			C extends '3' ? '4' :
+			C extends '4' ? '5' :
+			C extends '5' ? '6' :
+			C extends '6' ? '7' :
+			C extends '7' ? '8' :
+			C extends '8' ? '9' :
+			'0' :
+		N extends '2' ?
+			C extends '0' ? '2' :
+			C extends '1' ? '3' :
+			C extends '2' ? '4' :
+			C extends '3' ? '5' :
+			C extends '4' ? '6' :
+			C extends '5' ? '7' :
+			C extends '6' ? '8' :
+			C extends '7' ? '9' :
+			C extends '8' ? '0' :
+			'1' :
+		N extends '3' ?
+			C extends '0' ? '3' :
+			C extends '1' ? '4' :
+			C extends '2' ? '5' :
+			C extends '3' ? '6' :
+			C extends '4' ? '7' :
+			C extends '5' ? '8' :
+			C extends '6' ? '9' :
+			C extends '7' ? '0' :
+			C extends '8' ? '1' :
+			'2' :
+		N extends '4' ?
+			C extends '0' ? '4' :
+			C extends '1' ? '5' :
+			C extends '2' ? '6' :
+			C extends '3' ? '7' :
+			C extends '4' ? '8' :
+			C extends '5' ? '9' :
+			C extends '6' ? '0' :
+			C extends '7' ? '1' :
+			C extends '8' ? '2' :
+			'3' :
+		N extends '5' ?
+			C extends '0' ? '5' :
+			C extends '1' ? '6' :
+			C extends '2' ? '7' :
+			C extends '3' ? '8' :
+			C extends '4' ? '9' :
+			C extends '5' ? '0' :
+			C extends '6' ? '1' :
+			C extends '7' ? '2' :
+			C extends '8' ? '3' :
+			'4' :
+		N extends '6' ?
+			C extends '0' ? '6' :
+			C extends '1' ? '7' :
+			C extends '2' ? '8' :
+			C extends '3' ? '9' :
+			C extends '4' ? '0' :
+			C extends '5' ? '1' :
+			C extends '6' ? '2' :
+			C extends '7' ? '3' :
+			C extends '8' ? '4' :
+			'5' :
+		N extends '7' ?
+			C extends '0' ? '7' :
+			C extends '1' ? '8' :
+			C extends '2' ? '9' :
+			C extends '3' ? '0' :
+			C extends '4' ? '1' :
+			C extends '5' ? '2' :
+			C extends '6' ? '3' :
+			C extends '7' ? '4' :
+			C extends '8' ? '5' :
+			'6' :
+		N extends '8' ?
+			C extends '0' ? '8' :
+			C extends '1' ? '9' :
+			C extends '2' ? '0' :
+			C extends '3' ? '1' :
+			C extends '4' ? '2' :
+			C extends '5' ? '3' :
+			C extends '6' ? '4' :
+			C extends '7' ? '5' :
+			C extends '8' ? '6' :
+			'7' :
+		N extends '9' ?
+			C extends '0' ? '9' :
+			C extends '1' ? '0' :
+			C extends '2' ? '1' :
+			C extends '3' ? '2' :
+			C extends '4' ? '3' :
+			C extends '5' ? '4' :
+			C extends '6' ? '5' :
+			C extends '7' ? '6' :
+			C extends '8' ? '7' :
+			'8' :
+		C;
+	
+	type IntCharCarry<C extends IntChar, N extends IntChar, O extends boolean = false> = 
+		N extends '1' ?
+			O extends true ? 
+				C extends '8' | '9' ? true : false :
+				C extends '9' ? true : false :
+		N extends '2' ?
+			O extends true ? 
+				C extends '7' | '8' | '9' ? true : false :
+				C extends '8' | '9' ? true : false :
+		N extends '3' ?
+			O extends true ? 
+				C extends '6' | '7' | '8' | '9' ? true : false :
+				C extends '7' | '8' | '9' ? true : false :
+		N extends '4' ?
+			O extends true ? 
+				C extends '5' | '6' | '7' | '8' | '9' ? true : false :
+				C extends '6' | '7' | '8' | '9' ? true : false :
+		N extends '5' ?
+			O extends true ? 
+				C extends '0' | '1' | '2' | '3' ? false : true :
+				C extends '0' | '1' | '2' | '3' | '4' ? false : true :
+		N extends '6' ?
+			O extends true ? 
+				C extends '0' | '1' | '2' ? false : true :
+				C extends '0' | '1' | '2' | '3' ? false : true :
+		N extends '7' ?
+			O extends true ? 
+				C extends '0' | '1' ? false : true :
+				C extends '0' | '1' | '2' ? false : true :
+		N extends '8' ?
+			O extends true ? 
+				C extends '0' ? false : true :
+				C extends '0' | '1' ? false : true :
+		N extends '9' ?
+			O extends true ? true :
+				C extends '0' ? false : true :
+		O extends true ?
+			C extends '9' ? true : false :
+			false;
+
+	type IntCharMinus<C extends IntChar, N extends IntChar = '1'> = 
+		N extends '1' ?
+			C extends '9' ? '8' :
+			C extends '8' ? '7' :
+			C extends '7' ? '6' :
+			C extends '6' ? '5' :
+			C extends '5' ? '4' :
+			C extends '4' ? '3' :
+			C extends '3' ? '2' :
+			C extends '2' ? '1' :
+			C extends '1' ? '0' :
+			'9' :
+		N extends '2' ?
+			C extends '9' ? '7' :
+			C extends '8' ? '6' :
+			C extends '7' ? '5' :
+			C extends '6' ? '4' :
+			C extends '5' ? '3' :
+			C extends '4' ? '2' :
+			C extends '3' ? '1' :
+			C extends '2' ? '0' :
+			C extends '1' ? '9' :
+			'8' :
+		N extends '3' ?
+			C extends '9' ? '6' :
+			C extends '8' ? '5' :
+			C extends '7' ? '4' :
+			C extends '6' ? '3' :
+			C extends '5' ? '2' :
+			C extends '4' ? '1' :
+			C extends '3' ? '0' :
+			C extends '2' ? '9' :
+			C extends '1' ? '8' :
+			'7' :
+		N extends '4' ?
+			C extends '9' ? '5' :
+			C extends '8' ? '4' :
+			C extends '7' ? '3' :
+			C extends '6' ? '2' :
+			C extends '5' ? '1' :
+			C extends '4' ? '0' :
+			C extends '3' ? '9' :
+			C extends '2' ? '8' :
+			C extends '1' ? '7' :
+			'6' :
+		N extends '5' ?
+			C extends '9' ? '4' :
+			C extends '8' ? '3' :
+			C extends '7' ? '2' :
+			C extends '6' ? '1' :
+			C extends '5' ? '0' :
+			C extends '4' ? '9' :
+			C extends '3' ? '8' :
+			C extends '2' ? '7' :
+			C extends '1' ? '6' :
+			'5' :
+		N extends '6' ?
+			C extends '9' ? '3' :
+			C extends '8' ? '2' :
+			C extends '7' ? '1' :
+			C extends '6' ? '0' :
+			C extends '5' ? '9' :
+			C extends '4' ? '8' :
+			C extends '3' ? '7' :
+			C extends '2' ? '6' :
+			C extends '1' ? '5' :
+			'4' :
+		N extends '7' ?
+			C extends '9' ? '2' :
+			C extends '8' ? '1' :
+			C extends '7' ? '0' :
+			C extends '6' ? '9' :
+			C extends '5' ? '8' :
+			C extends '4' ? '7' :
+			C extends '3' ? '6' :
+			C extends '2' ? '5' :
+			C extends '1' ? '4' :
+			'3' :
+		N extends '8' ?
+			C extends '9' ? '1' :
+			C extends '8' ? '0' :
+			C extends '7' ? '9' :
+			C extends '6' ? '8' :
+			C extends '5' ? '7' :
+			C extends '4' ? '6' :
+			C extends '3' ? '5' :
+			C extends '2' ? '4' :
+			C extends '1' ? '3' :
+			'2' :
+		N extends '9' ?
+			C extends '9' ? '0' :
+			C extends '8' ? '9' :
+			C extends '7' ? '8' :
+			C extends '6' ? '7' :
+			C extends '5' ? '6' :
+			C extends '4' ? '5' :
+			C extends '3' ? '4' :
+			C extends '2' ? '3' :
+			C extends '1' ? '2' :
+			'1' :
+		C;
+		
+	type IntCharBorrow<C extends IntChar, N extends IntChar, O extends boolean = false> = 
+		N extends '1' ?
+			O extends true ? 
+				C extends '0' | '1' ? true : false :
+				C extends '0' ? true : false :
+		N extends '2' ?
+			O extends true ? 
+				C extends '0' | '1' | '2' ? true : false :
+				C extends '0' | '1' ? true : false :
+		N extends '3' ?
+			O extends true ? 
+				C extends '0' | '1' | '2' | '3' ? true : false :
+				C extends '0' | '1' | '2' ? true : false :
+		N extends '4' ?
+			O extends true ? 
+				C extends '0' | '1' | '2' | '3' | '4' ? true : false :
+				C extends '0' | '1' | '2' | '3' ? true : false :
+		N extends '5' ?
+			O extends true ? 
+				C extends '6' | '7' | '8' | '9' ? false : true :
+				C extends '5' | '6' | '7' | '8' | '9' ? false : true :
+		N extends '6' ?
+			O extends true ? 
+				C extends '7' | '8' | '9' ? false : true :
+				C extends '6' | '7' | '8' | '9' ? false : true :
+		N extends '7' ?
+			O extends true ? 
+				C extends '8' | '9' ? false : true :
+				C extends '7' | '8' | '9' ? false : true :
+		N extends '8' ?
+			O extends true ? 
+				C extends '9' ? false : true :
+				C extends '8' | '9' ? false : true :
+		N extends '9' ?
+			O extends true ? true :
+				C extends '9' ? false : true :
+		O extends true ?
+			true :
+			C extends '0' ? false : true;
+
+	type SignalGreanThen<A extends Signal, B extends Signal> =
+		A extends B ? false :
+			A extends -1 ? false :
+			A extends 1 ? B extends -1 ? true : false :
+			false;
 
 	type IntCharGreatThen<A extends IntChar, B extends IntChar> = 
 		A extends B ? false : 
@@ -10,49 +303,82 @@ export declare namespace TypesTools {
 			A extends '3' ? B extends '0' | '1' | '2' ? true : false :
 			A extends '4' ? B extends '0' | '1' | '2' | '3' ? true : false :
 			A extends '5' ? B extends '0' | '1' | '2' | '3' | '4' ? true : false :
-			A extends '6' ? B extends '0' | '1' | '2' | '3' | '4' | '5' ? true : false :
-			A extends '7' ? B extends '0' | '1' | '2' | '3' | '4' | '5' | '6' ? true : false :
-			A extends '8' ? B extends '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' ? true : false :
-			A extends '9' ? B extends '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' ? true : false :
+			A extends '6' ? B extends '6' | '7' | '8' | '9' ? false : true :
+			A extends '7' ? B extends '7' | '8' | '9' ? false : true :
+			A extends '8' ? B extends '8' | '9' ? false : true :
+			A extends '9' ? B extends '9' ? false : true :
 			false;
-		
-	type IntCharGreatThenOrEquals<A extends IntChar, B extends IntChar> = 
-		A extends B ? true : IntCharGreatThen<A, B>;
 
-	type IntStringGreatThen<A extends string, B extends string> =
-		IntGreatThen<StringLength<A>, StringLength<B>> extends true ? true :
+	type UIntStringGreatThen<A extends string, B extends string> =
+		UIntGreatThen<StringLength<A>, StringLength<B>> extends true ? true :
 			StringLength<A> extends StringLength<B> ? 
 				A extends `${infer AF extends IntChar}${infer AR}` ?
 					B extends `${infer BF extends IntChar}${infer BR}` ?
-						IntCharGreatThen<AF, BF> extends true ? true :
-							IntStringGreatThen<AR, BR> :
+						AF extends BF ? 
+							UIntStringGreatThen<AR, BR> :
+							IntCharGreatThen<AF, BF> :
 						false :
 					false :
 				false;
 	
-	type DecStringGreatThen<A extends string, B extends string> =
+	type DecimalStringGreatThen<A extends string, B extends string> =
 		A extends `0.${infer AR}` ?
 			B extends `0.${infer BR}` ?
-				DecStringGreatThen<AR, BR> :
+				DecimalStringGreatThen<AR, BR> :
 			false :
 			A extends `${infer AF extends IntChar}${infer AR}` ?
 				B extends `${infer BF extends IntChar}${infer BR}` ?
-					IntCharGreatThen<AF, BF> extends true ? true :
-						IntStringGreatThen<AR, BR> :
+					AF extends BF ? 
+						UIntStringGreatThen<AR, BR> : 
+						IntCharGreatThen<AF, BF> :
 					true :
 				false;
 
-	type IntGreatThen<A extends number, B extends number> =
-		A extends B ? false : IntStringGreatThen<ToString<A>, ToString<B>>;
+	type UIntGreatThen<A extends number, B extends number> =
+		A extends B ? false : UIntStringGreatThen<ToString<A>, ToString<B>>;
 		
-	type IntGreatThenOrEquals<A extends number, B extends number> =
-		A extends B ? true : IntStringGreatThen<ToString<A>, ToString<B>>;
+	type UIntGreatThenOrEquals<A extends number, B extends number> =
+		A extends B ? true : UIntStringGreatThen<ToString<A>, ToString<B>>;
 
-	type DecGreatThen<A extends number, B extends number> =
-		A extends B ? false : DecStringGreatThen<ToString<A>, ToString<B>>;
+	type DecimalGreatThen<A extends number, B extends number> =
+		A extends B ? false : DecimalStringGreatThen<ToString<A>, ToString<B>>;
 
-	type DecGreatThenOrEquals<A extends number, B extends number> =
-		A extends B ? true : DecStringGreatThen<ToString<A>, ToString<B>>;
+	type DecimalGreatThenOrEquals<A extends number, B extends number> =
+		A extends B ? true : DecimalStringGreatThen<ToString<A>, ToString<B>>;
+
+	type AddIntReverseString<A extends string, B extends string, CARRY extends boolean = false> = 
+		A extends `${infer AF extends IntChar}${infer AR}` ?
+			B extends `${infer BF extends IntChar}${infer BR}` ?
+				CARRY extends true ? 
+					//进位
+					`${IntCharAdd<IntCharAdd<AF, BF>>}${AddIntReverseString<AR, BR, IntCharCarry<AF, BF, CARRY>>}` :
+					//不进位
+					`${IntCharAdd<AF, BF>}${AddIntReverseString<AR, BR, IntCharCarry<AF, BF>>}` :
+			CARRY extends true ?
+				`${IntCharAdd<AF>}${AddIntReverseString<AR, '', IntCharCarry<AF, '0', CARRY>>}` :
+				`${AF}${AddIntReverseString<AR, ''>}` :
+		B extends `${infer BF extends IntChar}${infer BR}` ?
+			CARRY extends true ?
+				`${IntCharAdd<BF>}${AddIntReverseString<'', BR, IntCharCarry<'0', BF, CARRY>>}` :
+				`${BF}${AddIntReverseString<'', BR>}` :
+		CARRY extends true ? '1' : '';
+
+	type MinusIntReverseString<A extends string, B extends string, BORROW extends boolean = false> =
+		A extends `${infer AF extends IntChar}${infer AR}` ?
+			B extends `${infer BF extends IntChar}${infer BR}` ?
+				BORROW extends true ?
+					//借位
+					`${IntCharMinus<IntCharMinus<AF, BF>>}${MinusIntReverseString<AR, BR, IntCharBorrow<AF, BF, BORROW>>}` :
+					//不借位
+					`${IntCharMinus<AF, BF>}${MinusIntReverseString<AR, BR, IntCharBorrow<AF, BF>>}` :
+			BORROW extends true ?
+				`${IntCharMinus<AF>}${MinusIntReverseString<AR, '', IntCharCarry<AF, '0', BORROW>>}` :
+				`${AF}${MinusIntReverseString<AR, ''>}` :
+		B extends `${infer BF extends IntChar}${infer BR}` ?
+			BORROW extends true ?
+				`${IntCharMinus<BF>}${MinusIntReverseString<'', BR, IntCharCarry<'0', BF, BORROW>>}` :
+				`${BF}${MinusIntReverseString<'', BR>}` :
+		BORROW extends true ? '-' : '';
 
 	/**
 	 * 取否
@@ -171,12 +497,12 @@ export declare namespace TypesTools {
 
 	/**
 	 * 数字的符号部分
-	 * Int part of a number
-	 * @example IntPart<-1.5> // -1
-	 * @example IntPart<1> // 1
-	 * @example IntPart<0> // 1
+	 * Signal part of a number
+	 * @example SignalPart<-1.5> // -1
+	 * @example SignalPart<1> // 1
+	 * @example SignalPart<0> // 1
 	 */
-	export type SignPart<N extends number> =
+	export type SignalPart<N extends number> =
 		ToString<N> extends `-${string}` ? -1 : 1;
 
 	/**
@@ -193,11 +519,11 @@ export declare namespace TypesTools {
 	/**
 	 * 数字的小数部分
 	 * Decimal part of a number
-	 * @example DecPart<-1.5> // 0.5
-	 * @example DecPart<1.5> // 0.5
-	 * @example DecPart<-1> // 0
+	 * @example DecimalPart<-1.5> // 0.5
+	 * @example DecimalPart<1.5> // 0.5
+	 * @example DecimalPart<-1> // 0
 	 */
-	export type DecPart<N extends number> = 
+	export type DecimalPart<N extends number> = 
 		ToString<N> extends `${number | '' | '-'}.${number}` ? 
 			ToString<N> extends `${number | '' | '-'}.${infer D}` ? ToNumber<`0.${D}`> : 0 :
 		0;
@@ -235,7 +561,7 @@ export declare namespace TypesTools {
 	 * @example AddOne<1.2> // never
 	 */
 	export type AddOne<N extends number> = IsUInt<N> extends true ? 
-		ReverseString<ToString<N>> extends `${infer F}${infer Rest}` ? 
+		ReverseString<ToString<N>> extends `${infer F extends IntChar}${infer Rest}` ? 
 			F extends '8' ? ToNumber<`${ReverseString<Rest>}9`> :
 			F extends '7' ? ToNumber<`${ReverseString<Rest>}8`> :
 			F extends '6' ? ToNumber<`${ReverseString<Rest>}7`> :
@@ -260,7 +586,7 @@ export declare namespace TypesTools {
 	 */
 	export type MinusOne<N extends number> = IsUInt<N> extends true ? 
 		N extends 0 ? never :
-			ReverseString<ToString<N>> extends `${infer F}${infer Rest}` ? 
+			ReverseString<ToString<N>> extends `${infer F extends IntChar}${infer Rest}` ? 
 				F extends '1' ? ToNumber<`${ReverseString<Rest>}0`> :
 				F extends '2' ? ToNumber<`${ReverseString<Rest>}1`> :
 				F extends '3' ? ToNumber<`${ReverseString<Rest>}2`> :
@@ -355,6 +681,25 @@ export declare namespace TypesTools {
 	export type Substring<S extends string, B extends number, E extends number> = 
 		TakeString<SkipString<S, B>, E>;
 
+
+	/**
+	 * 绝对值
+	 * Absolute value
+	 * @example Abs<-1> // 1
+	 * @example Abs<1> // 1
+	 * @example Abs<0> // 0
+	 */
+	export type Abs<N extends number> = ToString<N> extends `-${infer AN extends number}` ? AN : N;
+
+	/**
+	 * 负号算法
+	 * Negative
+	 * @example Nagative<-2> // 2
+	 * @example Nagative<2> // -2
+	 * @example Nagative<0> // 0
+	 */
+	export type Negative<N extends number> = ToString<N> extends `-${infer AN extends number}` ? AN : ToNumber<`-${ToString<N>}`>;
+
 	/**
 	 * 比较数字A是否大于B, 若A大于B则返回true, 否则返回false
 	 * If A greater than B, return true, otherwise return false
@@ -365,8 +710,15 @@ export declare namespace TypesTools {
 	 * @example GreatThen<5, 5> // false
 	 */
 	export type GreatThen<A extends number, B extends number> =
-		A extends B ? false : IntPart<A> extends IntPart<B> ? DecGreatThen<DecPart<A>, DecPart<B>> : 
-			IntGreatThen<IntPart<A>, IntPart<B>>;
+		A extends B ? false : 
+			SignalPart<A> extends SignalPart<B> ?
+				SignalPart<A> extends -1 ?
+					LessThen<Abs<A>, Abs<B>> :
+					IntPart<A> extends IntPart<B> ? 
+						DecimalGreatThen<DecimalPart<A>, DecimalPart<B>> : 
+						UIntGreatThen<IntPart<A>, IntPart<B>> : 
+				SignalGreanThen<SignalPart<A>, SignalPart<B>>;
+					
 	/** @see {@link GreatThen} */
 	export type GT<A extends number, B extends number> = GreatThen<A, B>;
 	
@@ -380,8 +732,14 @@ export declare namespace TypesTools {
 	 * @example GreatThenOrEquals<5, 6> // false
 	 */
 	export type GreatThenOrEquals<A extends number, B extends number> =
-		A extends B ? true : IntPart<A> extends IntPart<B> ? DecGreatThenOrEquals<DecPart<A>, DecPart<B>> : 
-			IntGreatThenOrEquals<IntPart<A>, IntPart<B>>;
+		A extends B ? true : 
+			SignalPart<A> extends SignalPart<B> ?
+				SignalPart<A> extends -1 ?
+					LessThenOrEquals<Abs<A>, Abs<B>> :
+					IntPart<A> extends IntPart<B> ? 
+						DecimalGreatThenOrEquals<DecimalPart<A>, DecimalPart<B>> : 
+						UIntGreatThenOrEquals<IntPart<A>, IntPart<B>> :
+				SignalGreanThen<SignalPart<A>, SignalPart<B>>;
 	/** @see {@link GreatThenOrEquals} */
 	export type GE<A extends number, B extends number> = GreatThenOrEquals<A, B>;
 
@@ -435,5 +793,79 @@ export declare namespace TypesTools {
 	/** @see {@link NotEquals} */
 	export type NE<A extends number, B extends number> = NotEquals<A, B>;
 
-	
+	/**
+	 * 填充字符串左边
+	 * Pad left for a string
+	 * @param S - 待填充的字符串
+	 * @param N - 填充的个数
+	 * @param C - 填充的字符
+	 * @example PadLeft<'5', 3, '0'> // '005'
+	 * @example PadLeft<'5', 3> // '  5'
+	 * @example PadLeft<'555', 3> // '555'
+	 * @example PadLeft<'55555', 3> // '55555'
+	 */
+	export type LeftPad<T extends string, L extends number, C extends string = " "> = 
+		GreatThenOrEquals<StringLength<T>, L> extends true ? T :
+			LeftPad<`${C}${T}`, L, C>;
+
+	/**
+	 * 填充字符串右边
+	 * Pad right for a string
+	 * @param S - 待填充的 字符串
+	 * @param N - 填充的个数
+	 * @param C - 填充的 字符
+	 * @example PadRight<'5', 3, '0'> // '500'
+	 * @example PadRight<'5', 3> // '5  '
+	 * @example PadRight<'555', 3> // '555'
+	 * @example PadRight<'55555', 3> // '55555'
+	 */
+	export type RightPad<T extends string, L extends number, C extends string = " "> = 
+		GreatThenOrEquals<StringLength<T>, L> extends true ? T :
+			RightPad<`${T}${C}`, L, C>;
+
+	export type TrimRight<T extends string, C extends string = " "> = 
+		T extends C ? "" : SkipString<T, MinusOne<StringLength<T>>> extends C ? TrimRight<TakeString<T, MinusOne<StringLength<T>>>, C> : T
+
+	export type DefaultIfEmpty<T extends string | undefined, D extends string> = 
+		T extends undefined ? D : T extends "" ? D : T;
+
+	/**
+	 * 两个整数的和
+	 * Sum of two integers
+	 * @param A - 待求和的整数
+	 * @param B - 待求和的整数
+	 * @example AddInt<0, 0> // 0
+	 * @example AddInt<10, 20> // 30
+	 * @example AddInt<5, 550> // 555
+	 */
+	export type AddInt<A extends number, B extends number> = 
+		SignalPart<A> extends 1 ?
+			SignalPart<B> extends 1 ?
+				//正常求和
+				ToNumber<ReverseString<AddIntReverseString<ReverseString<ToString<IntPart<A>>>, ReverseString<ToString<IntPart<B>>>>>> :
+				MinusInt<A, Abs<B>> :
+			SignalPart<B> extends 1 ?
+				MinusInt<B, Abs<A>> :
+				Negative<AddInt<Abs<A>, Abs<B>>>;
+
+	/**
+	 * 两个整数的差
+	 * Minus of two integers
+	 * @param A - 被减数
+	 * @param B - 减数
+	 * @example MinusInt<0, 0> // 0
+	 * @example MinusInt<10, 20> // -10
+	 * @example MinusInt<550, 5> // 545
+	 */
+	export type MinusInt<A extends number, B extends number> = 
+		SignalPart<A> extends 1 ?
+			SignalPart<B> extends 1 ?
+				GreatThenOrEquals<A, B> extends true ?
+				 	//正常求差
+					ToNumber<ReverseString<DefaultIfEmpty<TrimRight<MinusIntReverseString<ReverseString<ToString<IntPart<A>>>, ReverseString<ToString<IntPart<B>>>>, '0'>, '0'>>> :
+					Negative<MinusInt<B, A>> : 
+				AddInt<A, Abs<B>> :
+			SignalPart<B> extends 1 ?
+				Negative<AddInt<Abs<A>, B>> :
+				MinusInt<Abs<B>, Abs<A>>;
 }
