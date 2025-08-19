@@ -1,14 +1,93 @@
 export declare namespace TypesTools {
+
+	type IntChar = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9';
+
+	type IntCharGreatThen<A extends IntChar, B extends IntChar> = 
+		A extends B ? false : 
+			A extends '0' ? false :
+			A extends '1' ? B extends '0' ? true : false :
+			A extends '2' ? B extends '0' | '1' ? true : false :
+			A extends '3' ? B extends '0' | '1' | '2' ? true : false :
+			A extends '4' ? B extends '0' | '1' | '2' | '3' ? true : false :
+			A extends '5' ? B extends '0' | '1' | '2' | '3' | '4' ? true : false :
+			A extends '6' ? B extends '0' | '1' | '2' | '3' | '4' | '5' ? true : false :
+			A extends '7' ? B extends '0' | '1' | '2' | '3' | '4' | '5' | '6' ? true : false :
+			A extends '8' ? B extends '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' ? true : false :
+			A extends '9' ? B extends '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' ? true : false :
+			false;
+		
+	type IntCharGreatThenOrEquals<A extends IntChar, B extends IntChar> = 
+		A extends B ? true : IntCharGreatThen<A, B>;
+
+	type IntStringGreatThen<A extends string, B extends string> =
+		IntGreatThen<StringLength<A>, StringLength<B>> extends true ? true :
+			StringLength<A> extends StringLength<B> ? 
+				A extends `${infer AF extends IntChar}${infer AR}` ?
+					B extends `${infer BF extends IntChar}${infer BR}` ?
+						IntCharGreatThen<AF, BF> extends true ? true :
+							IntStringGreatThen<AR, BR> :
+						false :
+					false :
+				false;
+	
+	type DecStringGreatThen<A extends string, B extends string> =
+		A extends `0.${infer AR}` ?
+			B extends `0.${infer BR}` ?
+				DecStringGreatThen<AR, BR> :
+			false :
+			A extends `${infer AF extends IntChar}${infer AR}` ?
+				B extends `${infer BF extends IntChar}${infer BR}` ?
+					IntCharGreatThen<AF, BF> extends true ? true :
+						IntStringGreatThen<AR, BR> :
+					true :
+				false;
+
+	type IntGreatThen<A extends number, B extends number> =
+		A extends B ? false : IntStringGreatThen<ToString<A>, ToString<B>>;
+		
+	type IntGreatThenOrEquals<A extends number, B extends number> =
+		A extends B ? true : IntStringGreatThen<ToString<A>, ToString<B>>;
+
+	type DecGreatThen<A extends number, B extends number> =
+		A extends B ? false : DecStringGreatThen<ToString<A>, ToString<B>>;
+
+	type DecGreatThenOrEquals<A extends number, B extends number> =
+		A extends B ? true : DecStringGreatThen<ToString<A>, ToString<B>>;
+
 	/**
-	 * 反转一个字符串或字符串
+	 * 取否
+	 * Not for boolean
+	 * @example Not<true> // false
+	 * @example Not<false> // true
+	 */
+	export type Not<T extends boolean> =
+		T extends true ? false : true;
+
+	/**
+	 * 反转一个字符串
+	 * Reverse a string or an array
+	 * @example Reverse<'abc'> // 'cba'
+	 */
+	export type ReverseString<T extends string> = 
+			T extends `${infer F}${infer Rest}` ? `${Reverse<Rest>}${F}` : '';
+
+	/**
+	 * 反转一个数组
+	 * Reverse an array
+	 * @example Reverse<[1, 2]> // [2, 1]
+	 */
+	export type ReverseArray<T extends any[]> = 
+			T extends [ infer F, ...infer Rest ] ? [ ...Reverse<Rest>, F ] : [];
+
+
+	/**
+	 * 反转一个字符串或数组
 	 * Reverse a string or an array
 	 * @example Reverse<'abc'> // 'cba'
 	 * @example Reverse<[1, 2]> // [2, 1]
 	 */
 	export type Reverse<T extends string | any[]> = 
-		T extends string ?
-			T extends `${infer F}${infer Rest}` ? `${Reverse<Rest>}${F}` : '' :
-			T extends [ infer F, ...infer Rest ] ? [ ...Reverse<Rest>, F ] : [];
+		T extends string ? ReverseString<T> : T extends any[] ? ReverseArray<T> : never;
 
 	/**
 	 * 数字字符串类型转为数字类型
@@ -91,6 +170,16 @@ export declare namespace TypesTools {
 		never;
 
 	/**
+	 * 数字的符号部分
+	 * Int part of a number
+	 * @example IntPart<-1.5> // -1
+	 * @example IntPart<1> // 1
+	 * @example IntPart<0> // 1
+	 */
+	export type SignPart<N extends number> =
+		ToString<N> extends `-${string}` ? -1 : 1;
+
+	/**
 	 * 数字的整数部分
 	 * Int part of a number
 	 * @example IntPart<-1.5> // -1
@@ -145,18 +234,18 @@ export declare namespace TypesTools {
 	 * @example AddOne<-1> // never
 	 * @example AddOne<1.2> // never
 	 */
-	type AddOne<N extends number> = IsUInt<N> extends true ? 
-		Reverse<ToString<N>> extends `${infer F}${infer Rest}` ? 
-			F extends '8' ? ToNumber<`${Reverse<Rest>}9`> :
-			F extends '7' ? ToNumber<`${Reverse<Rest>}8`> :
-			F extends '6' ? ToNumber<`${Reverse<Rest>}7`> :
-			F extends '5' ? ToNumber<`${Reverse<Rest>}6`> :
-			F extends '4' ? ToNumber<`${Reverse<Rest>}5`> :
-			F extends '3' ? ToNumber<`${Reverse<Rest>}4`> :
-			F extends '2' ? ToNumber<`${Reverse<Rest>}3`> :
-			F extends '1' ? ToNumber<`${Reverse<Rest>}2`> :
-			F extends '0' ? ToNumber<`${Reverse<Rest>}1`> :
-			Rest extends '' ? 10 : ToNumber<`${AddOne<ToNumber<Reverse<Rest>>>}0`> : 
+	export type AddOne<N extends number> = IsUInt<N> extends true ? 
+		ReverseString<ToString<N>> extends `${infer F}${infer Rest}` ? 
+			F extends '8' ? ToNumber<`${ReverseString<Rest>}9`> :
+			F extends '7' ? ToNumber<`${ReverseString<Rest>}8`> :
+			F extends '6' ? ToNumber<`${ReverseString<Rest>}7`> :
+			F extends '5' ? ToNumber<`${ReverseString<Rest>}6`> :
+			F extends '4' ? ToNumber<`${ReverseString<Rest>}5`> :
+			F extends '3' ? ToNumber<`${ReverseString<Rest>}4`> :
+			F extends '2' ? ToNumber<`${ReverseString<Rest>}3`> :
+			F extends '1' ? ToNumber<`${ReverseString<Rest>}2`> :
+			F extends '0' ? ToNumber<`${ReverseString<Rest>}1`> :
+			Rest extends '' ? 10 : ToNumber<`${AddOne<ToNumber<ReverseString<Rest>>>}0`> : 
 			0:
 		never;
 	
@@ -169,19 +258,19 @@ export declare namespace TypesTools {
 	 * @example MinusOne<0> // never
 	 * @example MinusOne<1.5> // never
 	 */
-	type MinusOne<N extends number> = IsUInt<N> extends true ? 
+	export type MinusOne<N extends number> = IsUInt<N> extends true ? 
 		N extends 0 ? never :
-			Reverse<ToString<N>> extends `${infer F}${infer Rest}` ? 
-				F extends '1' ? ToNumber<`${Reverse<Rest>}0`> :
-				F extends '2' ? ToNumber<`${Reverse<Rest>}1`> :
-				F extends '3' ? ToNumber<`${Reverse<Rest>}2`> :
-				F extends '4' ? ToNumber<`${Reverse<Rest>}3`> :
-				F extends '5' ? ToNumber<`${Reverse<Rest>}4`> :
-				F extends '6' ? ToNumber<`${Reverse<Rest>}5`> :
-				F extends '7' ? ToNumber<`${Reverse<Rest>}6`> :
-				F extends '8' ? ToNumber<`${Reverse<Rest>}7`> :
-				F extends '9' ? ToNumber<`${Reverse<Rest>}8`> :
-				Rest extends '1' ? 9 : ToNumber<`${MinusOne<ToNumber<Reverse<Rest>>>}9`> : 
+			ReverseString<ToString<N>> extends `${infer F}${infer Rest}` ? 
+				F extends '1' ? ToNumber<`${ReverseString<Rest>}0`> :
+				F extends '2' ? ToNumber<`${ReverseString<Rest>}1`> :
+				F extends '3' ? ToNumber<`${ReverseString<Rest>}2`> :
+				F extends '4' ? ToNumber<`${ReverseString<Rest>}3`> :
+				F extends '5' ? ToNumber<`${ReverseString<Rest>}4`> :
+				F extends '6' ? ToNumber<`${ReverseString<Rest>}5`> :
+				F extends '7' ? ToNumber<`${ReverseString<Rest>}6`> :
+				F extends '8' ? ToNumber<`${ReverseString<Rest>}7`> :
+				F extends '9' ? ToNumber<`${ReverseString<Rest>}8`> :
+				Rest extends '1' ? 9 : ToNumber<`${MinusOne<ToNumber<ReverseString<Rest>>>}9`> : 
 				0:
 		never;
 
@@ -195,15 +284,156 @@ export declare namespace TypesTools {
 	 * @example IntList<5, 3> // 5 | 6 | 7
 	 * @example IntList<-5, 5> // never
 	 */
-	type IntList<S extends number, L extends number, A extends number[] = []> = 
+	export type IntList<S extends number, L extends number, A extends number[] = []> = 
 		IsUInt<S> extends true ?
 			IsUInt<L> extends true ?
 				number extends L ? number : A['length'] extends L ? A[number] : IntList<AddOne<S>, L, [...A, S]> :
 			never :
 		never;
 
-	// type Substring<S extends string, B extends number, E extends number> = 
-	// 	S extends `${string}${infer V}` ?
-	// type Slice<T, A extends T[], B extends number, E extends number> =
+	/**
+	 * 获取数组具体长度的数字类型
+	 * Get the length of an array
+	 * @example ArrayLength<[1,2,3]> // 3
+	 * @example ArrayLength<any[]> // number
+	 */
+	export type ArrayLength<A extends T[], T = any> = A['length'];
 
+	/**
+	 * 获取字符串的长度的数字类型
+	 * Get the length of a string
+	 * @example StringLength<'123'> // 3
+	 * @example StringLength<string> // number
+	 */
+	export type StringLength<A extends string> = A extends '' ? 0 : A extends `${string}${infer R}` ? AddOne<StringLength<R>> : number;
+
+	/**
+	 * 数组前 N 项组成的新的类型数组
+	 * A new array type composed of the first N items
+	 * @example PrefixArray<[1, 2, 3], 2> // [1, 2]
+	 */
+	export type TakeArray<A extends T[], N extends number, T = any> =
+		A extends { length: N } ? A : A extends [ ...infer P, T ] ? TakeArray<P, N> : never;
+
+	/**
+	 * 数组从 N 项开始往后组成的类型数组
+	 * A new array type composed of the items after N
+	 * @example SkipArray<[1, 2, 3], 2> // [3]
+	 */
+	export type SkipArray<A extends T[], N extends number, T = any> =
+		N extends 0 ? A : A extends [ T, ...infer S ] ? SkipArray<S, MinusOne<N>> : never;
+
+	/**
+	 * 数组从 N 项开始往后至 S 项组成的类型数组
+	 * A new array type composed of the items from N to S
+	 * @example Slice<[1, 2, 3, 4, 5], 1, 3> // [2, 3]
+	 */
+	export type Slice<A extends T[], B extends number, E extends number, T = any> =
+		SkipArray<TakeArray<A, E>, B>;
+
+	/**
+	 * 字符串前 N 个字符组成的新字符串
+	 * A new string composed of the first N characters
+	 * @example TakeString<'abcdefg', 3> // 'abc'
+	 */
+	export type TakeString<A extends string, N extends number> =
+		N extends 0 ? '' : A extends `${ infer F }${ infer R }` ? `${ F }${ TakeString<R, MinusOne<N>> }` : '';
+
+	/**
+	 * 字符串从 N 项开始往后的所有字符组成的新字符串
+	 * A new string composed of all characters after N
+	 * @example SkipString<'abcdefg', 3> // 'fg'
+	 */
+	export type SkipString<A extends string, N extends number> =
+		N extends 0 ? A : A extends `${ string }${ infer R }` ? SkipString<R, MinusOne<N>> : '';
+
+	/**
+	 * 字符串从 N 开始到 M 的所有字符组成的新字符串
+	 * A new string composed of all characters from N to M
+	 * @example Substring<'abcdefg', 2, 4> // 'cde'
+	 */
+	export type Substring<S extends string, B extends number, E extends number> = 
+		TakeString<SkipString<S, B>, E>;
+
+	/**
+	 * 比较数字A是否大于B, 若A大于B则返回true, 否则返回false
+	 * If A greater than B, return true, otherwise return false
+	 * @param A - 待比较的数字A
+	 * @param B - 待比较的数字B
+	 * @example GreatThen<5, 2> // true
+	 * @example GreatThen<2, 5> // false
+	 * @example GreatThen<5, 5> // false
+	 */
+	export type GreatThen<A extends number, B extends number> =
+		A extends B ? false : IntPart<A> extends IntPart<B> ? DecGreatThen<DecPart<A>, DecPart<B>> : 
+			IntGreatThen<IntPart<A>, IntPart<B>>;
+	/** @see {@link GreatThen} */
+	export type GT<A extends number, B extends number> = GreatThen<A, B>;
+	
+	/**
+	 * 比较数字A是否大于等于B, 若A大于等于B则返回true, 否则返回false
+	 * If A is great then or equals B, return true, otherwise return false
+	 * @param A - 待比较的数字A
+	 * @param B - 待比较的数字B
+	 * @example GreatThenOrEquals<5, 2> // true
+	 * @example GreatThenOrEquals<5, 5> // true
+	 * @example GreatThenOrEquals<5, 6> // false
+	 */
+	export type GreatThenOrEquals<A extends number, B extends number> =
+		A extends B ? true : IntPart<A> extends IntPart<B> ? DecGreatThenOrEquals<DecPart<A>, DecPart<B>> : 
+			IntGreatThenOrEquals<IntPart<A>, IntPart<B>>;
+	/** @see {@link GreatThenOrEquals} */
+	export type GE<A extends number, B extends number> = GreatThenOrEquals<A, B>;
+
+	/**
+	 * 比较数字A是否小于B, 若A小于B则返回true, 否则返回false
+	 * If A less than B, return true, otherwise return false
+	 * @param A - 待比较的数字A
+	 * @param B - 待比较的数字B
+	 * @example LessThen<5, 2> // false
+	 * @example LessThen<2, 5> // true
+	 * @example LessThen<5, 5> // false
+	 */
+	export type LessThen<A extends number, B extends number> = Not<GreatThenOrEquals<A, B>>;
+	/** @see {@link LessThen} */
+	export type LT<A extends number, B extends number> = LessThen<A, B>;
+
+	/**
+	 * 比较数字A是否小于等于B, 若A小于等于B则返回true, 否则返回false
+	 * If A is less then or equals B, return true, otherwise return false
+	 * @param A - 待比较的数字A
+	 * @param B - 待比较的数字B
+	 * @example LessThenOrEquals<5, 2> // false
+	 * @example LessThenOrEquals<5, 5> // true
+	 * @example LessThenOrEquals<5, 6> // true
+	 */
+	export type LessThenOrEquals<A extends number, B extends number> = Not<GreatThen<A, B>>;
+	/** @see {@link LessThenOrEquals} */
+	export type LE<A extends number, B extends number> = LessThenOrEquals<A, B>;
+
+	/**
+	 * 比较两个数据是否相同
+	 * If A and B are the same, return true, otherwise return false
+	 * @param A - 待比较的数据A
+	 * @param B - 待比较的数据B
+	 * @example Equals<5, 5> // true
+	 * @example Equals<5, 2> // false
+	 */
+	export type Equals<A extends any, B extends any> = [A] extends [B] ? ([B] extends [A] ? true : false) : false;
+	/** @see {@link Equals}*/
+	export type EQ<A extends number, B extends number> = Equals<A, B>;
+
+	/**
+	 * 比较两个数据是否不同
+	 * If A and B are not same, return true, otherwise return false
+	 * @param A - 待比较的数据A
+	 * @param B - 待比较的数据B
+	 * @example Equals<5, 5> // false
+	 * @example Equals<5, 2> // true
+	 */
+	export type NotEquals<A extends any, B extends any> = Not<Equals<A, B>>;
+	/** @see {@link NotEquals} */
+	export type NE<A extends number, B extends number> = NotEquals<A, B>;
+
+	
 }

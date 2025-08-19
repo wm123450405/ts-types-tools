@@ -1,13 +1,13 @@
 # ts-type-tools
-TS中一些方便的类型工具
+some type tools for typescript
 
-## 1. 安装
+## 1. install
 
 ```shell
 npm install ts-type-tools --save-dev
 ```
 
-## 2. 使用
+## 2. usage
 
 ```typescript
 import type { TypesTools } from 'ts-type-tools';
@@ -18,6 +18,4 @@ type Status = TypesTools.IntRange<0, 5>;  // 0 | 1 | 2 | 3 | 4
 ```
 
 ## 3. api
-
-
 
