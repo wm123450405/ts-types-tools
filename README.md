@@ -54,8 +54,8 @@ NumberToString<123> // '123'
 
 ### 是否是整数 `IsInt<number>`
 ``` typescript
-IsInteger<123> // true
-IsInteger<123.1> // false
+IsInt<123> // true
+IsInt<123.1> // false
 ```
 
 ### 作为整数 `AsInt<number>`
@@ -66,9 +66,9 @@ AsInt<123.1> // never
 
 ### 是否是非负整数 `IsUInt<number>`
 ``` typescript
-AsUInt<123> // true
-AsUInt<-123> // false
-AsUInt<123.1> // false
+IsUInt<123> // true
+IsUInt<-123> // false
+IsUInt<123.1> // false
 ```
 
 ### 作为非负整数 `AsUInt<number>`
@@ -206,9 +206,9 @@ Abs<0> // 0
 
 ### 负号 `Negative<number>`
 ``` typescript
-Nagative<-2> // 2
-Nagative<2> // -2
-Nagative<0> // 0
+Negative<-2> // 2
+Negative<2> // -2
+Negative<0> // 0
 ```
 
 ### 大于 `GreaterThan<number, number>`

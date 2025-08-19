@@ -491,8 +491,8 @@ export type NumberToString<T extends number> = `${T}`;
 /**
  * 是否是整数,不能用于判断联合类型
  * Are integers, cannot be used to determine union types
- * @example IsInteger<123> // true
- * @example IsInteger<123.1> // false
+ * @example IsInt<123> // true
+ * @example IsInt<123.1> // false
  */
 export type IsInt<T extends number> = NumberToString<T> extends `${number | '' | '-'}.${infer D extends number}` ? D extends 0 ? true : false : true;
 
@@ -507,9 +507,9 @@ export type AsInt<T extends number> = IsInt<T> extends true ? T : never;
 /**
  * 是否是非负整数,不能用于判断联合类型
  * Are non-negative integers, cannot be used to determine union types
- * @example AsUInt<123> // true
- * @example AsUInt<-123> // false
- * @example AsUInt<123.1> // false
+ * @example IsUInt<123> // true
+ * @example IsUInt<-123> // false
+ * @example IsUInt<123.1> // false
  */
 export type IsUInt<T extends number> = NumberToString<T> extends `-${number}` ? false : IsInt<T>;
 
@@ -607,7 +607,7 @@ export type IsNegative<N extends number> =
  * @example IsPositive<0> // false
  */
 export type IsPositive<N extends number> =
-	N extends 0 ? false : NumberToString<N> extends `${number}` ? true : false;
+	N extends 0 ? false : NumberToString<N> extends `-${number}` ? false : true;
 
 
 /**
@@ -738,7 +738,7 @@ export type SkipString<A extends string, N extends number> =
  * @example Substring<'abcdefg', 2, 4> // 'cd'
  */
 export type Substring<S extends string, B extends number, E extends number> = 
-	TakeString<SkipString<S, B>, E>;
+	SkipString<TakeString<S, E>, B>;
 
 
 /**
@@ -757,7 +757,7 @@ export type Abs<N extends number> = NumberToString<N> extends `-${infer AN exten
  * @example Nagative<2> // -2
  * @example Nagative<0> // 0
  */
-export type Negative<N extends number> = NumberToString<N> extends `-${infer AN extends number}` ? AN : `-${NumberToString<N>}` extends `${infer NN extends number}` ? NN : never;
+export type Negative<N extends number> = N extends 0 ? 0 : NumberToString<N> extends `-${infer AN extends number}` ? AN : `-${NumberToString<N>}` extends `${infer NN extends number}` ? NN : never;
 
 /**
  * 比较数字A是否大于B, 若A大于B则返回true, 否则返回false

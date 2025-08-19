@@ -1,7 +1,7 @@
 {
   "name": "ts-types-tools",
   "author": "wm123450405",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "module": "index.ts",
   "type": "module",
   "keywords": [
@@ -14,10 +14,13 @@
   ],
   "husky": {
     "hooks": {
-      "pre-commit": "tsc --checkJS && cases.ts"
+      "pre-commit": "bun tsc --checkJS && bun cases.ts"
     }
   },
-  "scripts": {},
+  "scripts": {
+    "preinstall": "bun tsc --checkJS && bun cases.ts",
+    "prepublish": "bun tsc --checkJS && bun cases.ts"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wm123450405/ts-types-tools.git"
