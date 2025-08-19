@@ -1,3 +1,5 @@
+import type { UnionOrIntersectionType, UnionType } from "typescript";
+
 export declare namespace TypesTools {
 	type Signal = -1 | 1;
 
@@ -335,16 +337,16 @@ export declare namespace TypesTools {
 				false;
 
 	type UIntGreatThen<A extends number, B extends number> =
-		A extends B ? false : UIntStringGreatThen<ToString<A>, ToString<B>>;
+		A extends B ? false : UIntStringGreatThen<NumberToString<A>, NumberToString<B>>;
 		
 	type UIntGreatThenOrEquals<A extends number, B extends number> =
-		A extends B ? true : UIntStringGreatThen<ToString<A>, ToString<B>>;
+		A extends B ? true : UIntStringGreatThen<NumberToString<A>, NumberToString<B>>;
 
 	type DecimalGreatThen<A extends number, B extends number> =
-		A extends B ? false : DecimalStringGreatThen<ToString<A>, ToString<B>>;
+		A extends B ? false : DecimalStringGreatThen<NumberToString<A>, NumberToString<B>>;
 
 	type DecimalGreatThenOrEquals<A extends number, B extends number> =
-		A extends B ? true : DecimalStringGreatThen<ToString<A>, ToString<B>>;
+		A extends B ? true : DecimalStringGreatThen<NumberToString<A>, NumberToString<B>>;
 
 	type AddIntReverseString<A extends string, B extends string, CARRY extends boolean = false> = 
 		A extends `${infer AF extends IntChar}${infer AR}` ?
@@ -420,14 +422,14 @@ export declare namespace TypesTools {
 	 * string -> number
 	 * @example ToNumber<'123'> // 123
 	 */
-	export type ToNumber<T extends string> = T extends `${infer N extends number}` ? N : never;
+	export type StringToNumber<T extends string> = T extends `${infer N extends number}` ? N : never;
 
 	/**
 	 * 数字类型转为数字字符串类型
 	 * number -> string
 	 * @example ToString<123> // '123'
 	 */
-	export type ToString<T extends number> = `${T}`;
+	export type NumberToString<T extends number> = `${T}`;
 
 	/**
 	 * 是否是整数,不能用于判断联合类型
@@ -435,7 +437,7 @@ export declare namespace TypesTools {
 	 * @example IsInteger<123> // true
 	 * @example IsInteger<123.1> // false
 	 */
-	export type IsInt<T extends number> = ToString<T> extends `${number | '' | '-'}.${infer D extends number}` ? D extends 0 ? true : false : true;
+	export type IsInt<T extends number> = NumberToString<T> extends `${number | '' | '-'}.${infer D extends number}` ? D extends 0 ? true : false : true;
 
 	/**
 	 * 只能是整数,不能处理联合类型
@@ -452,7 +454,7 @@ export declare namespace TypesTools {
 	 * @example AsUInt<-123> // false
 	 * @example AsUInt<123.1> // false
 	 */
-	export type IsUInt<T extends number> = ToString<T> extends `-${number}` ? false : IsInt<T>;
+	export type IsUInt<T extends number> = NumberToString<T> extends `-${number}` ? false : IsInt<T>;
 
 	/**
 	 * 只能是非负整数,不能处理联合类型
@@ -503,7 +505,7 @@ export declare namespace TypesTools {
 	 * @example SignalPart<0> // 1
 	 */
 	export type SignalPart<N extends number> =
-		ToString<N> extends `-${string}` ? -1 : 1;
+		NumberToString<N> extends `-${string}` ? -1 : 1;
 
 	/**
 	 * 数字的整数部分
@@ -513,7 +515,7 @@ export declare namespace TypesTools {
 	 * @example IntPart<-1> // -1
 	 */
 	export type IntPart<N extends number> = 
-		ToString<N> extends `${infer I extends number | '' | '-'}.${number}` ? 
+		NumberToString<N> extends `${infer I extends number | '' | '-'}.${number}` ? 
 			I extends '' ? 0 : I extends '-' ? -0 : I : N;
 
 	/**
@@ -524,8 +526,8 @@ export declare namespace TypesTools {
 	 * @example DecimalPart<-1> // 0
 	 */
 	export type DecimalPart<N extends number> = 
-		ToString<N> extends `${number | '' | '-'}.${number}` ? 
-			ToString<N> extends `${number | '' | '-'}.${infer D}` ? ToNumber<`0.${D}`> : 0 :
+		NumberToString<N> extends `${number | '' | '-'}.${number}` ? 
+			NumberToString<N> extends `${number | '' | '-'}.${infer D}` ? StringToNumber<`0.${D}`> : 0 :
 		0;
 
 	/**
@@ -537,7 +539,7 @@ export declare namespace TypesTools {
 	 * @example IsNegative<0> // false
 	 */
 	export type IsNegative<N extends number> =
-		ToString<N> extends `-${number}` ? true : false;
+		NumberToString<N> extends `-${number}` ? true : false;
 
 	/**
 	 * 判断一个数字是否为正数
@@ -548,7 +550,7 @@ export declare namespace TypesTools {
 	 * @example IsPositive<0> // false
 	 */
 	export type IsPositive<N extends number> =
-		N extends 0 ? false : ToString<N> extends `${number}` ? true : false;
+		N extends 0 ? false : NumberToString<N> extends `${number}` ? true : false;
 
 
 	/**
@@ -561,17 +563,17 @@ export declare namespace TypesTools {
 	 * @example AddOne<1.2> // never
 	 */
 	export type AddOne<N extends number> = IsUInt<N> extends true ? 
-		ReverseString<ToString<N>> extends `${infer F extends IntChar}${infer Rest}` ? 
-			F extends '8' ? ToNumber<`${ReverseString<Rest>}9`> :
-			F extends '7' ? ToNumber<`${ReverseString<Rest>}8`> :
-			F extends '6' ? ToNumber<`${ReverseString<Rest>}7`> :
-			F extends '5' ? ToNumber<`${ReverseString<Rest>}6`> :
-			F extends '4' ? ToNumber<`${ReverseString<Rest>}5`> :
-			F extends '3' ? ToNumber<`${ReverseString<Rest>}4`> :
-			F extends '2' ? ToNumber<`${ReverseString<Rest>}3`> :
-			F extends '1' ? ToNumber<`${ReverseString<Rest>}2`> :
-			F extends '0' ? ToNumber<`${ReverseString<Rest>}1`> :
-			Rest extends '' ? 10 : ToNumber<`${AddOne<ToNumber<ReverseString<Rest>>>}0`> : 
+		ReverseString<NumberToString<N>> extends `${infer F extends IntChar}${infer Rest}` ? 
+			F extends '8' ? StringToNumber<`${ReverseString<Rest>}9`> :
+			F extends '7' ? StringToNumber<`${ReverseString<Rest>}8`> :
+			F extends '6' ? StringToNumber<`${ReverseString<Rest>}7`> :
+			F extends '5' ? StringToNumber<`${ReverseString<Rest>}6`> :
+			F extends '4' ? StringToNumber<`${ReverseString<Rest>}5`> :
+			F extends '3' ? StringToNumber<`${ReverseString<Rest>}4`> :
+			F extends '2' ? StringToNumber<`${ReverseString<Rest>}3`> :
+			F extends '1' ? StringToNumber<`${ReverseString<Rest>}2`> :
+			F extends '0' ? StringToNumber<`${ReverseString<Rest>}1`> :
+			Rest extends '' ? 10 : StringToNumber<`${AddOne<StringToNumber<ReverseString<Rest>>>}0`> : 
 			0:
 		never;
 	
@@ -586,17 +588,17 @@ export declare namespace TypesTools {
 	 */
 	export type MinusOne<N extends number> = IsUInt<N> extends true ? 
 		N extends 0 ? never :
-			ReverseString<ToString<N>> extends `${infer F extends IntChar}${infer Rest}` ? 
-				F extends '1' ? ToNumber<`${ReverseString<Rest>}0`> :
-				F extends '2' ? ToNumber<`${ReverseString<Rest>}1`> :
-				F extends '3' ? ToNumber<`${ReverseString<Rest>}2`> :
-				F extends '4' ? ToNumber<`${ReverseString<Rest>}3`> :
-				F extends '5' ? ToNumber<`${ReverseString<Rest>}4`> :
-				F extends '6' ? ToNumber<`${ReverseString<Rest>}5`> :
-				F extends '7' ? ToNumber<`${ReverseString<Rest>}6`> :
-				F extends '8' ? ToNumber<`${ReverseString<Rest>}7`> :
-				F extends '9' ? ToNumber<`${ReverseString<Rest>}8`> :
-				Rest extends '1' ? 9 : ToNumber<`${MinusOne<ToNumber<ReverseString<Rest>>>}9`> : 
+			ReverseString<NumberToString<N>> extends `${infer F extends IntChar}${infer Rest}` ? 
+				F extends '1' ? StringToNumber<`${ReverseString<Rest>}0`> :
+				F extends '2' ? StringToNumber<`${ReverseString<Rest>}1`> :
+				F extends '3' ? StringToNumber<`${ReverseString<Rest>}2`> :
+				F extends '4' ? StringToNumber<`${ReverseString<Rest>}3`> :
+				F extends '5' ? StringToNumber<`${ReverseString<Rest>}4`> :
+				F extends '6' ? StringToNumber<`${ReverseString<Rest>}5`> :
+				F extends '7' ? StringToNumber<`${ReverseString<Rest>}6`> :
+				F extends '8' ? StringToNumber<`${ReverseString<Rest>}7`> :
+				F extends '9' ? StringToNumber<`${ReverseString<Rest>}8`> :
+				Rest extends '1' ? 9 : StringToNumber<`${MinusOne<StringToNumber<ReverseString<Rest>>>}9`> : 
 				0:
 		never;
 
@@ -689,7 +691,7 @@ export declare namespace TypesTools {
 	 * @example Abs<1> // 1
 	 * @example Abs<0> // 0
 	 */
-	export type Abs<N extends number> = ToString<N> extends `-${infer AN extends number}` ? AN : N;
+	export type Abs<N extends number> = NumberToString<N> extends `-${infer AN extends number}` ? AN : N;
 
 	/**
 	 * 负号算法
@@ -698,7 +700,7 @@ export declare namespace TypesTools {
 	 * @example Nagative<2> // -2
 	 * @example Nagative<0> // 0
 	 */
-	export type Negative<N extends number> = ToString<N> extends `-${infer AN extends number}` ? AN : ToNumber<`-${ToString<N>}`>;
+	export type Negative<N extends number> = NumberToString<N> extends `-${infer AN extends number}` ? AN : StringToNumber<`-${NumberToString<N>}`>;
 
 	/**
 	 * 比较数字A是否大于B, 若A大于B则返回true, 否则返回false
@@ -804,9 +806,9 @@ export declare namespace TypesTools {
 	 * @example PadLeft<'555', 3> // '555'
 	 * @example PadLeft<'55555', 3> // '55555'
 	 */
-	export type LeftPad<T extends string, L extends number, C extends string = " "> = 
+	export type PadLeft<T extends string, L extends number, C extends string = " "> = 
 		GreatThenOrEquals<StringLength<T>, L> extends true ? T :
-			LeftPad<`${C}${T}`, L, C>;
+			PadLeft<`${C}${T}`, L, C>;
 
 	/**
 	 * 填充字符串右边
@@ -819,13 +821,39 @@ export declare namespace TypesTools {
 	 * @example PadRight<'555', 3> // '555'
 	 * @example PadRight<'55555', 3> // '55555'
 	 */
-	export type RightPad<T extends string, L extends number, C extends string = " "> = 
+	export type PadRight<T extends string, L extends number, C extends string = " "> = 
 		GreatThenOrEquals<StringLength<T>, L> extends true ? T :
-			RightPad<`${T}${C}`, L, C>;
+			PadRight<`${T}${C}`, L, C>;
 
+	/**
+	 * 清除字符串左侧的重复字符
+	 * @param T - 待清除的字符串
+	 * @param C - 需要清除的重复字符
+	 * @example TrimLeft<' 123'> // '123'
+	 * @example TrimLeft<'0123', '0'> // '123'
+	 * @example TrimLeft<'0123'> // '0123'
+	 */
+	export type TrimLeft<T extends string, C extends string = " "> = 
+		T extends `${infer _F extends C}${infer R}` ? TrimLeft<R> : T
+
+	/**
+	 * 清除字符串右侧的重复字符
+	 * @param T - 待清除的字符串
+	 * @param C - 需要清除的重复字符
+	 * @example TrimRight<'123 '> // '123'
+	 * @example TrimRight<'1230', '0'> // '123'
+	 * @example TrimRight<'1230'> // '1230'
+	 */
 	export type TrimRight<T extends string, C extends string = " "> = 
 		T extends C ? "" : SkipString<T, MinusOne<StringLength<T>>> extends C ? TrimRight<TakeString<T, MinusOne<StringLength<T>>>, C> : T
 
+	/**
+	 * 如果传入的字符串不存在, 则用默认字符串代替
+	 * @param T - 待检查的字符串
+	 * @param D - 默认字符串
+	 * @example DefaultIfEmpty<'123', '234'> // '123'
+	 * @example DefaultIfEmpty<'', '234'> // '234'
+	 */
 	export type DefaultIfEmpty<T extends string | undefined, D extends string> = 
 		T extends undefined ? D : T extends "" ? D : T;
 
@@ -842,7 +870,7 @@ export declare namespace TypesTools {
 		SignalPart<A> extends 1 ?
 			SignalPart<B> extends 1 ?
 				//正常求和
-				ToNumber<ReverseString<AddIntReverseString<ReverseString<ToString<IntPart<A>>>, ReverseString<ToString<IntPart<B>>>>>> :
+				StringToNumber<ReverseString<AddIntReverseString<ReverseString<NumberToString<IntPart<A>>>, ReverseString<NumberToString<IntPart<B>>>>>> :
 				MinusInt<A, Abs<B>> :
 			SignalPart<B> extends 1 ?
 				MinusInt<B, Abs<A>> :
@@ -862,10 +890,62 @@ export declare namespace TypesTools {
 			SignalPart<B> extends 1 ?
 				GreatThenOrEquals<A, B> extends true ?
 				 	//正常求差
-					ToNumber<ReverseString<DefaultIfEmpty<TrimRight<MinusIntReverseString<ReverseString<ToString<IntPart<A>>>, ReverseString<ToString<IntPart<B>>>>, '0'>, '0'>>> :
+					StringToNumber<ReverseString<DefaultIfEmpty<TrimRight<MinusIntReverseString<ReverseString<NumberToString<IntPart<A>>>, ReverseString<NumberToString<IntPart<B>>>>, '0'>, '0'>>> :
 					Negative<MinusInt<B, A>> : 
 				AddInt<A, Abs<B>> :
 			SignalPart<B> extends 1 ?
 				Negative<AddInt<Abs<A>, B>> :
 				MinusInt<Abs<B>, Abs<A>>;
+
+	/**
+	 * 将具体是数组类型转化未联合类型
+	 * @example ArrayToUnion<[1, 2, 3]> // 1 | 2 | 3
+	 * @example ArrayToUnion<[ '1', '2', '3' ]> // '1' | '2' | '3'
+	 * @example ArrayToUnion<[ boolean, number, false, null ]> // boolean | number | null
+	 * @example ArrayToUnion<[ true, false ]> // boolean
+	 */
+	export type ArrayToUnion<A extends T[], T = any> =
+		A extends [ infer F, ...infer R ] ? F | ArrayToUnion<R> : never;
+
+	/**
+	 * 获取一组数字中的最大数字类型
+	 * @param A 一个数字，或一组数字
+	 * @param B 若A为一个数字，这里给定另一个数字，否则不指定数据
+	 * @example Max<1, 23> // 23
+	 * @example Max<[1, 23]> // 23
+	 * @example Max<[1, 23, 5]> // 23
+	 * @example Max<[]> // never
+	 */
+	export type Max<A extends number | number[], B extends (A extends number ? number : never) = never> =
+		A extends number ?
+			B extends number ? 
+				GreatThenOrEquals<A, B> extends true ? A : B
+			: A :
+		A extends [] ? 
+			B :
+		A extends [ infer F extends number, ...infer R extends number[] ] ?
+			R extends [] ? F : Max<Max<R>, F> 
+		: never ;
+
+	/**
+	 * 获取一组数字中的最小数字类型
+	 * @param A 一个数字，或一组数字
+	 * @param B 若A为一个数字，这里给定另一个数字，否则不指定数据
+	 * @example Min<1, 23> // 1
+	 * @example Min<[1, 23]> // 1
+	 * @example Min<[8, 23, 5]> // 5
+	 * @example Min<[]> // never
+	 */
+	export type Min<A extends number | number[], B extends (A extends number ? number : never) = never> =
+		A extends number ?
+			B extends number ? 
+				GreatThenOrEquals<A, B> extends true ? B : A
+			: A :
+		A extends [] ? 
+			B :
+		A extends [ infer F extends number, ...infer R extends number[] ] ?
+			R extends [] ? F : Min<Min<R>, F> 
+		: never ;
+
+	
 }
