@@ -1,3 +1,9 @@
+export * from './src/core';
+export * from './src/boolean';
+export * from './src/string';
+export * from './src/number';
+export * from './src/mixins';
+
 type BinarySize = 32;
 
 /** 32位 */
@@ -434,15 +440,6 @@ type MinusIntReverseString<A extends string, B extends string, BORROW extends bo
 			`${IntCharMinus<BF>}${MinusIntReverseString<'', BR, IntCharBorrow<'0', BF, BORROW>>}` :
 			`${BF}${MinusIntReverseString<'', BR>}` :
 	BORROW extends true ? never : '';
-
-/**
- * 取否
- * Not for boolean
- * @example Not<true> // false
- * @example Not<false> // true
- */
-export type Not<T extends boolean> =
-	T extends true ? false : true;
 
 /**
  * 反转一个字符串
