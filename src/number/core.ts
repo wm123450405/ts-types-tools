@@ -1,4 +1,6 @@
+import type { BinaryStringToNumber } from './binary';
 
+export type Signal = -1 | 1;
 
 /**
  * 数字字符串类型转为数字类型
@@ -51,3 +53,20 @@ export type IsNegative<N extends number> =
 export type IsPositive<N extends number> =
     N extends 0 ? false : NumberToString<N> extends `-${number}` ? false : true;
 
+/**
+ * 绝对值
+ * Absolute value
+ * @example Abs<-1> // 1
+ * @example Abs<1> // 1
+ * @example Abs<0> // 0
+ */
+export type Abs<N extends number> = NumberToString<N> extends `-${infer AN extends number}` ? AN : N;
+
+/**
+ * 负号算法
+ * Negative
+ * @example Nagative<-2> // 2
+ * @example Nagative<2> // -2
+ * @example Nagative<0> // 0
+ */
+export type Negative<N extends number> = N extends 0 ? 0 : NumberToString<N> extends `-${infer AN extends number}` ? AN : `-${NumberToString<N>}` extends `${infer NN extends number}` ? NN : never;

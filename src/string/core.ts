@@ -1,4 +1,3 @@
-import type { DistributeUnions } from '../core';
 import type { AddOne } from '../number';
 
 /**
@@ -17,5 +16,13 @@ export type ReverseString<T extends string> =
  */
 export type StringLength<A extends string> = A extends '' ? 0 : A extends `${string}${infer R}` ? AddOne<StringLength<R>> : number;
 
+/**
+ * 如果传入的字符串不存在, 则用默认字符串代替
+ * @param T - 待检查的字符串
+ * @param D - 默认字符串
+ * @example DefaultIfEmpty<'123', '234'> // '123'
+ * @example DefaultIfEmpty<'', '234'> // '234'
+ */
+export type DefaultIfEmpty<T extends string | undefined, D extends string> = 
+	T extends undefined ? D : T extends "" ? D : T;
 
-type c = StringLength<'123' | '3456345'> 

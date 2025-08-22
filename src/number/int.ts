@@ -1,10 +1,330 @@
 import type { DistributeUnions } from "../core";
-import type { ReverseString } from "../string";
-import type { NumberToString, StringToNumber } from "./core";
+import type { DefaultIfEmpty, ReverseString, TrimRight } from "../string";
+import type { GreatThenOrEquals } from "./compare";
+import type { Abs, Negative, NumberToString, SignalPart, StringToNumber } from "./core";
+import type { IntPart } from "./decimal";
 
-type IntChars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+export type IntChars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 
-type IntChar = IntChars[number];
+export type IntChar = IntChars[number];
+
+type IntCharAdd<C extends IntChar, N extends IntChar = '1'> = 
+	N extends '1' ?
+		C extends '0' ? '1' :
+		C extends '1' ? '2' :
+		C extends '2' ? '3' :
+		C extends '3' ? '4' :
+		C extends '4' ? '5' :
+		C extends '5' ? '6' :
+		C extends '6' ? '7' :
+		C extends '7' ? '8' :
+		C extends '8' ? '9' :
+		'0' :
+	N extends '2' ?
+		C extends '0' ? '2' :
+		C extends '1' ? '3' :
+		C extends '2' ? '4' :
+		C extends '3' ? '5' :
+		C extends '4' ? '6' :
+		C extends '5' ? '7' :
+		C extends '6' ? '8' :
+		C extends '7' ? '9' :
+		C extends '8' ? '0' :
+		'1' :
+	N extends '3' ?
+		C extends '0' ? '3' :
+		C extends '1' ? '4' :
+		C extends '2' ? '5' :
+		C extends '3' ? '6' :
+		C extends '4' ? '7' :
+		C extends '5' ? '8' :
+		C extends '6' ? '9' :
+		C extends '7' ? '0' :
+		C extends '8' ? '1' :
+		'2' :
+	N extends '4' ?
+		C extends '0' ? '4' :
+		C extends '1' ? '5' :
+		C extends '2' ? '6' :
+		C extends '3' ? '7' :
+		C extends '4' ? '8' :
+		C extends '5' ? '9' :
+		C extends '6' ? '0' :
+		C extends '7' ? '1' :
+		C extends '8' ? '2' :
+		'3' :
+	N extends '5' ?
+		C extends '0' ? '5' :
+		C extends '1' ? '6' :
+		C extends '2' ? '7' :
+		C extends '3' ? '8' :
+		C extends '4' ? '9' :
+		C extends '5' ? '0' :
+		C extends '6' ? '1' :
+		C extends '7' ? '2' :
+		C extends '8' ? '3' :
+		'4' :
+	N extends '6' ?
+		C extends '0' ? '6' :
+		C extends '1' ? '7' :
+		C extends '2' ? '8' :
+		C extends '3' ? '9' :
+		C extends '4' ? '0' :
+		C extends '5' ? '1' :
+		C extends '6' ? '2' :
+		C extends '7' ? '3' :
+		C extends '8' ? '4' :
+		'5' :
+	N extends '7' ?
+		C extends '0' ? '7' :
+		C extends '1' ? '8' :
+		C extends '2' ? '9' :
+		C extends '3' ? '0' :
+		C extends '4' ? '1' :
+		C extends '5' ? '2' :
+		C extends '6' ? '3' :
+		C extends '7' ? '4' :
+		C extends '8' ? '5' :
+		'6' :
+	N extends '8' ?
+		C extends '0' ? '8' :
+		C extends '1' ? '9' :
+		C extends '2' ? '0' :
+		C extends '3' ? '1' :
+		C extends '4' ? '2' :
+		C extends '5' ? '3' :
+		C extends '6' ? '4' :
+		C extends '7' ? '5' :
+		C extends '8' ? '6' :
+		'7' :
+	N extends '9' ?
+		C extends '0' ? '9' :
+		C extends '1' ? '0' :
+		C extends '2' ? '1' :
+		C extends '3' ? '2' :
+		C extends '4' ? '3' :
+		C extends '5' ? '4' :
+		C extends '6' ? '5' :
+		C extends '7' ? '6' :
+		C extends '8' ? '7' :
+		'8' :
+	C;
+
+type IntCharCarry<C extends IntChar, N extends IntChar, O extends boolean = false> = 
+	N extends '1' ?
+		O extends true ? 
+			C extends '8' | '9' ? true : false :
+			C extends '9' ? true : false :
+	N extends '2' ?
+		O extends true ? 
+			C extends '7' | '8' | '9' ? true : false :
+			C extends '8' | '9' ? true : false :
+	N extends '3' ?
+		O extends true ? 
+			C extends '6' | '7' | '8' | '9' ? true : false :
+			C extends '7' | '8' | '9' ? true : false :
+	N extends '4' ?
+		O extends true ? 
+			C extends '5' | '6' | '7' | '8' | '9' ? true : false :
+			C extends '6' | '7' | '8' | '9' ? true : false :
+	N extends '5' ?
+		O extends true ? 
+			C extends '0' | '1' | '2' | '3' ? false : true :
+			C extends '0' | '1' | '2' | '3' | '4' ? false : true :
+	N extends '6' ?
+		O extends true ? 
+			C extends '0' | '1' | '2' ? false : true :
+			C extends '0' | '1' | '2' | '3' ? false : true :
+	N extends '7' ?
+		O extends true ? 
+			C extends '0' | '1' ? false : true :
+			C extends '0' | '1' | '2' ? false : true :
+	N extends '8' ?
+		O extends true ? 
+			C extends '0' ? false : true :
+			C extends '0' | '1' ? false : true :
+	N extends '9' ?
+		O extends true ? true :
+			C extends '0' ? false : true :
+	O extends true ?
+		C extends '9' ? true : false :
+		false;
+
+type IntCharMinus<C extends IntChar, N extends IntChar = '1'> = 
+	N extends '1' ?
+		C extends '9' ? '8' :
+		C extends '8' ? '7' :
+		C extends '7' ? '6' :
+		C extends '6' ? '5' :
+		C extends '5' ? '4' :
+		C extends '4' ? '3' :
+		C extends '3' ? '2' :
+		C extends '2' ? '1' :
+		C extends '1' ? '0' :
+		'9' :
+	N extends '2' ?
+		C extends '9' ? '7' :
+		C extends '8' ? '6' :
+		C extends '7' ? '5' :
+		C extends '6' ? '4' :
+		C extends '5' ? '3' :
+		C extends '4' ? '2' :
+		C extends '3' ? '1' :
+		C extends '2' ? '0' :
+		C extends '1' ? '9' :
+		'8' :
+	N extends '3' ?
+		C extends '9' ? '6' :
+		C extends '8' ? '5' :
+		C extends '7' ? '4' :
+		C extends '6' ? '3' :
+		C extends '5' ? '2' :
+		C extends '4' ? '1' :
+		C extends '3' ? '0' :
+		C extends '2' ? '9' :
+		C extends '1' ? '8' :
+		'7' :
+	N extends '4' ?
+		C extends '9' ? '5' :
+		C extends '8' ? '4' :
+		C extends '7' ? '3' :
+		C extends '6' ? '2' :
+		C extends '5' ? '1' :
+		C extends '4' ? '0' :
+		C extends '3' ? '9' :
+		C extends '2' ? '8' :
+		C extends '1' ? '7' :
+		'6' :
+	N extends '5' ?
+		C extends '9' ? '4' :
+		C extends '8' ? '3' :
+		C extends '7' ? '2' :
+		C extends '6' ? '1' :
+		C extends '5' ? '0' :
+		C extends '4' ? '9' :
+		C extends '3' ? '8' :
+		C extends '2' ? '7' :
+		C extends '1' ? '6' :
+		'5' :
+	N extends '6' ?
+		C extends '9' ? '3' :
+		C extends '8' ? '2' :
+		C extends '7' ? '1' :
+		C extends '6' ? '0' :
+		C extends '5' ? '9' :
+		C extends '4' ? '8' :
+		C extends '3' ? '7' :
+		C extends '2' ? '6' :
+		C extends '1' ? '5' :
+		'4' :
+	N extends '7' ?
+		C extends '9' ? '2' :
+		C extends '8' ? '1' :
+		C extends '7' ? '0' :
+		C extends '6' ? '9' :
+		C extends '5' ? '8' :
+		C extends '4' ? '7' :
+		C extends '3' ? '6' :
+		C extends '2' ? '5' :
+		C extends '1' ? '4' :
+		'3' :
+	N extends '8' ?
+		C extends '9' ? '1' :
+		C extends '8' ? '0' :
+		C extends '7' ? '9' :
+		C extends '6' ? '8' :
+		C extends '5' ? '7' :
+		C extends '4' ? '6' :
+		C extends '3' ? '5' :
+		C extends '2' ? '4' :
+		C extends '1' ? '3' :
+		'2' :
+	N extends '9' ?
+		C extends '9' ? '0' :
+		C extends '8' ? '9' :
+		C extends '7' ? '8' :
+		C extends '6' ? '7' :
+		C extends '5' ? '6' :
+		C extends '4' ? '5' :
+		C extends '3' ? '4' :
+		C extends '2' ? '3' :
+		C extends '1' ? '2' :
+		'1' :
+	C;
+	
+type IntCharBorrow<C extends IntChar, N extends IntChar, O extends boolean = false> = 
+	N extends '1' ?
+		O extends true ? 
+			C extends '0' | '1' ? true : false :
+			C extends '0' ? true : false :
+	N extends '2' ?
+		O extends true ? 
+			C extends '0' | '1' | '2' ? true : false :
+			C extends '0' | '1' ? true : false :
+	N extends '3' ?
+		O extends true ? 
+			C extends '0' | '1' | '2' | '3' ? true : false :
+			C extends '0' | '1' | '2' ? true : false :
+	N extends '4' ?
+		O extends true ? 
+			C extends '0' | '1' | '2' | '3' | '4' ? true : false :
+			C extends '0' | '1' | '2' | '3' ? true : false :
+	N extends '5' ?
+		O extends true ? 
+			C extends '6' | '7' | '8' | '9' ? false : true :
+			C extends '5' | '6' | '7' | '8' | '9' ? false : true :
+	N extends '6' ?
+		O extends true ? 
+			C extends '7' | '8' | '9' ? false : true :
+			C extends '6' | '7' | '8' | '9' ? false : true :
+	N extends '7' ?
+		O extends true ? 
+			C extends '8' | '9' ? false : true :
+			C extends '7' | '8' | '9' ? false : true :
+	N extends '8' ?
+		O extends true ? 
+			C extends '9' ? false : true :
+			C extends '8' | '9' ? false : true :
+	N extends '9' ?
+		O extends true ? true :
+			C extends '9' ? false : true :
+	O extends true ?
+		C extends '0' ? true : false :
+		false;
+
+type AddIntReverseString<A extends string, B extends string, CARRY extends boolean = false> = 
+	A extends `${infer AF extends IntChar}${infer AR}` ?
+		B extends `${infer BF extends IntChar}${infer BR}` ?
+			CARRY extends true ? 
+				//进位
+				`${IntCharAdd<IntCharAdd<AF, BF>>}${AddIntReverseString<AR, BR, IntCharCarry<AF, BF, CARRY>>}` :
+				//不进位
+				`${IntCharAdd<AF, BF>}${AddIntReverseString<AR, BR, IntCharCarry<AF, BF>>}` :
+		CARRY extends true ?
+			`${IntCharAdd<AF>}${AddIntReverseString<AR, '', IntCharCarry<AF, '0', CARRY>>}` :
+			`${AF}${AddIntReverseString<AR, ''>}` :
+	B extends `${infer BF extends IntChar}${infer BR}` ?
+		CARRY extends true ?
+			`${IntCharAdd<BF>}${AddIntReverseString<'', BR, IntCharCarry<'0', BF, CARRY>>}` :
+			`${BF}${AddIntReverseString<'', BR>}` :
+	CARRY extends true ? '1' : '';
+
+type MinusIntReverseString<A extends string, B extends string, BORROW extends boolean = false> =
+	A extends `${infer AF extends IntChar}${infer AR}` ?
+		B extends `${infer BF extends IntChar}${infer BR}` ?
+			BORROW extends true ?
+				//借位
+				`${IntCharMinus<IntCharMinus<AF, BF>>}${MinusIntReverseString<AR, BR, IntCharBorrow<AF, BF, BORROW>>}` :
+				//不借位
+				`${IntCharMinus<AF, BF>}${MinusIntReverseString<AR, BR, IntCharBorrow<AF, BF>>}` :
+		BORROW extends true ?
+			`${IntCharMinus<AF>}${MinusIntReverseString<AR, '', IntCharBorrow<AF, '0', BORROW>>}` :
+			`${AF}${MinusIntReverseString<AR, ''>}` :
+	B extends `${infer BF extends IntChar}${infer BR}` ?
+		BORROW extends true ?
+			`${IntCharMinus<BF>}${MinusIntReverseString<'', BR, IntCharBorrow<'0', BF, BORROW>>}` :
+			`${BF}${MinusIntReverseString<'', BR>}` :
+	BORROW extends true ? never : '';
 
 
 /**
@@ -149,6 +469,43 @@ export type IntList<S extends number, L extends number, A extends number[] = []>
 		never :
 	never;
 
-type a = IntEnumerate<3 | 6>;
-type b = IntRange<1, 3 | 10>;
-type c = IntList<1, 3 | 10>;
+
+/**
+ * 两个整数的和
+ * Sum of two integers
+ * @param A - 待求和的整数
+ * @param B - 待求和的整数
+ * @example AddInt<0, 0> // 0
+ * @example AddInt<10, 20> // 30
+ * @example AddInt<5, 550> // 555
+ */
+export type AddInt<A extends number, B extends number> = 
+	SignalPart<A> extends 1 ?
+		SignalPart<B> extends 1 ?
+			//正常求和
+			StringToNumber<ReverseString<AddIntReverseString<ReverseString<NumberToString<IntPart<A>>>, ReverseString<NumberToString<IntPart<B>>>>>> :
+			MinusInt<A, Abs<B>> :
+		SignalPart<B> extends 1 ?
+			MinusInt<B, Abs<A>> :
+			Negative<AddInt<Abs<A>, Abs<B>>>;
+
+/**
+ * 两个整数的差
+ * Minus of two integers
+ * @param A - 被减数
+ * @param B - 减数
+ * @example MinusInt<0, 0> // 0
+ * @example MinusInt<10, 20> // -10
+ * @example MinusInt<550, 5> // 545
+ */
+export type MinusInt<A extends number, B extends number> = 
+	SignalPart<A> extends 1 ?
+		SignalPart<B> extends 1 ?
+			GreatThenOrEquals<A, B> extends true ?
+				//正常求差
+				StringToNumber<ReverseString<DefaultIfEmpty<TrimRight<MinusIntReverseString<ReverseString<NumberToString<IntPart<A>>>, ReverseString<NumberToString<IntPart<B>>>>, '0'>, '0'>>> :
+				Negative<MinusInt<B, A>> : 
+			AddInt<A, Abs<B>> :
+		SignalPart<B> extends 1 ?
+			Negative<AddInt<Abs<A>, B>> :
+			MinusInt<Abs<B>, Abs<A>>;

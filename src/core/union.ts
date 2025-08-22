@@ -103,3 +103,14 @@ type cases = [
   >
   >,
 ]
+
+
+/**
+ * 将具体是数组类型转化未联合类型
+ * @example ArrayToUnion<[1, 2, 3]> // 1 | 2 | 3
+ * @example ArrayToUnion<[ '1', '2', '3' ]> // '1' | '2' | '3'
+ * @example ArrayToUnion<[ boolean, number, false, null ]> // boolean | number | null
+ * @example ArrayToUnion<[ true, false ]> // boolean
+ */
+export type ArrayToUnion<A extends T[], T = unknown> =
+	A extends [ infer F, ...infer R ] ? F | ArrayToUnion<R> : never;
