@@ -13,9 +13,9 @@ type DistributeArr<A extends unknown[], R extends unknown[] = []> = A extends [i
 
 type Distribute<T> = T extends unknown[] ? DistributeArr<T> : T extends object ? DistributeObj<T> : T;
 
-type Norm<T> = T extends object ? {[K in keyof T]: Norm<T[K]>} : T;
+type Normalize<T> = T extends object ? {[K in keyof T]: Normalize<T[K]>} : T;
 
-type DistributeUnions<T> = Norm<Distribute<T>>;
+export type DistributeUnions<T> = Normalize<Distribute<T>>;
 
 type c = DistributeUnions<[{ x: 'a' | 'b', y: 'c' | 'd' }]>;
 
