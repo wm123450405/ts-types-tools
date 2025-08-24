@@ -18,6 +18,7 @@
     }
   },
   "scripts": {
+    "build": "bun run build.ts",
     "preinstall": "bun tsc --checkJS && bun cases.ts",
     "prepublish": "bun tsc --checkJS && bun cases.ts"
   },

@@ -17,7 +17,7 @@ import type { IntRange } from 'ts-type-tools';
 type Status = IntRange<0, 5>;  // 0 | 1 | 2 | 3 | 4
 ```
 
-## 3. api
+## 3. 文档
 
 
 ### 取否 `Not<boolean>`
