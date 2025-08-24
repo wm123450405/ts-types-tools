@@ -5,9 +5,9 @@ const src = 'src';
 const cases = 'cases';
 const docs = 'docs'
 
-const functions = /\/\*\*\s*(.+?)\s*\*\/\s*[\r\n]+\s*export\s+type\s+(.+?)\s*(?==$|=\s*[\r\n]+)/igm;
+const functions = /\/\*\*\s*?(?<notes>(.+?\s*)+?)\*\/\s*?((?<exports>export)\s+?)?type\s+?(?<declares>.+?)\s*?(=$|=\s*?[\r\n]+?)/igm;
 
-const mkdir = async (p: PathLike) => {
+  const mkdir = async (p: PathLike) => {
 	if (!(await fs.promises.exists(p))) {
 		fs.promises.mkdir(p);
 	}
@@ -32,10 +32,11 @@ await Promise.all((await fs.promises.readdir(path.resolve(src))).flatMap(classif
 					const allExamples = [];
 					let match = null;
 					while ((match = functions.exec(data)) != null) {
-						console.log(match[1], match[2])
-						const examples = match[1]?.split(/\s*[\r\n]+\s*\*\s*/igm)?.filter(line => line.startsWith('@example'))?.map(line => line.replace('@example', ''));
-						const type = match[2]?.split(/</ig)?.[0];
-						if (examples && type) {
+						console.log('match notes', match.groups?.['notes'], 'match declares', match.groups?.['declares'])
+						const exports = match.groups?.['exports'];
+						const examples = match.groups?.['notes']?.split(/\s*[\r\n]+\s*\*\s*/igm)?.filter(line => line.startsWith('@example'))?.map(line => line.replace('@example', ''));
+						const type = match.groups?.['declares']?.split(/</ig)?.[0];
+						if (exports && examples && type) {
 							types.push(type);
 							allExamples.push(...examples.map(example => example.split('//')));
 						}

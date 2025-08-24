@@ -1,6 +1,8 @@
 
 import type { Equal, Expect } from '@type-challenges/utils';
-import type {  } from '../../index';
+import type { Reverse } from '../../index';
 
-export type Cases = [];
+export type Cases = [	Expect<Equal< Reverse<'abc'> ,  'cba'>>,
+	Expect<Equal< Reverse<[1, 2]> ,  [2, 1]
+ >>];
 					

@@ -46,7 +46,7 @@ export type SkipArray<A extends unknown[], N extends number> =
  * A new array type composed of the items from N to S
  * @example Slice<[1, 2, 3, 4, 5], 1, 3> // [2, 3]
  */
-export type Slice<A extends T[], B extends number, E extends number> =
+export type Slice<A extends unknown[], B extends number, E extends number> =
 	SkipArray<TakeArray<A, E>, B>;
 
 
