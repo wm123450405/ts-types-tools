@@ -1,16 +1,7 @@
-/**
- * @zh 核心功能
- * @en Core
- */
 
-## [core](./core.md)
 
-					
-/**
- * @zh 拼接
- * @en Concat
- */
+## [核心功能](./core.md)
 
-## [concat](./concat.md)
+## [拼接](./concat.md)
 
-					
+				

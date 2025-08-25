@@ -21,15 +21,15 @@ type Status = IntRange<0, 5>;  // 0 | 1 | 2 | 3 | 4
 
 ### [核心功能](./docs/zh/core/index.md)
 
-### [布尔相关](./docs/zh/boolean/index.md)
+### [布尔](./docs/zh/boolean/index.md)
 
-### [字符串相关](./docs/zh/string/index.md)
+### [字符串](./docs/zh/string/index.md)
 
-### [数字相关](./docs/zh/number/index.md)
+### [数字](./docs/zh/number/index.md)
 
-### [数组相关](./docs/zh/array/index.md)
+### [数组](./docs/zh/array/index.md)
 
-### [混合类型](./docs/zh/mixins/index.md)
+### [综合](./docs/zh/mixins/index.md)
 
 
 ### 取否 `Not<boolean>`

@@ -6,8 +6,16 @@ const cases = 'cases';
 const docs = 'docs'
 
 const functions = /\/\*\*\s*?[\r\n]*?(?<notes>(.+?[\r\n]*)+?)\*\/[\s\r\n]*?((?<exports>export)\s+?)?type\s+?(?<declares>.+?)\s*?=[^=]*?[\r\n]+?/ig;
+const modules = /(\/\*\*\s*?[\r\n]*?(?<notes>(.+?[\r\n]*)+?)\*\/[\s\r\n]*?)?export\s+\*\s+from\s+['"]\.\/(?<module>.+?)['"];?/ig;
+const notesSpliter = /(^|\s*[\r\n]+)\s*\*\s*|\s*[\r\n]+\s*$/ig;
 
 const languages = [ 'zh', 'en' ];
+
+const progress = { total: 5, current: 0 };
+
+const showProgress = () => { 
+	console.log(`${progress.current}/${progress.total}`);
+};
 
 const mkdir = async (p: PathLike) => {
 	if (!(await fs.promises.exists(p))) {
@@ -19,11 +27,22 @@ await Promise.all([
 	mkdir(path.resolve(cases)),
 	mkdir(path.resolve(docs)),
 ]);
+progress.current ++;
+showProgress();
+
 await Promise.all(languages.map(language => mkdir(path.resolve(docs, language))));
+progress.current ++;
+showProgress();
 
 const datas: { classify: string, file: string, data: string }[] = [];
 
-await Promise.all((await fs.promises.readdir(path.resolve(src))).map(classify => (async () => {
+const classifies = await fs.promises.readdir(path.resolve(src));
+
+progress.total += classifies.length;
+progress.current ++;
+showProgress();
+
+await Promise.all(classifies.map(classify => (async () => {
 	await Promise.all([
 		mkdir(path.resolve(cases, classify)),
 		...languages.map(language => mkdir(path.resolve(docs, language, classify))),
@@ -36,23 +55,42 @@ await Promise.all((await fs.promises.readdir(path.resolve(src))).map(classify =>
 			file,
 			data,
 		});
+		progress.current ++;
+		showProgress();
 	})()));
 })()))
+
+progress.total += datas.length * (1 + languages.length);
+progress.current ++;
+showProgress();
 
 await Promise.all([
 	...datas.map(({ classify, file, data }) => (async () => {
 		// console.log(`read file ${src}/${classify}/${file}`);
 		if (file === 'index.ts') {
-			await fs.promises.writeFile(path.resolve(cases, classify, file), 
-				data.replaceAll(/export\s+\*\s+from/ig, 'import'));
+			const subModules: string[] = [];
+			let match = null;
+			while ((match = modules.exec(data)) != null) {
+				const module = match.groups?.['module'];
+				if (module) {
+					subModules.push(module);
+				}
+			}
+			if (subModules.length) {
+				await fs.promises.writeFile(path.resolve(cases, classify, file), `
+${subModules.map(module => `
+import './${module}';	
+`).join('\r\n')}
+				`);
+			}
 		} else {
-			const types = [];
-			const allExamples = [];
+			const types: string[] = [];
+			const allExamples: string[][] = [];
 			let match = null;
 			while ((match = functions.exec(data)) != null) {
 				// console.log('match notes', match.groups?.['notes'], 'match declares', match.groups?.['declares'])
 				const exports = match.groups?.['exports'];
-				const examples = match.groups?.['notes']?.split(/\s*[\r\n]+\s*\*\s*/igm)?.filter(line => line.startsWith('@example'))?.map(line => line.replace('@example', ''));
+				const examples = match.groups?.['notes']?.split(notesSpliter)?.filter(line => line && line.startsWith('@example'))?.map(line => line.replace('@example', ''));
 				const type = match.groups?.['declares']?.split(/</ig)?.[0];
 				if (exports && examples && type) {
 					types.push(type);
@@ -66,14 +104,28 @@ import type { ${ types.join(', ') } } from '../../index';
 export type Cases = [${allExamples.map(example => `	Expect<Equal<${example[0]}, ${example[1]}>>`).join(',\r\n')}];
 			`);
 		}
+		progress.current ++;
+		showProgress();
 	})()),
 	...datas.flatMap(({ classify, file, data}) => languages.map(language => (async () => {
 		if (file === 'index.ts') {
-			await fs.promises.writeFile(path.resolve(docs, language, classify, file.replace('.ts', '.md')), 
-				data.replaceAll(/export\s+\*\s+from\s+['"]\.\/(.+)['"];?/ig, `
-## [$1](./$1.md)
-
-					`));
+			const subModules: { desc: string, module: string }[] = [];
+			let match = null;
+			while ((match = modules.exec(data)) != null) {
+				console.log(language, match.groups?.['notes']?.split(notesSpliter));
+				const desc = match.groups?.['notes']?.split(notesSpliter)?.filter(line => line && line.startsWith(`@${language}`))?.map(line => line.replace(`@${language}`, '').trim());
+				const module = match.groups?.['module'];
+				if (module) {
+					subModules.push({ desc: desc?.length ? desc.join('; ') : module, module });
+				}
+			}
+			if (subModules.length) {
+				await fs.promises.writeFile(path.resolve(docs, language, classify, file.replace('.ts', '.md')), `
+${subModules.map(({ desc, module }) => `
+## [${desc}](./${module}.md)
+`).join('')}
+				`);
+			}
 		} else {
 			const types = [];
 			let match = null;
@@ -89,6 +141,8 @@ export type Cases = [${allExamples.map(example => `	Expect<Equal<${example[0]}, 
 
 			`);
 		}
+		progress.current ++;
+		showProgress();
 	})())),
 ]);
 

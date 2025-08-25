@@ -1,40 +1,13 @@
-/**
- * @zh 核心功能
- * @en Core
- */
 
-## [core](./core.md)
 
-					
-/**
- * @zh 整数
- * @en Integer
- */
+## [核心功能](./core.md)
 
-## [int](./int.md)
+## [整数](./int.md)
 
-					
-/**
- * @zh 小数
- * @en Decimal
- */
+## [小数](./decimal.md)
 
-## [decimal](./decimal.md)
+## [比较](./compare.md)
 
-					
-/**
- * @zh 比较
- * @en Compare
- */
+## [二进制](./binary.md)
 
-## [compare](./compare.md)
-
-					
-/**
- * @zh 二进制
- * @en Binary
- */
-
-## [binary](./binary.md)
-
-					
+				
