@@ -1,10 +1,8 @@
 
 /**
- * @zh 取否
- * @en Not for boolean
- * @summary 
- * @zh 取否
- * @en Not
+ * @zh 取否.
+ * @en Not.
+ * For boolean
  * @example Not<true> // false
  * @example Not<false> // true
  */
