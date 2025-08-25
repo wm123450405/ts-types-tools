@@ -13,7 +13,7 @@ export type ReverseArray<T extends unknown[]> =
  * 获取数组具体长度的数字类型
  * Get the length of an array
  * @example ArrayLength<[1,2,3]> // 3
- * @example ArrayLength<any[]> // number
+ * @example ArrayLength<unknown[]> // number
  */
 export type ArrayLength<A extends unknown[]> = A['length'];
 
@@ -75,8 +75,8 @@ export type FillRight<T extends V[], L extends number, I extends V, V = unknown>
  * 生成指定长度的数组类型
  * @param T 数组元素的类型
  * @param L 数组的长度
- * @example GenerateArray<any, 2> // [any, any]
- * @example GenerateArray<any, 0> // []
+ * @example GenerateArray<unknown, 2> // [unknown, unknown]
+ * @example GenerateArray<unknown, 0> // []
  * @example GenerateArray<boolean, 1> // [boolean]
  */
 export type GenerateArray<T, L extends number, R extends T[] = []> = 

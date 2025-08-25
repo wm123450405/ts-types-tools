@@ -1,2 +1,2 @@
-import from './core';
-import from './concat';
+import './core';
+import './concat';

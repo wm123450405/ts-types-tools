@@ -1,6 +1,6 @@
 
 import type { Equal, Expect } from '@type-challenges/utils';
-import type { GreatThen, GreatThenOrEquals, Max, Min } from '../../index';
+import type { GreatThen, GT, GreatThenOrEquals, GE, LessThen, LT, LessThenOrEquals, LE, Equals, EQ, NotEquals, NE, Max, Min } from '../../index';
 
 export type Cases = [	Expect<Equal< GreatThen<5, 2> ,  true>>,
 	Expect<Equal< GreatThen<2, 5> ,  false>>,
@@ -12,14 +12,18 @@ export type Cases = [	Expect<Equal< GreatThen<5, 2> ,  true>>,
  >>,
 	Expect<Equal< LessThen<5, 2> ,  false>>,
 	Expect<Equal< LessThen<2, 5> ,  true>>,
-	Expect<Equal< LessThen<5, 5> ,  false>>,
+	Expect<Equal< LessThen<5, 5> ,  false
+ >>,
 	Expect<Equal< LessThenOrEquals<5, 2> ,  false>>,
 	Expect<Equal< LessThenOrEquals<5, 5> ,  true>>,
-	Expect<Equal< LessThenOrEquals<5, 6> ,  true>>,
+	Expect<Equal< LessThenOrEquals<5, 6> ,  true
+ >>,
 	Expect<Equal< Equals<5, 5> ,  true>>,
-	Expect<Equal< Equals<5, 2> ,  false>>,
+	Expect<Equal< Equals<5, 2> ,  false
+ >>,
 	Expect<Equal< NotEquals<5, 5> ,  false>>,
-	Expect<Equal< NotEquals<5, 2> ,  true>>,
+	Expect<Equal< NotEquals<5, 2> ,  true
+ >>,
 	Expect<Equal< Max<1, 23> ,  23>>,
 	Expect<Equal< Max<[1, 23]> ,  23>>,
 	Expect<Equal< Max<[1, 23, 5]> ,  23>>,

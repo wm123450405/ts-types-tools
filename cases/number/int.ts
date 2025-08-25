@@ -1,17 +1,21 @@
 
 import type { Equal, Expect } from '@type-challenges/utils';
-import type { IntEnumerate, IntRange, AddOne, MinusOne, IntList, AddInt, MinusInt } from '../../index';
+import type { IsInt, AsInt, IsUInt, AsUInt, IntEnumerate, IntRange, AddOne, MinusOne, IntList, AddInt, MinusInt } from '../../index';
 
 export type Cases = [	Expect<Equal< IsInt<123> ,  true>>,
-	Expect<Equal< IsInt<123.1> ,  false>>,
+	Expect<Equal< IsInt<123.1> ,  false
+ >>,
 	Expect<Equal< AsInt<123> ,  123>>,
-	Expect<Equal< AsInt<123.1> ,  never>>,
+	Expect<Equal< AsInt<123.1> ,  never
+ >>,
 	Expect<Equal< IsUInt<123> ,  true>>,
 	Expect<Equal< IsUInt<-123> ,  false>>,
-	Expect<Equal< IsUInt<123.1> ,  false>>,
+	Expect<Equal< IsUInt<123.1> ,  false
+ >>,
 	Expect<Equal< AsUInt<123> ,  123>>,
 	Expect<Equal< AsUInt<-123> ,  never>>,
-	Expect<Equal< AsUInt<123.1> ,  never>>,
+	Expect<Equal< AsUInt<123.1> ,  never
+ >>,
 	Expect<Equal< IntEnumerate<5> ,  0 | 1 | 2 | 3 | 4>>,
 	Expect<Equal< IntEnumerate<0> ,  never>>,
 	Expect<Equal< IntEnumerate<-1> ,  never>>,

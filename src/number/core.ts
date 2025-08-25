@@ -65,8 +65,8 @@ export type Abs<N extends number> = NumberToString<N> extends `-${infer AN exten
 /**
  * 负号算法
  * Negative
- * @example Nagative<-2> // 2
- * @example Nagative<2> // -2
- * @example Nagative<0> // 0
+ * @example Negative<-2> // 2
+ * @example Negative<2> // -2
+ * @example Negative<0> // 0
  */
 export type Negative<N extends number> = N extends 0 ? 0 : NumberToString<N> extends `-${infer AN extends number}` ? AN : `-${NumberToString<N>}` extends `${infer NN extends number}` ? NN : never;

@@ -1,1 +1,1 @@
-import from './core';
+import './core';

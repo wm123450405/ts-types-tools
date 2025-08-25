@@ -1,5 +1,5 @@
-import from './core';
-import from './int';
-import from './decimal';
-import from './compare'
-import from './binary';
+import './core';
+import './int';
+import './decimal';
+import './compare'
+import './binary';

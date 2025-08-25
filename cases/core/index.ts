@@ -1,1 +1,1 @@
-import from './union.ts';
+import './union.ts';

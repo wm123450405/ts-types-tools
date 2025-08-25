@@ -5,7 +5,7 @@ const src = 'src';
 const cases = 'cases';
 const docs = 'docs'
 
-const functions = /\/\*\*\s*?(?<notes>(.+?\s*)+?)\*\/\s*?((?<exports>export)\s+?)?type\s+?(?<declares>.+?)\s*?(=$|=\s*?[\r\n]+?)/igm;
+const functions = /\/\*\*\s*?[\r\n]*?(?<notes>(.+?[\r\n]*)+?)\*\/[\s\r\n]*?((?<exports>export)\s+?)?type\s+?(?<declares>.+?)\s*?=[^=]*?[\r\n]+?/ig;
 
   const mkdir = async (p: PathLike) => {
 	if (!(await fs.promises.exists(p))) {
@@ -25,8 +25,9 @@ await Promise.all((await fs.promises.readdir(path.resolve(src))).flatMap(classif
 			const files = await fs.promises.readdir(path.resolve(src, classify));
 			await Promise.all(files.map(file => (async () => {
 				const data = (await fs.promises.readFile(path.resolve(src, classify, file))).toString();
+				console.log(`read file ${src}/${classify}/${file}`);
 				if (file === 'index.ts') {
-					await fs.promises.writeFile(path.resolve(cases, classify, file), data.replaceAll(/export\s+\*/ig, 'import'));
+					await fs.promises.writeFile(path.resolve(cases, classify, file), data.replaceAll(/export\s+\*\s+from/ig, 'import'));
 				} else {
 					const types = [];
 					const allExamples = [];
