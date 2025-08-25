@@ -1,6 +1,7 @@
 
-###  `TakeString<string, number>`
-
+### 截取 `TakeString<string, number>`
+ * 字符串前 N 个字符组成的新字符串
+ * A new string composed of the first N characters
 
 ``` typescript
 TakeString<'abcdefg', 3> // 'abc'

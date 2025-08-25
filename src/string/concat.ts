@@ -6,6 +6,7 @@ type SimpleTakeString<A extends string, N extends number> =
 	N extends 0 ? '' : A extends `${ infer F }${ infer R }` ? `${ F }${ SimpleTakeString<R, MinusOne<N>> }` : '';
 
 /**
+ * @zh 截取
  * 字符串前 N 个字符组成的新字符串
  * A new string composed of the first N characters
  * @example TakeString<'abcdefg', 3> // 'abc'

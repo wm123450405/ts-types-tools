@@ -1,5 +1,5 @@
 
-###  `ReverseArray<unknown[]>`
+### Reverse an array `ReverseArray<unknown[]>`
 
 
 ``` typescript
@@ -7,7 +7,7 @@ ReverseArray<[1, 2]> // [2, 1]
 ```
 
 			
-###  `ArrayLength<unknown[]>`
+### Get the length of an array `ArrayLength<unknown[]>`
 
 
 ``` typescript
@@ -16,7 +16,7 @@ ArrayLength<unknown[]> // number
 ```
 
 			
-###  `TakeArray<unknown[], number>`
+### A new array type composed of the first N items `TakeArray<unknown[], number>`
 
 
 ``` typescript
@@ -24,7 +24,7 @@ TakeArray<[1, 2, 3], 2> // [1, 2]
 ```
 
 			
-###  `SkipArray<unknown[], number>`
+### A new array type composed of the items after N `SkipArray<unknown[], number>`
 
 
 ``` typescript
@@ -32,7 +32,7 @@ SkipArray<[1, 2, 3], 2> // [3]
 ```
 
 			
-###  `Slice<unknown[], number, number>`
+### A new array type composed of the items from N to S `Slice<unknown[], number, number>`
 
 
 ``` typescript
@@ -40,11 +40,11 @@ Slice<[1, 2, 3, 4, 5], 1, 3> // [2, 3]
 ```
 
 			
-###  `FillLeft<V[], number, V, V = unknown>`
+### Generate an array of a specified length, adding a specified type to the left `FillLeft<V[], number, V, V = unknown>`
 
 
 ``` typescript
-
+FillLeft<[1, 2], 5, 0> // [0, 0, 0, 1, 2]
 ```
 
 			
@@ -52,7 +52,7 @@ Slice<[1, 2, 3, 4, 5], 1, 3> // [2, 3]
 
 
 ``` typescript
-
+FillRight<[1, 2], 5, 0> // [1, 2, 0, 0, 0]
 ```
 
 			

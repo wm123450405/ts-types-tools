@@ -3,8 +3,9 @@ import type { BinaryStringToNumber } from './binary';
 export type Signal = -1 | 1;
 
 /**
+ * @zh 字符串转数字.
  * 数字字符串类型转为数字类型
- * string -> number
+ * @en string -> number
  * @example StringToNumber<'123'> // 123
  */
 export type StringToNumber<T extends string> = 
@@ -14,16 +15,18 @@ export type StringToNumber<T extends string> =
 		T extends `${infer N extends number}` ? N : never;
 
 /**
+ * @zh 数字转字符串.
  * 数字类型转为数字字符串类型
- * number -> string
+ * @en number -> string
  * @example NumberToString<123> // '123'
  */
 export type NumberToString<T extends number> = `${T}`;
 
 
 /**
+ * @zh 符号.
  * 数字的符号部分
- * Signal part of a number
+ * @en Signal part of a number
  * @example SignalPart<-1.5> // -1
  * @example SignalPart<1> // 1
  * @example SignalPart<0> // 1
@@ -32,8 +35,9 @@ export type SignalPart<N extends number> =
 	NumberToString<N> extends `-${string}` ? -1 : 1;
 
 /**
+ * @zh 是否负数.
  * 判断一个数字是否为负数
- * Check if a number is negative
+ * @en Check if a number is negative
  * @param N 待判断数字类型(非联合类型) The number to check(non-union type)
  * @example IsNegative<-1> // true
  * @example IsNegative<1> // false
@@ -43,8 +47,9 @@ export type IsNegative<N extends number> =
 	NumberToString<N> extends `-${number}` ? true : false;
 
 /**
+ * @zh 是否正数.
  * 判断一个数字是否为正数
- * Check if a number is positive
+ * @en Check if a number is positive
  * @param N 待判断数字类型(非联合类型) The number to check(non-union type)
  * @example IsPositive<-1> // false
  * @example IsPositive<1> // true
@@ -54,8 +59,8 @@ export type IsPositive<N extends number> =
     N extends 0 ? false : NumberToString<N> extends `-${number}` ? false : true;
 
 /**
- * 绝对值
- * Absolute value
+ * @zh 绝对值.
+ * @en Absolute value
  * @example Abs<-1> // 1
  * @example Abs<1> // 1
  * @example Abs<0> // 0
@@ -63,8 +68,8 @@ export type IsPositive<N extends number> =
 export type Abs<N extends number> = NumberToString<N> extends `-${infer AN extends number}` ? AN : N;
 
 /**
- * 负号算法
- * Negative
+ * @zh 负号算法.
+ * @en Negative
  * @example Negative<-2> // 2
  * @example Negative<2> // -2
  * @example Negative<0> // 0

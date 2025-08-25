@@ -1,5 +1,5 @@
 
-###  `IntPart<number>`
+### 数字的整数部分 `IntPart<number>`
 
 
 ``` typescript
@@ -9,7 +9,7 @@ IntPart<-1> // -1
 ```
 
 			
-###  `DecimalPart<number>`
+### 数字的小数部分 `DecimalPart<number>`
 
 
 ``` typescript

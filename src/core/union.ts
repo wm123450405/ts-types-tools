@@ -1,4 +1,4 @@
-import type { Equal, Expect } from '@type-challenges/utils'
+// import type { Equal, Expect } from '@type-challenges/utils'
 
 type Param<F> = [F] extends [(p: infer P) => void] ? P : never;
 type Intersection<T> = Param<T extends unknown ? (p: T) => void : never>;
@@ -106,7 +106,7 @@ export type DistributeUnions<T> = Normalize<Distribute<T>>;
 
 
 /**
- * 将具体是数组类型转化未联合类型
+ * @zh 将具体是数组类型转化未联合类型
  * @example ArrayToUnion<[1, 2, 3]> // 1 | 2 | 3
  * @example ArrayToUnion<[ '1', '2', '3' ]> // '1' | '2' | '3'
  * @example ArrayToUnion<[ boolean, number, false, null ]> // boolean | number | null

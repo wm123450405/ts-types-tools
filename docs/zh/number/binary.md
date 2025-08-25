@@ -1,5 +1,5 @@
 
-###  `Binary`
+### 数字二进制格式 `Binary`
 
 
 ``` typescript
@@ -7,7 +7,7 @@
 ```
 
 			
-###  `NumberToBinary<number, number[] = Binarys>`
+### 数字转二进制格式 `NumberToBinary<number, number[] = Binarys>`
 
 
 ``` typescript
@@ -15,7 +15,7 @@
 ```
 
 			
-###  `BinaryToNumber<Binary, boolean[] = B, number[] = Binarys, number = 0>`
+### 二进制转化为数字 `BinaryToNumber<Binary, boolean[] = B, number[] = Binarys, number = 0>`
 
 
 ``` typescript
@@ -23,7 +23,7 @@
 ```
 
 			
-###  `NumberToBinaryString<Binary | number, boolean[] = number ? NumberToBinary<B> : B, string = ''>`
+### 二进制转二进制字符串 `NumberToBinaryString<Binary | number, boolean[] = number ? NumberToBinary<B> : B, string = ''>`
 
 
 ``` typescript

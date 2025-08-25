@@ -3,8 +3,9 @@ import type { ReverseString } from "../string";
 
 
 /**
+ * @zh 反转.
  * 反转一个字符串或数组
- * Reverse a string or an array
+ * @en Reverse a string or an array
  * @example Reverse<'abc'> // 'cba'
  * @example Reverse<[1, 2]> // [2, 1]
  */

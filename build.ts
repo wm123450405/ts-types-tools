@@ -166,12 +166,12 @@ ${subModules.map(({ desc, module }) => `
 						type,
 						examples,
 						declares,
-						summary: desc?.length ? desc[0]?.replaceAll(/\.$/, '') : type,
+						summary: desc?.length ? desc[0]?.replaceAll(/\.$/ig, '') : type,
 						desc: (desc?.length ?? 0) > 1 ? desc.slice(1).join('\r\n') : '',
 					});
 				}
 			}
-			await fs.promises.writeFile(path.resolve(docs, language, classify, file.replace('.ts', '.md')), types.map(({ type, declares, summary, desc, examples }) => `
+			await fs.promises.writeFile(path.resolve(docs, language, classify, file.replace('.ts', '.md')), types.map(({ declares, summary, desc, examples }) => `
 ### ${summary} \`${declares}\`
 ${desc}
 

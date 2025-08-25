@@ -1,5 +1,5 @@
 
-###  `Reverse<string | unknown[]>`
+### Reverse a string or an array `Reverse<string | unknown[]>`
 
 
 ``` typescript

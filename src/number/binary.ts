@@ -44,12 +44,12 @@ type Binarys = [
 
 
 /**
- * 数字二进制格式
+ * @zh 数字二进制格式
  */
 export type Binary = GenerateArray<boolean, ArrayLength<Binarys>>;
 
 /**
- * 数字转二进制格式
+ * @zh 数字转二进制格式
  */
 export type NumberToBinary<N extends number, BS extends number[] = Binarys> = 
 	BS extends [ infer H extends number, ...infer L extends number[] ] ?
@@ -60,7 +60,7 @@ export type NumberToBinary<N extends number, BS extends number[] = Binarys> =
 	: []
 
 /** 
- * 二进制转化为数字
+ * @zh 二进制转化为数字
  */
 export type BinaryToNumber<B extends Binary, L extends boolean[] = B, BS extends number[] = Binarys, R extends number = 0> = 
 	L extends [ infer F extends boolean, ...infer RL extends boolean[] ] ?
@@ -74,7 +74,7 @@ export type BinaryToNumber<B extends Binary, L extends boolean[] = B, BS extends
 
 
 /**
- * 二进制转二进制字符串
+ * @zh 二进制转二进制字符串
  */
 export type NumberToBinaryString<B extends Binary | number, L extends boolean[] = B extends number ? NumberToBinary<B> : B, R extends string = ''> =
 	L extends [ infer F extends boolean, ...infer Rest extends boolean[] ] ?
@@ -103,6 +103,6 @@ type BinaryStringToBinary<T extends string, R extends boolean[] = []> =
 		
 
 /**
- * 二进制字符串转为数字
+ * @zh 二进制字符串转为数字
  */
 export type BinaryStringToNumber<T extends string> = BinaryToNumber<BinaryStringToBinary<T>>;

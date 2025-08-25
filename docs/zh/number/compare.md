@@ -1,6 +1,6 @@
 
-###  `GreatThen<number, number>`
-
+### 大于 `GreatThen<number, number>`
+ * 比较数字A是否大于B, 若A大于B则返回true, 否则返回false
 
 ``` typescript
 GreatThen<5, 2> // true
@@ -17,8 +17,8 @@ GreatThen<5, 5> // false
 ```
 
 			
-###  `GreatThenOrEquals<number, number>`
-
+### 大于等于 `GreatThenOrEquals<number, number>`
+ * 比较数字A是否大于等于B, 若A大于等于B则返回true, 否则返回false
 
 ``` typescript
 GreatThenOrEquals<5, 2> // true
@@ -35,8 +35,8 @@ GreatThenOrEquals<5, 6> // false
 ```
 
 			
-###  `LessThen<number, number>`
-
+### 小于 `LessThen<number, number>`
+ * 比较数字A是否小于B, 若A小于B则返回true, 否则返回false
 
 ``` typescript
 LessThen<5, 2> // false
@@ -53,8 +53,8 @@ LessThen<5, 5> // false
 ```
 
 			
-###  `LessThenOrEquals<number, number>`
-
+### 小于等于 `LessThenOrEquals<number, number>`
+ * 比较数字A是否小于等于B, 若A小于等于B则返回true, 否则返回false
 
 ``` typescript
 LessThenOrEquals<5, 2> // false
@@ -71,8 +71,8 @@ LessThenOrEquals<5, 6> // true
 ```
 
 			
-###  `Equals<A, B>`
-
+### 等于 `Equals<A, B>`
+ * 比较两个数据是否相同
 
 ``` typescript
 Equals<5, 5> // true
@@ -88,8 +88,8 @@ Equals<5, 2> // false
 ```
 
 			
-###  `NotEquals<A, B>`
-
+### 不等于 `NotEquals<A, B>`
+ * 比较两个数据是否不同
 
 ``` typescript
 NotEquals<5, 5> // false
@@ -105,8 +105,8 @@ NotEquals<5, 2> // true
 ```
 
 			
-###  `Max<number | number[], (number ? number : never) = never>`
-
+### 最大值 `Max<number | number[], (number ? number : never) = never>`
+ * 获取一组数字中的最大数字类型
 
 ``` typescript
 Max<1, 23> // 23
@@ -116,8 +116,8 @@ Max<[]> // never
 ```
 
 			
-###  `Min<number | number[], (number ? number : never) = never>`
-
+### 最小值 `Min<number | number[], (number ? number : never) = never>`
+ * 获取一组数字中的最小数字类型
 
 ``` typescript
 Min<1, 23> // 1

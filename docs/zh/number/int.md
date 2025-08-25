@@ -1,6 +1,6 @@
 
-###  `IsInt<number>`
-
+### 是否是整数 `IsInt<number>`
+ * 不能用于判断联合类型
 
 ``` typescript
 IsInt<123> // true
@@ -8,8 +8,8 @@ IsInt<123.1> // false
 ```
 
 			
-###  `AsInt<number>`
-
+### 只能是整数 `AsInt<number>`
+ * 不能处理联合类型
 
 ``` typescript
 AsInt<123> // 123
@@ -17,8 +17,8 @@ AsInt<123.1> // never
 ```
 
 			
-###  `IsUInt<number>`
-
+### 是否是非负整数 `IsUInt<number>`
+ * 不能用于判断联合类型
 
 ``` typescript
 IsUInt<123> // true
@@ -27,8 +27,8 @@ IsUInt<123.1> // false
 ```
 
 			
-###  `AsUInt<number>`
-
+### 只能是非负整数 `AsUInt<number>`
+ * 不能处理联合类型
 
 ``` typescript
 AsUInt<123> // 123
@@ -37,8 +37,8 @@ AsUInt<123.1> // never
 ```
 
 			
-###  `IntEnumerate<number>`
-
+### 索引序列 `IntEnumerate<number>`
+ * 创建一个从 0 到 N 的数字序列类型,等效于: 0 | 1 | 2 | 3 | ... | N - 1
 
 ``` typescript
 IntEnumerate<5> // 0 | 1 | 2 | 3 | 4
@@ -48,8 +48,8 @@ IntEnumerate<1.1> // never
 ```
 
 			
-###  `IntRange<number, number>`
-
+### 数字序列 `IntRange<number, number>`
+ * 创建一个从 F 到 N 的数字序列类型, 等效于: F | F + 1 | F + 2 | .... | N - 1
 
 ``` typescript
 IntRange<0, 3> // 0 | 1 | 2
@@ -60,8 +60,8 @@ IntRange<-5, 5> // never
 ```
 
 			
-###  `AddOne<number>`
-
+### 整数加一 `AddOne<number>`
+ * 指定整数+1后的数字类型
 
 ``` typescript
 AddOne<0> // 1
@@ -71,8 +71,8 @@ AddOne<1.2> // never
 ```
 
 			
-###  `MinusOne<number>`
-
+### 整数减一 `MinusOne<number>`
+ * 指定整数-1后的数字类型
 
 ``` typescript
 MinusOne<1> // 0
@@ -82,8 +82,8 @@ MinusOne<1.5> // never
 ```
 
 			
-###  `IntList<number, number, number[] = []>`
-
+### 数字序列 `IntList<number, number, number[] = []>`
+ * 创建一个从 S 开始的指定数量 L 的数字序列类型, 等效于: F | F + 1 | F + 2 | .... | F + L - 1
 
 ``` typescript
 IntList<0, 3> // 0 | 1 | 2
@@ -93,8 +93,8 @@ IntList<-5, 5> // never
 ```
 
 			
-###  `AddInt<number, number>`
-
+### 求和 `AddInt<number, number>`
+ * 两个整数的和
 
 ``` typescript
 AddInt<0, 0> // 0
@@ -103,8 +103,8 @@ AddInt<5, 550> // 555
 ```
 
 			
-###  `MinusInt<number, number>`
-
+### 求差 `MinusInt<number, number>`
+ * 两个整数的差
 
 ``` typescript
 MinusInt<0, 0> // 0

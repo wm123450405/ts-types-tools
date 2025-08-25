@@ -1,22 +1,22 @@
 
-###  `StringToNumber<string>`
-
+### 字符串转数字 `StringToNumber<string>`
+ * 数字字符串类型转为数字类型
 
 ``` typescript
 StringToNumber<'123'> // 123
 ```
 
 			
-###  `NumberToString<number>`
-
+### 数字转字符串 `NumberToString<number>`
+ * 数字类型转为数字字符串类型
 
 ``` typescript
 NumberToString<123> // '123'
 ```
 
 			
-###  `SignalPart<number>`
-
+### 符号 `SignalPart<number>`
+ * 数字的符号部分
 
 ``` typescript
 SignalPart<-1.5> // -1
@@ -25,8 +25,8 @@ SignalPart<0> // 1
 ```
 
 			
-###  `IsNegative<number>`
-
+### 是否负数 `IsNegative<number>`
+ * 判断一个数字是否为负数
 
 ``` typescript
 IsNegative<-1> // true
@@ -35,8 +35,8 @@ IsNegative<0> // false
 ```
 
 			
-###  `IsPositive<number>`
-
+### 是否正数 `IsPositive<number>`
+ * 判断一个数字是否为正数
 
 ``` typescript
 IsPositive<-1> // false
@@ -45,7 +45,7 @@ IsPositive<0> // false
 ```
 
 			
-###  `Abs<number>`
+### 绝对值 `Abs<number>`
 
 
 ``` typescript
@@ -55,7 +55,7 @@ Abs<0> // 0
 ```
 
 			
-###  `Negative<number>`
+### 负号算法 `Negative<number>`
 
 
 ``` typescript

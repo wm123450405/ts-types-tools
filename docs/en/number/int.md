@@ -1,6 +1,6 @@
 
-###  `IsInt<number>`
-
+### Are integers `IsInt<number>`
+ * Cannot be used to determine union types
 
 ``` typescript
 IsInt<123> // true
@@ -8,8 +8,8 @@ IsInt<123.1> // false
 ```
 
 			
-###  `AsInt<number>`
-
+### Only integers `AsInt<number>`
+ * Cannot handle union types
 
 ``` typescript
 AsInt<123> // 123
@@ -17,8 +17,8 @@ AsInt<123.1> // never
 ```
 
 			
-###  `IsUInt<number>`
-
+### Are non-negative integers `IsUInt<number>`
+ * Cannot be used to determine union types
 
 ``` typescript
 IsUInt<123> // true
@@ -27,8 +27,8 @@ IsUInt<123.1> // false
 ```
 
 			
-###  `AsUInt<number>`
-
+### Only non-negative integers `AsUInt<number>`
+ * Cannot handle union types
 
 ``` typescript
 AsUInt<123> // 123
@@ -37,8 +37,8 @@ AsUInt<123.1> // never
 ```
 
 			
-###  `IntEnumerate<number>`
-
+### Create a number sequence type from 0 to N `IntEnumerate<number>`
+ * Equivalent to: 0 | 1 | 2 | 3 | ... | N - 1
 
 ``` typescript
 IntEnumerate<5> // 0 | 1 | 2 | 3 | 4
@@ -48,8 +48,8 @@ IntEnumerate<1.1> // never
 ```
 
 			
-###  `IntRange<number, number>`
-
+### Create a number sequence type from F to N `IntRange<number, number>`
+ * Equivalent to: F | F + 1 | F + 2 | .... | N - 1
 
 ``` typescript
 IntRange<0, 3> // 0 | 1 | 2
@@ -60,7 +60,7 @@ IntRange<-5, 5> // never
 ```
 
 			
-###  `AddOne<number>`
+### Create a number type after adding 1 to an integer `AddOne<number>`
 
 
 ``` typescript
@@ -71,7 +71,7 @@ AddOne<1.2> // never
 ```
 
 			
-###  `MinusOne<number>`
+### Create a type that subtracts one from a number `MinusOne<number>`
 
 
 ``` typescript
@@ -82,7 +82,7 @@ MinusOne<1.5> // never
 ```
 
 			
-###  `IntList<number, number, number[] = []>`
+### Create a number sequence type from S and with length L, equivalent to: F | F + 1 | F + 2 | .... | F + L - 1 `IntList<number, number, number[] = []>`
 
 
 ``` typescript
@@ -93,7 +93,7 @@ IntList<-5, 5> // never
 ```
 
 			
-###  `AddInt<number, number>`
+### Sum of two integers `AddInt<number, number>`
 
 
 ``` typescript
@@ -103,7 +103,7 @@ AddInt<5, 550> // 555
 ```
 
 			
-###  `MinusInt<number, number>`
+### Minus of two integers `MinusInt<number, number>`
 
 
 ``` typescript

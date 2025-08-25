@@ -328,24 +328,30 @@ type MinusIntReverseString<A extends string, B extends string, BORROW extends bo
 
 
 /**
- * 是否是整数,不能用于判断联合类型
- * Are integers, cannot be used to determine union types
+ * @zh 是否是整数.
+ * 不能用于判断联合类型
+ * @en Are integers.
+ * Cannot be used to determine union types
  * @example IsInt<123> // true
  * @example IsInt<123.1> // false
  */
 export type IsInt<T extends number> = NumberToString<T> extends `${number | '' | '-'}.${infer D extends number}` ? D extends 0 ? true : false : true;
 
 /**
- * 只能是整数,不能处理联合类型
- * Only integers, cannot handle union types
+ * @zh 只能是整数.
+ * 不能处理联合类型
+ * @en Only integers.
+ * Cannot handle union types
  * @example AsInt<123> // 123
  * @example AsInt<123.1> // never
  */
 export type AsInt<T extends number> = IsInt<T> extends true ? T : never;
 
 /**
- * 是否是非负整数,不能用于判断联合类型
- * Are non-negative integers, cannot be used to determine union types
+ * @zh 是否是非负整数.
+ * 不能用于判断联合类型
+ * @en Are non-negative integers.
+ * Cannot be used to determine union types
  * @example IsUInt<123> // true
  * @example IsUInt<-123> // false
  * @example IsUInt<123.1> // false
@@ -353,8 +359,10 @@ export type AsInt<T extends number> = IsInt<T> extends true ? T : never;
 export type IsUInt<T extends number> = NumberToString<T> extends `-${number}` ? false : IsInt<T>;
 
 /**
- * 只能是非负整数,不能处理联合类型
- * Only non-negative integers, cannot handle union types
+ * @zh 只能是非负整数.
+ * 不能处理联合类型
+ * @en Only non-negative integers.
+ * Cannot handle union types
  * @example AsUInt<123> // 123
  * @example AsUInt<-123> // never
  * @example AsUInt<123.1> // never
@@ -368,8 +376,10 @@ export type SimpleIntEnumerate<N extends number, Acc extends number[] = []> =
 		never;
 
 /**
+ * @zh 索引序列.
  * 创建一个从 0 到 N 的数字序列类型,等效于: 0 | 1 | 2 | 3 | ... | N - 1
- * Create a number sequence type from 0 to N, equivalent to: 0 | 1 | 2 | 3 | ... | N - 1
+ * @en Create a number sequence type from 0 to N.
+ * Equivalent to: 0 | 1 | 2 | 3 | ... | N - 1
  * @param N 数量(非负整数,非联合类型) count(non-negative integer, non-union type)
  * @example IntEnumerate<5> // 0 | 1 | 2 | 3 | 4
  * @example IntEnumerate<0> // never
@@ -380,8 +390,10 @@ export type IntEnumerate<N extends number> =
     DistributeUnions<[N]> extends [infer Ni extends number] ? Ni extends Ni ? SimpleIntEnumerate<Ni> : never : never;
 
 /**
+ * @zh 数字序列.
  * 创建一个从 F 到 N 的数字序列类型, 等效于: F | F + 1 | F + 2 | .... | N - 1
- * Create a number sequence type from F to N, equivalent to: F | F + 1 | F + 2 | .... | N - 1
+ * @en Create a number sequence type from F to N.
+ * Equivalent to: F | F + 1 | F + 2 | .... | N - 1
  * @param F 起始数字(非负整数,非联合类型) start(non-negative integer, non-union type)
  * @param N 结束数字(非负整数,非联合类型) end(non-negative integer, non-union type)
  * @example IntRange<0, 3> // 0 | 1 | 2
@@ -413,8 +425,9 @@ type SimpleAddOne<N extends number> = IsUInt<N> extends true ?
 	never
 
 /**
+ * @zh 整数加一.
  * 指定整数+1后的数字类型
- * Create a number type after adding 1 to an integer
+ * @en Create a number type after adding 1 to an integer
  * @param N 待+1数字类型(非负整数,非联合类型) The number to add one(non-negative integer, non-union type)
  * @example AddOne<0> // 1
  * @example AddOne<1> // 2
@@ -441,8 +454,9 @@ type SimplMinusOne<N extends number> = IsUInt<N> extends true ?
 	never;
 
 /**
+ * @zh 整数减一.
  * 指定整数-1后的数字类型
- * Create a type that subtracts one from a number.
+ * @en Create a type that subtracts one from a number.
  * @param N 待-1数字类型(正整数,非联合类型) The number to add one(positive integer, non-union type)
  * @example MinusOne<1> // 0
  * @example MinusOne<10> // 9
@@ -453,8 +467,9 @@ export type MinusOne<N extends number> =
     DistributeUnions<[N]> extends [infer Ni extends number] ? Ni extends Ni ? SimplMinusOne<Ni> : never : never;
 
 /**
+ * @zh 数字序列.
  * 创建一个从 S 开始的指定数量 L 的数字序列类型, 等效于: F | F + 1 | F + 2 | .... | F + L - 1
- * Create a number sequence type from S and with length L, equivalent to: F | F + 1 | F + 2 | .... | F + L - 1
+ * @en Create a number sequence type from S and with length L, equivalent to: F | F + 1 | F + 2 | .... | F + L - 1
  * @param S 起始数字(非负整数,非联合类型) start(non-negative integer, non-union type)
  * @param L 序列数量(非负整数,非联合类型) length(non-negative integer, non-union type)
  * @example IntList<0, 3> // 0 | 1 | 2
@@ -471,8 +486,9 @@ export type IntList<S extends number, L extends number, A extends number[] = []>
 
 
 /**
+ * @zh 求和.
  * 两个整数的和
- * Sum of two integers
+ * @en Sum of two integers
  * @param A - 待求和的整数
  * @param B - 待求和的整数
  * @example AddInt<0, 0> // 0
@@ -490,8 +506,9 @@ export type AddInt<A extends number, B extends number> =
 			Negative<AddInt<Abs<A>, Abs<B>>>;
 
 /**
+ * @zh 求差.
  * 两个整数的差
- * Minus of two integers
+ * @en Minus of two integers
  * @param A - 被减数
  * @param B - 减数
  * @example MinusInt<0, 0> // 0

@@ -62,8 +62,9 @@ type DecimalGreatThenOrEquals<A extends number, B extends number> =
 	A extends B ? true : DecimalStringGreatThen<NumberToString<A>, NumberToString<B>>;
 
 /**
+ * @zh 大于.
  * 比较数字A是否大于B, 若A大于B则返回true, 否则返回false
- * If A greater than B, return true, otherwise return false
+ * @en If A greater than B, return true, otherwise return false
  * @param A - 待比较的数字A
  * @param B - 待比较的数字B
  * @example GreatThen<5, 2> // true
@@ -84,8 +85,9 @@ export type GreatThen<A extends number, B extends number> =
 export type GT<A extends number, B extends number> = GreatThen<A, B>;
 
 /**
+ * @zh 大于等于.
  * 比较数字A是否大于等于B, 若A大于等于B则返回true, 否则返回false
- * If A is great then or equals B, return true, otherwise return false
+ * @en If A is great then or equals B, return true, otherwise return false
  * @param A - 待比较的数字A
  * @param B - 待比较的数字B
  * @example GreatThenOrEquals<5, 2> // true
@@ -105,8 +107,9 @@ export type GreatThenOrEquals<A extends number, B extends number> =
 export type GE<A extends number, B extends number> = GreatThenOrEquals<A, B>;
 
 /**
+ * @zh 小于.
  * 比较数字A是否小于B, 若A小于B则返回true, 否则返回false
- * If A less than B, return true, otherwise return false
+ * @en If A less than B, return true, otherwise return false
  * @param A - 待比较的数字A
  * @param B - 待比较的数字B
  * @example LessThen<5, 2> // false
@@ -118,8 +121,9 @@ export type LessThen<A extends number, B extends number> = Not<GreatThenOrEquals
 export type LT<A extends number, B extends number> = LessThen<A, B>;
 
 /**
+ * @zh 小于等于.
  * 比较数字A是否小于等于B, 若A小于等于B则返回true, 否则返回false
- * If A is less then or equals B, return true, otherwise return false
+ * @en If A is less then or equals B, return true, otherwise return false
  * @param A - 待比较的数字A
  * @param B - 待比较的数字B
  * @example LessThenOrEquals<5, 2> // false
@@ -131,8 +135,9 @@ export type LessThenOrEquals<A extends number, B extends number> = Not<GreatThen
 export type LE<A extends number, B extends number> = LessThenOrEquals<A, B>;
 
 /**
+ * @zh 等于.
  * 比较两个数据是否相同
- * If A and B are the same, return true, otherwise return false
+ * @en If A and B are the same, return true, otherwise return false
  * @param A - 待比较的数据A
  * @param B - 待比较的数据B
  * @example Equals<5, 5> // true
@@ -143,8 +148,9 @@ export type Equals<A, B> = A extends B ? (B extends A ? true : false) : false;
 export type EQ<A extends number, B extends number> = Equals<A, B>;
 
 /**
+ * @zh 不等于.
  * 比较两个数据是否不同
- * If A and B are not same, return true, otherwise return false
+ * @en If A and B are not same, return true, otherwise return false
  * @param A - 待比较的数据A
  * @param B - 待比较的数据B
  * @example NotEquals<5, 5> // false
@@ -156,6 +162,7 @@ export type NE<A extends number, B extends number> = NotEquals<A, B>;
 
 
 /**
+ * @zh 最大值.
  * 获取一组数字中的最大数字类型
  * @param A 一个数字，或一组数字
  * @param B 若A为一个数字，这里给定另一个数字，否则不指定数据
@@ -176,6 +183,7 @@ export type Max<A extends number | number[], B extends (A extends number ? numbe
 	: never ;
 
 /**
+ * @zh 最小值.
  * 获取一组数字中的最小数字类型
  * @param A 一个数字，或一组数字
  * @param B 若A为一个数字，这里给定另一个数字，否则不指定数据

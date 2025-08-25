@@ -2,39 +2,43 @@ import type { DistributeUnions } from "../core";
 import type { GreatThenOrEquals, MinusOne } from "../number";
 
 /**
+ * @zh 反转数组.
  * 反转一个数组
- * Reverse an array
+ * @en Reverse an array
  * @example ReverseArray<[1, 2]> // [2, 1]
  */
 export type ReverseArray<T extends unknown[]> = 
 		T extends [ infer F, ...infer Rest ] ? [ ...ReverseArray<Rest>, F ] : [];
 
 /**
+ * @zh 数组长度.
  * 获取数组具体长度的数字类型
- * Get the length of an array
+ * @en Get the length of an array
  * @example ArrayLength<[1,2,3]> // 3
  * @example ArrayLength<unknown[]> // number
  */
 export type ArrayLength<A extends unknown[]> = A['length'];
 
-export type SimpleTakeArray<A extends unknown[], N extends number> =
+type SimpleTakeArray<A extends unknown[], N extends number> =
 	A extends { length: N } ? A : A extends [ ...infer P, unknown ] ? SimpleTakeArray<P, N> : never;
 
 /**
+ * @zh 截取数组前 N 项.
  * 数组前 N 项组成的新的类型数组
- * A new array type composed of the first N items
+ * @en A new array type composed of the first N items
  * @example TakeArray<[1, 2, 3], 2> // [1, 2]
  */
 export type TakeArray<A extends unknown[], N extends number> =
     DistributeUnions<[A, N]> extends [infer Ai extends unknown[], infer Ni extends number] ? 
         Ai extends Ai ? Ni extends Ni ? SimpleTakeArray<Ai, Ni> : never : never : never;
 
-export type SimpleSkipArray<A extends unknown[], N extends number> =
+type SimpleSkipArray<A extends unknown[], N extends number> =
 	N extends 0 ? A : A extends [ unknown, ...infer S ] ? SimpleSkipArray<S, MinusOne<N>> : never;
 
 /**
+ * @zh 忽略数组前 N 项.
  * 数组从 N 项开始往后组成的类型数组
- * A new array type composed of the items after N
+ * @en A new array type composed of the items after N
  * @example SkipArray<[1, 2, 3], 2> // [3]
  */
 export type SkipArray<A extends unknown[], N extends number> =
@@ -42,8 +46,9 @@ export type SkipArray<A extends unknown[], N extends number> =
         Ai extends Ai ? Ni extends Ni ? SimpleSkipArray<Ai, Ni> : never : never : never;
 
 /**
+ * @zh 提取子数组.
  * 数组从 N 项开始往后至 S 项组成的类型数组
- * A new array type composed of the items from N to S
+ * @en A new array type composed of the items from N to S
  * @example Slice<[1, 2, 3, 4, 5], 1, 3> // [2, 3]
  */
 export type Slice<A extends unknown[], B extends number, E extends number> =
@@ -54,7 +59,10 @@ type SimpleFillLeft<T extends V[], L extends number, I extends V, V = unknown, R
 	GreatThenOrEquals<ArrayLength<R>, L> extends true ? R : SimpleFillLeft<T, L, I, V, [I, ...R]>;
 
 /**
- * 向数组左侧添加指定类型，获取一个指定长度的新数组
+ * @zh 左向填充数组.
+ * 向数组左侧添加指定类型, 获取一个指定长度的新数组
+ * @en Generate an array of a specified length, adding a specified type to the left
+ * @example FillLeft<[1, 2], 5, 0> // [0, 0, 0, 1, 2]
  */
 export type FillLeft<T extends V[], L extends number, I extends V, V = unknown> = 
 	DistributeUnions<[T, L, I]> extends [infer Ti extends V[], infer Li extends number, infer Ii extends V] ? 
@@ -62,17 +70,19 @@ export type FillLeft<T extends V[], L extends number, I extends V, V = unknown> 
 
 		
 type SimpleFillRight<T extends V[], L extends number, I extends V, V = unknown, R extends V[] = T> = 
-	GreatThenOrEquals<ArrayLength<T>, L> extends true ? R : SimpleFillRight<T, L, I, V, [...R, I]>;
+	GreatThenOrEquals<ArrayLength<R>, L> extends true ? R : SimpleFillRight<T, L, I, V, [...R, I]>;
 
 /**
- * 向数组右侧添加指定类型，获取一个指定长度的新数组
+ * @zh 右向填充数组.
+ * 向数组右侧添加指定类型, 获取一个指定长度的新数组
+ * @example FillRight<[1, 2], 5, 0> // [1, 2, 0, 0, 0]
  */
 export type FillRight<T extends V[], L extends number, I extends V, V = unknown> = 
 	DistributeUnions<[T, L, I]> extends [infer Ti extends V[], infer Li extends number, infer Ii extends V] ? 
         Ti extends Ti ? Li extends Li ? Ii extends Ii ? SimpleFillRight<Ti, Li, Ii> : never : never : never : never;
 
 /**
- * 生成指定长度的数组类型
+ * @zh 生成指定长度的数组类型
  * @param T 数组元素的类型
  * @param L 数组的长度
  * @example GenerateArray<unknown, 2> // [unknown, unknown]

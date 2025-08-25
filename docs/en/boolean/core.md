@@ -1,5 +1,5 @@
 
-### Not. `Not<boolean>`
+### Not `Not<boolean>`
  * For boolean
 
 ``` typescript

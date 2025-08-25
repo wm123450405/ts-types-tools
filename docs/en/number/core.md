@@ -1,5 +1,5 @@
 
-###  `StringToNumber<string>`
+### string -> number `StringToNumber<string>`
 
 
 ``` typescript
@@ -7,7 +7,7 @@ StringToNumber<'123'> // 123
 ```
 
 			
-###  `NumberToString<number>`
+### number -> string `NumberToString<number>`
 
 
 ``` typescript
@@ -15,7 +15,7 @@ NumberToString<123> // '123'
 ```
 
 			
-###  `SignalPart<number>`
+### Signal part of a number `SignalPart<number>`
 
 
 ``` typescript
@@ -25,7 +25,7 @@ SignalPart<0> // 1
 ```
 
 			
-###  `IsNegative<number>`
+### Check if a number is negative `IsNegative<number>`
 
 
 ``` typescript
@@ -35,7 +35,7 @@ IsNegative<0> // false
 ```
 
 			
-###  `IsPositive<number>`
+### Check if a number is positive `IsPositive<number>`
 
 
 ``` typescript
@@ -45,7 +45,7 @@ IsPositive<0> // false
 ```
 
 			
-###  `Abs<number>`
+### Absolute value `Abs<number>`
 
 
 ``` typescript
@@ -55,7 +55,7 @@ Abs<0> // 0
 ```
 
 			
-###  `Negative<number>`
+### Negative `Negative<number>`
 
 
 ``` typescript

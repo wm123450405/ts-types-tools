@@ -1,5 +1,5 @@
 
-### 取否. `Not<boolean>`
+### 取否 `Not<boolean>`
 
 
 ``` typescript

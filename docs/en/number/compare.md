@@ -1,5 +1,5 @@
 
-###  `GreatThen<number, number>`
+### If A greater than B, return true, otherwise return false `GreatThen<number, number>`
 
 
 ``` typescript
@@ -17,7 +17,7 @@ GreatThen<5, 5> // false
 ```
 
 			
-###  `GreatThenOrEquals<number, number>`
+### If A is great then or equals B, return true, otherwise return false `GreatThenOrEquals<number, number>`
 
 
 ``` typescript
@@ -35,7 +35,7 @@ GreatThenOrEquals<5, 6> // false
 ```
 
 			
-###  `LessThen<number, number>`
+### If A less than B, return true, otherwise return false `LessThen<number, number>`
 
 
 ``` typescript
@@ -53,7 +53,7 @@ LessThen<5, 5> // false
 ```
 
 			
-###  `LessThenOrEquals<number, number>`
+### If A is less then or equals B, return true, otherwise return false `LessThenOrEquals<number, number>`
 
 
 ``` typescript
@@ -71,7 +71,7 @@ LessThenOrEquals<5, 6> // true
 ```
 
 			
-###  `Equals<A, B>`
+### If A and B are the same, return true, otherwise return false `Equals<A, B>`
 
 
 ``` typescript
@@ -88,7 +88,7 @@ Equals<5, 2> // false
 ```
 
 			
-###  `NotEquals<A, B>`
+### If A and B are not same, return true, otherwise return false `NotEquals<A, B>`
 
 
 ``` typescript
