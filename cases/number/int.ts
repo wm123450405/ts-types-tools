@@ -50,4 +50,4 @@ export type Cases = [	Expect<Equal< IsInt<123> ,  true>>,
 	Expect<Equal< MinusInt<10, 20> ,  -10>>,
 	Expect<Equal< MinusInt<550, 5> ,  545
  >>];
-					
+			

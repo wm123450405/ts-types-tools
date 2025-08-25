@@ -26,4 +26,4 @@ export type Cases = [	Expect<Equal< StringToNumber<'123'> ,  123
 	Expect<Equal< Negative<2> ,  -2>>,
 	Expect<Equal< Negative<0> ,  0
  >>];
-					
+			

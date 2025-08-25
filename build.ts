@@ -7,7 +7,9 @@ const docs = 'docs'
 
 const functions = /\/\*\*\s*?[\r\n]*?(?<notes>(.+?[\r\n]*)+?)\*\/[\s\r\n]*?((?<exports>export)\s+?)?type\s+?(?<declares>.+?)\s*?=[^=]*?[\r\n]+?/ig;
 
-  const mkdir = async (p: PathLike) => {
+const languages = [ 'zh', 'en' ];
+
+const mkdir = async (p: PathLike) => {
 	if (!(await fs.promises.exists(p))) {
 		fs.promises.mkdir(p);
 	}
@@ -17,45 +19,78 @@ await Promise.all([
 	mkdir(path.resolve(cases)),
 	mkdir(path.resolve(docs)),
 ]);
+await Promise.all(languages.map(language => mkdir(path.resolve(docs, language))));
 
-await Promise.all((await fs.promises.readdir(path.resolve(src))).flatMap(classify => {
-	return [
-		(async () => {
-			await mkdir(path.resolve(cases, classify));
-			const files = await fs.promises.readdir(path.resolve(src, classify));
-			await Promise.all(files.map(file => (async () => {
-				const data = (await fs.promises.readFile(path.resolve(src, classify, file))).toString();
-				console.log(`read file ${src}/${classify}/${file}`);
-				if (file === 'index.ts') {
-					await fs.promises.writeFile(path.resolve(cases, classify, file), data.replaceAll(/export\s+\*\s+from/ig, 'import'));
-				} else {
-					const types = [];
-					const allExamples = [];
-					let match = null;
-					while ((match = functions.exec(data)) != null) {
-						console.log('match notes', match.groups?.['notes'], 'match declares', match.groups?.['declares'])
-						const exports = match.groups?.['exports'];
-						const examples = match.groups?.['notes']?.split(/\s*[\r\n]+\s*\*\s*/igm)?.filter(line => line.startsWith('@example'))?.map(line => line.replace('@example', ''));
-						const type = match.groups?.['declares']?.split(/</ig)?.[0];
-						if (exports && examples && type) {
-							types.push(type);
-							allExamples.push(...examples.map(example => example.split('//')));
-						}
-					}
-					await fs.promises.writeFile(path.resolve(cases, classify, file), `
+const datas: { classify: string, file: string, data: string }[] = [];
+
+await Promise.all((await fs.promises.readdir(path.resolve(src))).map(classify => (async () => {
+	await Promise.all([
+		mkdir(path.resolve(cases, classify)),
+		...languages.map(language => mkdir(path.resolve(docs, language, classify))),
+	]);
+	const files = await fs.promises.readdir(path.resolve(src, classify));
+	await Promise.all(files.map(file => (async () => { 
+		const data = await fs.promises.readFile(path.resolve(src, classify, file), 'utf-8');
+		datas.push({
+			classify,
+			file,
+			data,
+		});
+	})()));
+})()))
+
+await Promise.all([
+	...datas.map(({ classify, file, data }) => (async () => {
+		// console.log(`read file ${src}/${classify}/${file}`);
+		if (file === 'index.ts') {
+			await fs.promises.writeFile(path.resolve(cases, classify, file), 
+				data.replaceAll(/export\s+\*\s+from/ig, 'import'));
+		} else {
+			const types = [];
+			const allExamples = [];
+			let match = null;
+			while ((match = functions.exec(data)) != null) {
+				// console.log('match notes', match.groups?.['notes'], 'match declares', match.groups?.['declares'])
+				const exports = match.groups?.['exports'];
+				const examples = match.groups?.['notes']?.split(/\s*[\r\n]+\s*\*\s*/igm)?.filter(line => line.startsWith('@example'))?.map(line => line.replace('@example', ''));
+				const type = match.groups?.['declares']?.split(/</ig)?.[0];
+				if (exports && examples && type) {
+					types.push(type);
+					allExamples.push(...examples.map(example => example.split('//')));
+				}
+			}
+			await fs.promises.writeFile(path.resolve(cases, classify, file), `
 import type { Equal, Expect } from '@type-challenges/utils';
 import type { ${ types.join(', ') } } from '../../index';
 
 export type Cases = [${allExamples.map(example => `	Expect<Equal<${example[0]}, ${example[1]}>>`).join(',\r\n')}];
-					`);
+			`);
+		}
+	})()),
+	...datas.flatMap(({ classify, file, data}) => languages.map(language => (async () => {
+		if (file === 'index.ts') {
+			await fs.promises.writeFile(path.resolve(docs, language, classify, file.replace('.ts', '.md')), 
+				data.replaceAll(/export\s+\*\s+from\s+['"]\.\/(.+)['"];?/ig, `
+## [$1](./$1.md)
+
+					`));
+		} else {
+			const types = [];
+			let match = null;
+			while ((match = functions.exec(data)) != null) {
+				const exports = match.groups?.['exports'];
+				const notes = match.groups?.['notes'];
+				const type = match.groups?.['declares']?.split(/</ig)?.[0];
+				if (exports && notes && type) {
+					types.push(type);
 				}
-			})()));
-		})(),
-		(async () => {
-			
-		})(),
-	]
-}));
+			}
+			await fs.promises.writeFile(path.resolve(docs, language, classify, file.replace('.ts', '.md')), `
+
+			`);
+		}
+	})())),
+]);
 
 
 // import type { Equal, Expect } from '@type-challenges/utils'

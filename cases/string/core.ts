@@ -10,4 +10,4 @@ export type Cases = [	Expect<Equal< ReverseString<'abc'> ,  'cba'
 	Expect<Equal< DefaultIfEmpty<'123', '234'> ,  '123'>>,
 	Expect<Equal< DefaultIfEmpty<'', '234'> ,  '234'
  >>];
-					
+			

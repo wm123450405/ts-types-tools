@@ -17,4 +17,4 @@ export type Cases = [	Expect<Equal< ReverseArray<[1, 2]> ,  [2, 1]
 	Expect<Equal< GenerateArray<unknown, 0> ,  []>>,
 	Expect<Equal< GenerateArray<boolean, 1> ,  [boolean]
  >>];
-					
+			

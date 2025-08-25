@@ -26,4 +26,4 @@ export type Cases = [	Expect<Equal< TakeString<'abcdefg', 3> ,  'abc'
 	Expect<Equal< TrimRight<'1230', '0'> ,  '123'>>,
 	Expect<Equal< TrimRight<'1230'> ,  '1230'
  >>];
-					
+			

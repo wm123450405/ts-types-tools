@@ -34,4 +34,4 @@ export type Cases = [	Expect<Equal< GreatThen<5, 2> ,  true>>,
 	Expect<Equal< Min<[8, 23, 5]> ,  5>>,
 	Expect<Equal< Min<[]> ,  never
  >>];
-					
+			
