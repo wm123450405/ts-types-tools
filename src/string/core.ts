@@ -23,6 +23,5 @@ export type StringLength<A extends string> = A extends '' ? 0 : A extends `${str
  * @example DefaultIfEmpty<'123', '234'> // '123'
  * @example DefaultIfEmpty<'', '234'> // '234'
  */
-export type DefaultIfEmpty<T extends string | undefined, D extends string> = 
-	T extends undefined ? D : T extends "" ? D : T;
-
+export type DefaultIfEmpty<T extends string | undefined | null, D extends string = ''> = 
+	T extends undefined | null | '' ? D : T;

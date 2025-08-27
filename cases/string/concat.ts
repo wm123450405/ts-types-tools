@@ -1,6 +1,6 @@
 
 import type { Equal, Expect } from '@type-challenges/utils';
-import type { TakeString, SkipString, Substring, PadLeft, PadRight, TrimLeft, TrimRight } from '../../index';
+import type { TakeString, SkipString, Substring, PadLeft, PadRight, TrimLeft, TrimRight, Trim } from '../../index';
 
 export type Cases = [
 	Expect<Equal<TakeString<'abcdefg', 3> ,  'abc'>>,
@@ -19,6 +19,9 @@ export type Cases = [
 	Expect<Equal<TrimLeft<'0123'> ,  '0123'>>,
 	Expect<Equal<TrimRight<'123 '> ,  '123'>>,
 	Expect<Equal<TrimRight<'1230', '0'> ,  '123'>>,
-	Expect<Equal<TrimRight<'1230'> ,  '1230'>>
+	Expect<Equal<TrimRight<'1230'> ,  '1230'>>,
+	Expect<Equal<Trim<' 123 '> ,  '123'>>,
+	Expect<Equal<Trim<'0123', '0'> ,  '123'>>,
+	Expect<Equal<Trim<'0123'> ,  '0123'>>
 ];
 			

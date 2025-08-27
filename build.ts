@@ -112,7 +112,7 @@ import './${module}';
 				// const examples = match.groups?.['notes']?.split(notesSpliter)?.filter(line => line && line.startsWith('@example'))?.map(line => line.replace('@example', ''));
 				const examples = findNotes(match.groups?.['notes'], 'example');
 				const type = match.groups?.['declares']?.split(/</ig)?.[0];
-				if (exports && examples && type) {
+				if (exports && examples?.length && type) {
 					types.push(type);
 					allExamples.push(...examples.map(example => example.split('//')));
 				}

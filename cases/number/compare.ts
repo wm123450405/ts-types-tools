@@ -1,6 +1,6 @@
 
 import type { Equal, Expect } from '@type-challenges/utils';
-import type { GreatThen, GT, GreatThenOrEquals, GE, LessThen, LT, LessThenOrEquals, LE, Equals, EQ, NotEquals, NE, Max, Min } from '../../index';
+import type { GreatThen, GreatThenOrEquals, LessThen, LessThenOrEquals, Equals, NotEquals, Max, Min } from '../../index';
 
 export type Cases = [
 	Expect<Equal<GreatThen<5, 2> ,  true>>,

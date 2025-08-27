@@ -14,13 +14,12 @@
   ],
   "husky": {
     "hooks": {
-      "pre-commit": "bun tsc --checkJS && bun cases.ts"
+      "pre-commit": "bun tsc --checkJS && bun index.ts && bun cases.ts"
     }
   },
   "scripts": {
-    "build": "bun run build.ts",
-    "preinstall": "bun tsc --checkJS && bun cases.ts",
-    "prepublish": "bun tsc --checkJS && bun cases.ts"
+    "build": "bun run build.ts && bun run prepublish",
+    "prepublish": "bun tsc --checkJS && bun index.ts && bun cases.ts"
   },
   "repository": {
     "type": "git",

@@ -1,5 +1,5 @@
 
-###  `TakeString<string, number>`
+### A new string composed of the first N characters `TakeString<string, number>`
 
 
 ``` typescript
@@ -7,7 +7,7 @@ TakeString<'abcdefg', 3> // 'abc'
 ```
 
 			
-###  `SkipString<string, number>`
+### A new string composed of all characters after N `SkipString<string, number>`
 
 
 ``` typescript
@@ -15,7 +15,7 @@ SkipString<'abcdefg', 3> // 'defg'
 ```
 
 			
-###  `Substring<string, number, number>`
+### A new string composed of all characters from N to M `Substring<string, number, number>`
 
 
 ``` typescript
@@ -23,7 +23,7 @@ Substring<'abcdefg', 2, 4> // 'cd'
 ```
 
 			
-###  `PadLeft<string, number, string = " ">`
+### Pad left for a string `PadLeft<string, number, string = ' '>`
 
 
 ``` typescript
@@ -34,7 +34,7 @@ PadLeft<'55555', 3> // '55555'
 ```
 
 			
-###  `PadRight<string, number, string = " ">`
+### Pad right for a string `PadRight<string, number, string = ' '>`
 
 
 ``` typescript
@@ -45,7 +45,7 @@ PadRight<'55555', 3> // '55555'
 ```
 
 			
-###  `TrimLeft<string, string = " ">`
+###  `TrimLeft<string, string = ' '>`
 
 
 ``` typescript
@@ -55,13 +55,23 @@ TrimLeft<'0123'> // '0123'
 ```
 
 			
-###  `TrimRight<string, string = " ">`
+###  `TrimRight<string, string = ' '>`
 
 
 ``` typescript
 TrimRight<'123 '> // '123'
 TrimRight<'1230', '0'> // '123'
 TrimRight<'1230'> // '1230'
+```
+
+			
+###  `Trim<string, string = ' '>`
+
+
+``` typescript
+Trim<' 123 '> // '123'
+Trim<'0123', '0'> // '123'
+Trim<'0123'> // '0123'
 ```
 
 			

@@ -16,7 +16,7 @@ StringLength<string> // number
 ```
 
 			
-###  `DefaultIfEmpty<string | undefined, string>`
+###  `DefaultIfEmpty<string | undefined | null, string = ''>`
 
 
 ``` typescript
