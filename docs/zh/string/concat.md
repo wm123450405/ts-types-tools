@@ -23,7 +23,7 @@ Substring<'abcdefg', 2, 4> // 'cd'
 ```
 
 			
-### 左侧填充 `PadLeft<string, number, string = ' '>`
+### 左侧填充 `PadLeft<string, number>` `PadLeft<string, number, string>`
  * 填充字符串左边
 
 ``` typescript
@@ -34,7 +34,7 @@ PadLeft<'55555', 3> // '55555'
 ```
 
 			
-### 右侧填充 `PadRight<string, number, string = ' '>`
+### 右侧填充 `PadRight<string, number>` `PadRight<string, number, string>`
  * 填充字符串右边
 
 ``` typescript
@@ -45,7 +45,7 @@ PadRight<'55555', 3> // '55555'
 ```
 
 			
-### 修剪左侧 `TrimLeft<string, string = ' '>`
+### 修剪左侧 `TrimLeft<string>` `TrimLeft<string, string>`
  * 清除字符串左侧的重复字符
 
 ``` typescript
@@ -55,7 +55,7 @@ TrimLeft<'0123'> // '0123'
 ```
 
 			
-### 修剪右侧 `TrimRight<string, string = ' '>`
+### 修剪右侧 `TrimRight<string>` `TrimRight<string, string>`
  * 清除字符串右侧的重复字符
 
 ``` typescript
@@ -65,7 +65,7 @@ TrimRight<'1230'> // '1230'
 ```
 
 			
-### 修剪 `Trim<string, string = ' '>`
+### 修剪 `Trim<string>` `Trim<string, string>`
  * 清除字符串的左侧和右侧的重复字符
 
 ``` typescript

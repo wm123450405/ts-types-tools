@@ -40,7 +40,7 @@ Slice<[1, 2, 3, 4, 5], 1, 3> // [2, 3]
 ```
 
 			
-### 左向填充数组 `FillLeft<V[], number, V, V = unknown>`
+### 左向填充数组 `FillLeft<unknown[], number, unknown>`
  * 向数组左侧添加指定类型, 获取一个指定长度的新数组
 
 ``` typescript
@@ -48,7 +48,7 @@ FillLeft<[1, 2], 5, 0> // [0, 0, 0, 1, 2]
 ```
 
 			
-### 右向填充数组 `FillRight<V[], number, V, V = unknown>`
+### 右向填充数组 `FillRight<unknown[], number, unknown>`
  * 向数组右侧添加指定类型, 获取一个指定长度的新数组
 
 ``` typescript
@@ -56,7 +56,7 @@ FillRight<[1, 2], 5, 0> // [1, 2, 0, 0, 0]
 ```
 
 			
-### 生成指定长度的数组类型 `GenerateArray<T, number>`
+### 生成指定长度的数组类型 `GenerateArray<unknown, number>`
 
 
 ``` typescript

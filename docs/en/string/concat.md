@@ -23,7 +23,7 @@ Substring<'abcdefg', 2, 4> // 'cd'
 ```
 
 			
-### Pad left for a string `PadLeft<string, number, string = ' '>`
+### Pad left for a string `PadLeft<string, number>` `PadLeft<string, number, string>`
 
 
 ``` typescript
@@ -34,7 +34,7 @@ PadLeft<'55555', 3> // '55555'
 ```
 
 			
-### Pad right for a string `PadRight<string, number, string = ' '>`
+### Pad right for a string `PadRight<string, number>` `PadRight<string, number, string>`
 
 
 ``` typescript
@@ -45,7 +45,7 @@ PadRight<'55555', 3> // '55555'
 ```
 
 			
-###  `TrimLeft<string, string = ' '>`
+###  `TrimLeft<string>` `TrimLeft<string, string>`
 
 
 ``` typescript
@@ -55,7 +55,7 @@ TrimLeft<'0123'> // '0123'
 ```
 
 			
-###  `TrimRight<string, string = ' '>`
+###  `TrimRight<string>` `TrimRight<string, string>`
 
 
 ``` typescript
@@ -65,7 +65,7 @@ TrimRight<'1230'> // '1230'
 ```
 
 			
-###  `Trim<string, string = ' '>`
+###  `Trim<string>` `Trim<string, string>`
 
 
 ``` typescript

@@ -82,7 +82,7 @@ MinusOne<1.5> // never
 ```
 
 			
-### Create a number sequence type from S and with length L, equivalent to: F | F + 1 | F + 2 | .... | F + L - 1 `IntList<number, number, number[] = []>`
+### Create a number sequence type from S and with length L, equivalent to: F | F + 1 | F + 2 | .... | F + L - 1 `IntList<number, number>`
 
 
 ``` typescript

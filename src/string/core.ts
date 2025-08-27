@@ -20,6 +20,8 @@ export type StringLength<A extends string> = A extends '' ? 0 : A extends `${str
  * 如果传入的字符串不存在, 则用默认字符串代替
  * @param T - 待检查的字符串
  * @param D - 默认字符串
+ * @usage DefaultIfEmpty<string | undefined | null>
+ * @usage DefaultIfEmpty<string | undefined | null, string>
  * @example DefaultIfEmpty<'123', '234'> // '123'
  * @example DefaultIfEmpty<'', '234'> // '234'
  */

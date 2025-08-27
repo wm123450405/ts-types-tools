@@ -50,6 +50,8 @@ type SimplePadLeft<T extends string, L extends number, C extends string = ' '> =
  * @param S - 待填充的字符串
  * @param N - 填充的个数
  * @param C - 填充的字符
+ * @usage PadLeft<string, number>
+ * @usage PadLeft<string, number, string>
  * @example PadLeft<'5', 3, '0'> // '005'
  * @example PadLeft<'5', 3> // '  5'
  * @example PadLeft<'555', 3> // '555'
@@ -69,6 +71,8 @@ type SimplePadRight<T extends string, L extends number, C extends string = ' '> 
  * @param S - 待填充的 字符串
  * @param N - 填充的个数
  * @param C - 填充的 字符
+ * @usage PadRight<string, number>
+ * @usage PadRight<string, number, string>
  * @example PadRight<'5', 3, '0'> // '500'
  * @example PadRight<'5', 3> // '5  '
  * @example PadRight<'555', 3> // '555'
@@ -83,6 +87,8 @@ export type PadRight<T extends string, L extends number, C extends string = ' '>
  * 清除字符串左侧的重复字符
  * @param T - 待清除的字符串
  * @param C - 需要清除的重复字符
+ * @usage TrimLeft<string>
+ * @usage TrimLeft<string, string>
  * @example TrimLeft<' 123'> // '123'
  * @example TrimLeft<'0123', '0'> // '123'
  * @example TrimLeft<'0123'> // '0123'
@@ -95,6 +101,8 @@ export type TrimLeft<T extends string, C extends string = ' '> =
  * 清除字符串右侧的重复字符
  * @param T - 待清除的字符串
  * @param C - 需要清除的重复字符
+ * @usage TrimRight<string>
+ * @usage TrimRight<string, string>
  * @example TrimRight<'123 '> // '123'
  * @example TrimRight<'1230', '0'> // '123'
  * @example TrimRight<'1230'> // '1230'
@@ -107,6 +115,8 @@ export type TrimRight<T extends string, C extends string = ' '> =
  * 清除字符串的左侧和右侧的重复字符
  * @param T - 待清除的字符串
  * @param C - 需要清除的重复字符
+ * @usage Trim<string>
+ * @usage Trim<string, string>
  * @example Trim<' 123 '> // '123'
  * @example Trim<'0123', '0'> // '123'
  * @example Trim<'0123'> // '0123'

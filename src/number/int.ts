@@ -466,6 +466,14 @@ type SimplMinusOne<N extends number> = IsUInt<N> extends true ?
 export type MinusOne<N extends number> =
     DistributeUnions<[N]> extends [infer Ni extends N] ? Ni extends Ni ? SimplMinusOne<Ni> : never : never;
 
+	
+type SimpleIntList<S extends number, L extends number, A extends number[] = []> = 
+	IsUInt<S> extends true ?
+		IsUInt<L> extends true ?
+			number extends L ? number : A['length'] extends L ? A[number] : SimpleIntList<AddOne<S>, L, [...A, S]> :
+		never :
+	never;
+
 /**
  * @zh 数字序列.
  * 创建一个从 S 开始的指定数量 L 的数字序列类型, 等效于: F | F + 1 | F + 2 | .... | F + L - 1
@@ -477,13 +485,8 @@ export type MinusOne<N extends number> =
  * @example IntList<5, 3> // 5 | 6 | 7
  * @example IntList<-5, 5> // never
  */
-export type IntList<S extends number, L extends number, A extends number[] = []> = 
-	IsUInt<S> extends true ?
-		IsUInt<L> extends true ?
-			number extends L ? number : A['length'] extends L ? A[number] : IntList<AddOne<S>, L, [...A, S]> :
-		never :
-	never;
-
+export type IntList<S extends number, L extends number> = 
+	SimpleIntList<S, L>;
 
 /**
  * @zh 求和.

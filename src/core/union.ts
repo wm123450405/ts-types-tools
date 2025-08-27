@@ -17,8 +17,6 @@ type Normalize<T> = T extends object ? {[K in keyof T]: Normalize<T[K]>} : T;
 
 export type DistributeUnions<T> = Normalize<Distribute<T>>;
 
-type t = DistributeUnions<[boolean]>
-
 // type c = DistributeUnions<[{ x: 'a' | 'b', y: 'c' | 'd' }]>;
 
 // type cases = [
@@ -114,5 +112,5 @@ type t = DistributeUnions<[boolean]>
  * @example ArrayToUnion<[ boolean, number, false, null ]> // boolean | number | null
  * @example ArrayToUnion<[ true, false ]> // boolean
  */
-export type ArrayToUnion<A extends T[], T = unknown> =
+export type ArrayToUnion<A extends unknown[]> =
 	A extends [ infer F, ...infer R ] ? F | ArrayToUnion<R> : never;

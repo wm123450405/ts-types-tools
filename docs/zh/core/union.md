@@ -1,5 +1,5 @@
 
-### 将具体是数组类型转化未联合类型 `ArrayToUnion<T[], T = unknown>`
+### 将具体是数组类型转化未联合类型 `ArrayToUnion<unknown[]>`
 
 
 ``` typescript

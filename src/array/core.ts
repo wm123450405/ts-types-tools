@@ -62,6 +62,7 @@ type SimpleFillLeft<T extends V[], L extends number, I extends V, V = unknown, R
  * @zh 左向填充数组.
  * 向数组左侧添加指定类型, 获取一个指定长度的新数组
  * @en Generate an array of a specified length, adding a specified type to the left
+ * @usage FillLeft<unknown[], number, unknown>
  * @example FillLeft<[1, 2], 5, 0> // [0, 0, 0, 1, 2]
  */
 export type FillLeft<T extends V[], L extends number, I extends V, V = unknown> = 
@@ -78,6 +79,7 @@ type SimpleFillRight<T extends V[], L extends number, I extends V, V = unknown, 
 /**
  * @zh 右向填充数组.
  * 向数组右侧添加指定类型, 获取一个指定长度的新数组
+ * @usage FillRight<unknown[], number, unknown>
  * @example FillRight<[1, 2], 5, 0> // [1, 2, 0, 0, 0]
  */
 export type FillRight<T extends V[], L extends number, I extends V, V = unknown> = 
@@ -96,6 +98,7 @@ type SimpleGenerateArray<T, L extends number, R extends T[] = []> =
  * @zh 生成指定长度的数组类型
  * @param T 数组元素的类型
  * @param L 数组的长度
+ * @usage GenerateArray<unknown, number>
  * @example GenerateArray<unknown, 2> // [unknown, unknown]
  * @example GenerateArray<unknown, 0> // []
  * @example GenerateArray<boolean, 1> // [boolean]

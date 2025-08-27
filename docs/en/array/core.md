@@ -40,7 +40,7 @@ Slice<[1, 2, 3, 4, 5], 1, 3> // [2, 3]
 ```
 
 			
-### Generate an array of a specified length, adding a specified type to the left `FillLeft<V[], number, V, V = unknown>`
+### Generate an array of a specified length, adding a specified type to the left `FillLeft<unknown[], number, unknown>`
 
 
 ``` typescript
@@ -48,7 +48,7 @@ FillLeft<[1, 2], 5, 0> // [0, 0, 0, 1, 2]
 ```
 
 			
-###  `FillRight<V[], number, V, V = unknown>`
+###  `FillRight<unknown[], number, unknown>`
 
 
 ``` typescript
@@ -56,7 +56,7 @@ FillRight<[1, 2], 5, 0> // [1, 2, 0, 0, 0]
 ```
 
 			
-###  `GenerateArray<T, number>`
+###  `GenerateArray<unknown, number>`
 
 
 ``` typescript

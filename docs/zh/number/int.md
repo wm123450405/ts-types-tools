@@ -82,7 +82,7 @@ MinusOne<1.5> // never
 ```
 
 			
-### 数字序列 `IntList<number, number, number[] = []>`
+### 数字序列 `IntList<number, number>`
  * 创建一个从 S 开始的指定数量 L 的数字序列类型, 等效于: F | F + 1 | F + 2 | .... | F + L - 1
 
 ``` typescript
