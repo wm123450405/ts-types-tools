@@ -166,6 +166,8 @@ export type NE<A extends number, B extends number> = NotEquals<A, B>;
  * 获取一组数字中的最大数字类型
  * @param A 一个数字，或一组数字
  * @param B 若A为一个数字，这里给定另一个数字，否则不指定数据
+ * @usage Max<number[]>
+ * @usage Max<number, number>
  * @example Max<1, 23> // 23
  * @example Max<[1, 23]> // 23
  * @example Max<[1, 23, 5]> // 23
@@ -187,6 +189,8 @@ export type Max<A extends number | number[], B extends (A extends number ? numbe
  * 获取一组数字中的最小数字类型
  * @param A 一个数字，或一组数字
  * @param B 若A为一个数字，这里给定另一个数字，否则不指定数据
+ * @usage Min<number[]>
+ * @usage Min<number, number>
  * @example Min<1, 23> // 1
  * @example Min<[1, 23]> // 1
  * @example Min<[8, 23, 5]> // 5

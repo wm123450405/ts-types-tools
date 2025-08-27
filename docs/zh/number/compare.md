@@ -105,7 +105,7 @@ NotEquals<5, 2> // true
 ```
 
 			
-### 最大值 `Max<number | number[], (number ? number : never) = never>`
+### 最大值 `Max<number[]>` `Max<number, number>`
  * 获取一组数字中的最大数字类型
 
 ``` typescript
@@ -116,7 +116,7 @@ Max<[]> // never
 ```
 
 			
-### 最小值 `Min<number | number[], (number ? number : never) = never>`
+### 最小值 `Min<number[]>` `Min<number, number>`
  * 获取一组数字中的最小数字类型
 
 ``` typescript

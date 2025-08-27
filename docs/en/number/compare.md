@@ -105,7 +105,7 @@ NotEquals<5, 2> // true
 ```
 
 			
-###  `Max<number | number[], (number ? number : never) = never>`
+###  `Max<number[]>` `Max<number, number>`
 
 
 ``` typescript
@@ -116,7 +116,7 @@ Max<[]> // never
 ```
 
 			
-###  `Min<number | number[], (number ? number : never) = never>`
+###  `Min<number[]>` `Min<number, number>`
 
 
 ``` typescript

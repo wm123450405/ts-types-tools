@@ -29,7 +29,7 @@ type SimpleTakeArray<A extends unknown[], N extends number> =
  * @example TakeArray<[1, 2, 3], 2> // [1, 2]
  */
 export type TakeArray<A extends unknown[], N extends number> =
-    DistributeUnions<[A, N]> extends [infer Ai extends unknown[], infer Ni extends number] ? 
+    DistributeUnions<[A, N]> extends [infer Ai extends A, infer Ni extends N] ? 
         Ai extends Ai ? Ni extends Ni ? SimpleTakeArray<Ai, Ni> : never : never : never;
 
 type SimpleSkipArray<A extends unknown[], N extends number> =
@@ -42,7 +42,7 @@ type SimpleSkipArray<A extends unknown[], N extends number> =
  * @example SkipArray<[1, 2, 3], 2> // [3]
  */
 export type SkipArray<A extends unknown[], N extends number> =
-    DistributeUnions<[A, N]> extends [infer Ai extends unknown[], infer Ni extends number] ? 
+    DistributeUnions<[A, N]> extends [infer Ai extends A, infer Ni extends N] ? 
         Ai extends Ai ? Ni extends Ni ? SimpleSkipArray<Ai, Ni> : never : never : never;
 
 /**
@@ -65,8 +65,11 @@ type SimpleFillLeft<T extends V[], L extends number, I extends V, V = unknown, R
  * @example FillLeft<[1, 2], 5, 0> // [0, 0, 0, 1, 2]
  */
 export type FillLeft<T extends V[], L extends number, I extends V, V = unknown> = 
-	DistributeUnions<[T, L, I]> extends [infer Ti extends V[], infer Li extends number, infer Ii extends V] ? 
-        Ti extends Ti ? Li extends Li ? Ii extends Ii ? SimpleFillLeft<Ti, Li, Ii> : never : never : never : never;
+	DistributeUnions<[T, L, I]> extends [infer Ti extends T, infer Li extends L, infer Ii extends I] ? 
+        Ti extends Ti ? Li extends Li ? 
+			boolean extends Ii ? SimpleFillLeft<Ti, Li, Ii> :
+			Ii extends Ii ? SimpleFillLeft<Ti, Li, Ii> : never
+		 : never : never : never;
 
 		
 type SimpleFillRight<T extends V[], L extends number, I extends V, V = unknown, R extends V[] = T> = 
@@ -78,8 +81,16 @@ type SimpleFillRight<T extends V[], L extends number, I extends V, V = unknown, 
  * @example FillRight<[1, 2], 5, 0> // [1, 2, 0, 0, 0]
  */
 export type FillRight<T extends V[], L extends number, I extends V, V = unknown> = 
-	DistributeUnions<[T, L, I]> extends [infer Ti extends V[], infer Li extends number, infer Ii extends V] ? 
-        Ti extends Ti ? Li extends Li ? Ii extends Ii ? SimpleFillRight<Ti, Li, Ii> : never : never : never : never;
+	DistributeUnions<[T, L, I]> extends [infer Ti extends T, infer Li extends L, infer Ii extends I] ? 
+        Ti extends Ti ? Li extends Li ? 
+			boolean extends Ii ? SimpleFillLeft<Ti, Li, Ii> :
+			Ii extends Ii ? SimpleFillRight<Ti, Li, Ii> : never 
+		: never : never : never;
+
+type SimpleGenerateArray<T, L extends number, R extends T[] = []> = 
+	GreatThenOrEquals<L, 0> extends true ?
+		ArrayLength<R> extends L ? R : SimpleGenerateArray<T, L, [...R, T]>
+	: never;
 
 /**
  * @zh 生成指定长度的数组类型
@@ -89,7 +100,7 @@ export type FillRight<T extends V[], L extends number, I extends V, V = unknown>
  * @example GenerateArray<unknown, 0> // []
  * @example GenerateArray<boolean, 1> // [boolean]
  */
-export type GenerateArray<T, L extends number, R extends T[] = []> = 
-	GreatThenOrEquals<L, 0> extends true ?
-		ArrayLength<R> extends L ? R : GenerateArray<T, L, [...R, T]>
-	: never;
+export type GenerateArray<T, L extends number> = 
+	DistributeUnions<[T, L]> extends [infer Ti extends T, infer Li extends L] ? 
+		boolean extends Ti ? Li extends Li ? SimpleGenerateArray<Ti, Li> : never :
+        Ti extends Ti ? Li extends Li ? SimpleGenerateArray<Ti, Li> : never : never : never;

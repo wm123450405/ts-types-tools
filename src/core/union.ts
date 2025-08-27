@@ -8,7 +8,7 @@ type PickKeyValues<T, K extends keyof T, V> = [V extends V ? {[K1 in K]: V} : ne
 type DistributeObj<T, K extends keyof T = keyof T> = (Intersection<K extends K ? PickKeyValues<T, K, Distribute<T[K]>> : never> & [unknown])[0];
 
 type DistributeArr<A extends unknown[], R extends unknown[] = []> = A extends [infer F, ...infer T]
-    ? Distribute<F> extends infer Fi ? Fi extends Fi ? DistributeArr<T, [...R, Fi]> : never : never
+    ? Distribute<F> extends infer Fi ? boolean extends Fi ? DistributeArr<T, [...R, Fi]> : Fi extends Fi ? DistributeArr<T, [...R, Fi]> : never : never
     : R;
 
 type Distribute<T> = T extends unknown[] ? DistributeArr<T> : T extends object ? DistributeObj<T> : T;
@@ -16,6 +16,8 @@ type Distribute<T> = T extends unknown[] ? DistributeArr<T> : T extends object ?
 type Normalize<T> = T extends object ? {[K in keyof T]: Normalize<T[K]>} : T;
 
 export type DistributeUnions<T> = Normalize<Distribute<T>>;
+
+type t = DistributeUnions<[boolean]>
 
 // type c = DistributeUnions<[{ x: 'a' | 'b', y: 'c' | 'd' }]>;
 

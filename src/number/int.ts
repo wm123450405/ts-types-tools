@@ -387,7 +387,7 @@ export type SimpleIntEnumerate<N extends number, Acc extends number[] = []> =
  * @example IntEnumerate<1.1> // never
  */
 export type IntEnumerate<N extends number> = 
-    DistributeUnions<[N]> extends [infer Ni extends number] ? Ni extends Ni ? SimpleIntEnumerate<Ni> : never : never;
+    DistributeUnions<[N]> extends [infer Ni extends N] ? Ni extends Ni ? SimpleIntEnumerate<Ni> : never : never;
 
 /**
  * @zh 数字序列.
@@ -435,7 +435,7 @@ type SimpleAddOne<N extends number> = IsUInt<N> extends true ?
  * @example AddOne<1.2> // never
  */
 export type AddOne<N extends number> = 
-    DistributeUnions<[N]> extends [infer Ni extends number] ? Ni extends Ni ? SimpleAddOne<Ni> : never : never;
+    DistributeUnions<[N]> extends [infer Ni extends N] ? Ni extends Ni ? SimpleAddOne<Ni> : never : never;
 
 type SimplMinusOne<N extends number> = IsUInt<N> extends true ? 
 	N extends 0 ? never :
@@ -464,7 +464,7 @@ type SimplMinusOne<N extends number> = IsUInt<N> extends true ?
  * @example MinusOne<1.5> // never
  */
 export type MinusOne<N extends number> =
-    DistributeUnions<[N]> extends [infer Ni extends number] ? Ni extends Ni ? SimplMinusOne<Ni> : never : never;
+    DistributeUnions<[N]> extends [infer Ni extends N] ? Ni extends Ni ? SimplMinusOne<Ni> : never : never;
 
 /**
  * @zh 数字序列.

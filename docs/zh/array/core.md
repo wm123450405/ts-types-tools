@@ -56,7 +56,7 @@ FillRight<[1, 2], 5, 0> // [1, 2, 0, 0, 0]
 ```
 
 			
-### 生成指定长度的数组类型 `GenerateArray<T, number, T[] = []>`
+### 生成指定长度的数组类型 `GenerateArray<T, number>`
 
 
 ``` typescript

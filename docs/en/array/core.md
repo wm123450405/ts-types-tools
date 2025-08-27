@@ -56,7 +56,7 @@ FillRight<[1, 2], 5, 0> // [1, 2, 0, 0, 0]
 ```
 
 			
-###  `GenerateArray<T, number, T[] = []>`
+###  `GenerateArray<T, number>`
 
 
 ``` typescript

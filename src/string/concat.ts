@@ -12,7 +12,7 @@ type SimpleTakeString<A extends string, N extends number> =
  * @example TakeString<'abcdefg', 3> // 'abc'
  */
 export type TakeString<A extends string, N extends number> =
-	DistributeUnions<[A, N]> extends [infer Ai extends string, infer Ni extends number] ? 
+	DistributeUnions<[A, N]> extends [infer Ai extends A, infer Ni extends N] ? 
             Ai extends Ai ? Ni extends Ni ? SimpleTakeString<Ai, Ni> : never : never : never;
 
             
@@ -26,7 +26,7 @@ type SimpleSkipString<A extends string, N extends number> =
  * @example SkipString<'abcdefg', 3> // 'defg'
  */
 export type SkipString<A extends string, N extends number> =
-	DistributeUnions<[A, N]> extends [infer Ai extends string, infer Ni extends number] ? 
+	DistributeUnions<[A, N]> extends [infer Ai extends A, infer Ni extends N] ? 
             Ai extends Ai ? Ni extends Ni ? SimpleSkipString<Ai, Ni> : never : never : never;
 
 /**
@@ -56,7 +56,7 @@ type SimplePadLeft<T extends string, L extends number, C extends string = ' '> =
  * @example PadLeft<'55555', 3> // '55555'
  */
 export type PadLeft<T extends string, L extends number, C extends string = ' '> = 
-    DistributeUnions<[T, L, C]> extends [infer Ti extends string, infer Li extends number, infer Ci extends string] ? 
+    DistributeUnions<[T, L, C]> extends [infer Ti extends T, infer Li extends L, infer Ci extends C] ? 
         Ti extends Ti ? Li extends Li ? Ci extends Ci ? SimplePadLeft<Ti, Li, Ci> : never : never : never : never;
         
 type SimplePadRight<T extends string, L extends number, C extends string = ' '> = 
@@ -75,8 +75,8 @@ type SimplePadRight<T extends string, L extends number, C extends string = ' '> 
  * @example PadRight<'55555', 3> // '55555'
  */
 export type PadRight<T extends string, L extends number, C extends string = ' '> = 
-    DistributeUnions<[T, L, C]> extends [infer Ti extends string, infer Li extends number, infer Ci extends string] ? 
-        Ti extends Ti ? Li extends Li ? Ci extends Ci ? SimplePadRight<Ti, Li, Ci> : never : never : never : never;
+    DistributeUnions<[T, L, C]> extends [infer Ti extends T, infer Li extends L, infer Ci extends C] ? 
+        SimplePadRight<Ti, Li, Ci> : never;
 
 /**
  * @zh 修剪左侧.

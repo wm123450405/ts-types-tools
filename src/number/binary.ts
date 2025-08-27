@@ -73,7 +73,7 @@ type SimpleNumberToBinary<N extends number, BS extends number[] = Binarys> =
  * @example NumberToBinary<0> // [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
  */
 export type NumberToBinary<N extends number> =
-	DistributeUnions<[N]> extends [infer Ni extends number] ? Ni extends Ni ? SimpleNumberToBinary<Ni> : never : never;
+	DistributeUnions<[N]> extends [infer Ni extends N] ? Ni extends Ni ? SimpleNumberToBinary<Ni> : never : never;
 
 type SimpleBinaryToNumber<B extends Binary, L extends boolean[] = B, BS extends number[] = Binarys, R extends number = 0> = 
 	L extends [ infer F extends boolean, ...infer RL extends boolean[] ] ?
@@ -89,7 +89,7 @@ type SimpleBinaryToNumber<B extends Binary, L extends boolean[] = B, BS extends 
  * @zh 二进制转化为数字
  */
 export type BinaryToNumber<B extends Binary> = 
-	DistributeUnions<[B]> extends [infer Bi extends Binary] ? Bi extends Bi ? SimpleBinaryToNumber<Bi> : never : never;
+	DistributeUnions<[B]> extends [infer Bi extends B] ? Bi extends Bi ? SimpleBinaryToNumber<Bi> : never : never;
 
 type SimpleNumberToBinaryString<B extends Binary | number, L extends boolean[] = B extends number ? NumberToBinary<B> : B, R extends string = ''> =
 	L extends [ infer F extends boolean, ...infer Rest extends boolean[] ] ?
@@ -106,7 +106,7 @@ type SimpleNumberToBinaryString<B extends Binary | number, L extends boolean[] =
  * @zh 二进制转二进制字符串
  */
 export type NumberToBinaryString<B extends Binary | number> =
-	DistributeUnions<[B]> extends [infer Bi extends Binary | number] ? Bi extends Bi ? SimpleNumberToBinaryString<Bi> : never : never;
+	DistributeUnions<[B]> extends [infer Bi extends B] ? Bi extends Bi ? SimpleNumberToBinaryString<Bi> : never : never;
 
 type SimpleBinaryStringToBinary<T extends string, R extends boolean[] = []> = 
 	T extends `0b${infer RT extends string}` ?
@@ -127,4 +127,4 @@ type SimpleBinaryStringToBinary<T extends string, R extends boolean[] = []> =
  * @zh 二进制字符串转为数字
  */
 export type BinaryStringToNumber<T extends string> = 
-	DistributeUnions<[T]> extends [infer Ti extends string] ? Ti extends Ti ? BinaryToNumber<SimpleBinaryStringToBinary<T>> : never : never;
+	DistributeUnions<[T]> extends [infer Ti extends T] ? Ti extends Ti ? BinaryToNumber<SimpleBinaryStringToBinary<T>> : never : never;
