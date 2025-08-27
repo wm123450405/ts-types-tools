@@ -1,7 +1,7 @@
 import type { DistributeUnions } from "../core";
 import type { DefaultIfEmpty, ReverseString, TrimRight } from "../string";
 import type { GreatThenOrEquals } from "./compare";
-import type { Abs, Negative, NumberToString, SignalPart, StringToNumber } from "./core";
+import type { Abs, Negative, NumberToString, SignalPart, DecimalStringToNumber } from "./core";
 import type { IntPart } from "./decimal";
 
 export type IntChars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
@@ -411,16 +411,16 @@ export type IntRange<F extends number, T extends number> =
 
 type SimpleAddOne<N extends number> = IsUInt<N> extends true ? 
 	ReverseString<NumberToString<N>> extends `${infer F extends IntChar}${infer Rest}` ? 
-		F extends '8' ? StringToNumber<`${ReverseString<Rest>}9`> :
-		F extends '7' ? StringToNumber<`${ReverseString<Rest>}8`> :
-		F extends '6' ? StringToNumber<`${ReverseString<Rest>}7`> :
-		F extends '5' ? StringToNumber<`${ReverseString<Rest>}6`> :
-		F extends '4' ? StringToNumber<`${ReverseString<Rest>}5`> :
-		F extends '3' ? StringToNumber<`${ReverseString<Rest>}4`> :
-		F extends '2' ? StringToNumber<`${ReverseString<Rest>}3`> :
-		F extends '1' ? StringToNumber<`${ReverseString<Rest>}2`> :
-		F extends '0' ? StringToNumber<`${ReverseString<Rest>}1`> :
-		Rest extends '' ? 10 : StringToNumber<`${SimpleAddOne<StringToNumber<ReverseString<Rest>>>}0`> : 
+		F extends '8' ? DecimalStringToNumber<`${ReverseString<Rest>}9`> :
+		F extends '7' ? DecimalStringToNumber<`${ReverseString<Rest>}8`> :
+		F extends '6' ? DecimalStringToNumber<`${ReverseString<Rest>}7`> :
+		F extends '5' ? DecimalStringToNumber<`${ReverseString<Rest>}6`> :
+		F extends '4' ? DecimalStringToNumber<`${ReverseString<Rest>}5`> :
+		F extends '3' ? DecimalStringToNumber<`${ReverseString<Rest>}4`> :
+		F extends '2' ? DecimalStringToNumber<`${ReverseString<Rest>}3`> :
+		F extends '1' ? DecimalStringToNumber<`${ReverseString<Rest>}2`> :
+		F extends '0' ? DecimalStringToNumber<`${ReverseString<Rest>}1`> :
+		Rest extends '' ? 10 : DecimalStringToNumber<`${SimpleAddOne<DecimalStringToNumber<ReverseString<Rest>>>}0`> : 
 		0:
 	never
 
@@ -440,16 +440,16 @@ export type AddOne<N extends number> =
 type SimplMinusOne<N extends number> = IsUInt<N> extends true ? 
 	N extends 0 ? never :
 		ReverseString<NumberToString<N>> extends `${infer F extends IntChar}${infer Rest}` ? 
-			F extends '1' ? StringToNumber<`${ReverseString<Rest>}0`> :
-			F extends '2' ? StringToNumber<`${ReverseString<Rest>}1`> :
-			F extends '3' ? StringToNumber<`${ReverseString<Rest>}2`> :
-			F extends '4' ? StringToNumber<`${ReverseString<Rest>}3`> :
-			F extends '5' ? StringToNumber<`${ReverseString<Rest>}4`> :
-			F extends '6' ? StringToNumber<`${ReverseString<Rest>}5`> :
-			F extends '7' ? StringToNumber<`${ReverseString<Rest>}6`> :
-			F extends '8' ? StringToNumber<`${ReverseString<Rest>}7`> :
-			F extends '9' ? StringToNumber<`${ReverseString<Rest>}8`> :
-			Rest extends '1' ? 9 : StringToNumber<`${SimplMinusOne<StringToNumber<ReverseString<Rest>>>}9`> : 
+			F extends '1' ? DecimalStringToNumber<`${ReverseString<Rest>}0`> :
+			F extends '2' ? DecimalStringToNumber<`${ReverseString<Rest>}1`> :
+			F extends '3' ? DecimalStringToNumber<`${ReverseString<Rest>}2`> :
+			F extends '4' ? DecimalStringToNumber<`${ReverseString<Rest>}3`> :
+			F extends '5' ? DecimalStringToNumber<`${ReverseString<Rest>}4`> :
+			F extends '6' ? DecimalStringToNumber<`${ReverseString<Rest>}5`> :
+			F extends '7' ? DecimalStringToNumber<`${ReverseString<Rest>}6`> :
+			F extends '8' ? DecimalStringToNumber<`${ReverseString<Rest>}7`> :
+			F extends '9' ? DecimalStringToNumber<`${ReverseString<Rest>}8`> :
+			Rest extends '1' ? 9 : DecimalStringToNumber<`${SimplMinusOne<DecimalStringToNumber<ReverseString<Rest>>>}9`> : 
 			0:
 	never;
 
@@ -499,7 +499,7 @@ export type AddInt<A extends number, B extends number> =
 	SignalPart<A> extends 1 ?
 		SignalPart<B> extends 1 ?
 			//正常求和
-			StringToNumber<ReverseString<AddIntReverseString<ReverseString<NumberToString<IntPart<A>>>, ReverseString<NumberToString<IntPart<B>>>>>> :
+			DecimalStringToNumber<ReverseString<AddIntReverseString<ReverseString<NumberToString<IntPart<A>>>, ReverseString<NumberToString<IntPart<B>>>>>> :
 			MinusInt<A, Abs<B>> :
 		SignalPart<B> extends 1 ?
 			MinusInt<B, Abs<A>> :
@@ -520,7 +520,7 @@ export type MinusInt<A extends number, B extends number> =
 		SignalPart<B> extends 1 ?
 			GreatThenOrEquals<A, B> extends true ?
 				//正常求差
-				StringToNumber<ReverseString<DefaultIfEmpty<TrimRight<MinusIntReverseString<ReverseString<NumberToString<IntPart<A>>>, ReverseString<NumberToString<IntPart<B>>>>, '0'>, '0'>>> :
+				DecimalStringToNumber<ReverseString<DefaultIfEmpty<TrimRight<MinusIntReverseString<ReverseString<NumberToString<IntPart<A>>>, ReverseString<NumberToString<IntPart<B>>>>, '0'>, '0'>>> :
 				Negative<MinusInt<B, A>> : 
 			AddInt<A, Abs<B>> :
 		SignalPart<B> extends 1 ?

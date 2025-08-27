@@ -2,6 +2,9 @@ import type { BinaryStringToNumber } from './binary';
 
 export type Signal = -1 | 1;
 
+export type DecimalStringToNumber<T extends string> =
+	T extends `${infer N extends number}` ? N : never;
+
 /**
  * @zh 字符串转数字.
  * 数字字符串类型转为数字类型
@@ -12,7 +15,7 @@ export type StringToNumber<T extends string> =
 	T extends `0b${number}` ? 
 		BinaryStringToNumber<T>
 	:
-		T extends `${infer N extends number}` ? N : never;
+		DecimalStringToNumber<T>;
 
 /**
  * @zh 数字转字符串.
