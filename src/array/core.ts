@@ -1,5 +1,5 @@
 import type { DistributeUnions } from "../core";
-import type { GreatThenOrEquals, MinusOne } from "../number";
+import type { GreatThenOrEquals, Max, Min, MinusOne } from "../number";
 
 /**
  * @zh 是否空数组.
@@ -117,3 +117,18 @@ export type GenerateArray<T, L extends number> =
 	DistributeUnions<[T, L]> extends [infer Ti extends T, infer Li extends L] ? 
 		boolean extends Ti ? Li extends Li ? SimpleGenerateArray<Ti, Li> : never :
         Ti extends Ti ? Li extends Li ? SimpleGenerateArray<Ti, Li> : never : never : never;
+
+export type SimpleSortArray<T extends number[], L extends number[] = [], M extends number = Min<T>> =
+	T extends [M, ...infer R extends number[]] ? [M, ...SimpleSortArray<[...L, ...R], []>] : 
+	T extends [infer F extends number, ...infer R extends number[]] ? SimpleSortArray<R, [...L, F], M> :
+	[];
+
+/**
+ * @zh 数组排序.
+ * @en Sort an array.
+ * @example SortArray<[2, 1, 3]> // [1, 2, 3]
+ * @example SortArray<[2, 1, 3, 2, 1, 3]> // [1, 1, 2, 2, 3, 3]
+ */
+export type SortArray<T extends number[]> =
+	DistributeUnions<[T]> extends [infer Ti extends T] ? 
+		Ti extends Ti ? SimpleSortArray<Ti> : never : never

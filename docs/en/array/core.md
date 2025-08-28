@@ -76,3 +76,12 @@ GenerateArray<boolean, 1> // [boolean]
 ```
 
 			
+### Sort an array `SortArray<number[]>`
+
+
+``` typescript
+SortArray<[2, 1, 3]> // [1, 2, 3]
+SortArray<[2, 1, 3, 2, 1, 3]> // [1, 1, 2, 2, 3, 3]
+```
+
+			
