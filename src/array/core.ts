@@ -118,7 +118,7 @@ export type GenerateArray<T, L extends number> =
 		boolean extends Ti ? Li extends Li ? SimpleGenerateArray<Ti, Li> : never :
         Ti extends Ti ? Li extends Li ? SimpleGenerateArray<Ti, Li> : never : never : never;
 
-export type SimpleSortArray<T extends number[], L extends number[] = [], M extends number = Min<T>> =
+type SimpleSortArray<T extends number[], L extends number[] = [], M extends number = Min<T>> =
 	T extends [M, ...infer R extends number[]] ? [M, ...SimpleSortArray<[...L, ...R], []>] : 
 	T extends [infer F extends number, ...infer R extends number[]] ? SimpleSortArray<R, [...L, F], M> :
 	[];
