@@ -114,3 +114,15 @@ export type DistributeUnions<T> = Normalize<Distribute<T>>;
  */
 export type ArrayToUnion<A extends unknown[]> =
 	A extends [ infer F, ...infer R ] ? F | ArrayToUnion<R> : never;
+
+
+type SimpleUnionToArray<A, C = A> =
+	[A] extends [infer B extends A] ? B extends B ? Exclude<C, B> extends never ? [B] : [B, ...UnionToArray<Exclude<C, B>>] : [] : [];
+
+/**
+ * @zh 将联合类型转化成数组类型
+ * @example UnionToArray<1 | 2> // [1, 2] | [2, 1]
+ * @example UnionToArray<1 | 2 | 3> // [1, 2, 3] | [1, 3, 2] | [2, 1, 3] | [2, 3, 1] | [3, 1, 2] | [3, 2, 1]
+ */
+export type UnionToArray<A> =
+	SimpleUnionToArray<A>;
