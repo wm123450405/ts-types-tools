@@ -29,4 +29,6 @@ type Status = IntRange<0, 5>;  // 0 | 1 | 2 | 3 | 4
 
 ### [数组](./docs/zh/array/index.md)
 
+### [对象](./docs/zh/object/index.md)
+
 ### [综合](./docs/zh/mixins/index.md)

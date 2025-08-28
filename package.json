@@ -1,5 +1,6 @@
 {
   "name": "ts-types-tools",
+  "description": "some type tools for typescript | TS中一些方便的类型工具",
   "author": "wm123450405",
   "version": "0.0.8",
   "module": "index.ts",

@@ -1,5 +1,5 @@
-import type { ReverseArray } from "../array";
-import type { ReverseString } from "../string";
+import type { ArrayLength, ReverseArray } from "../array";
+import type { ReverseString, StringLength } from "../string";
 
 
 /**
@@ -11,3 +11,14 @@ import type { ReverseString } from "../string";
  */
 export type Reverse<T extends string | unknown[]> = 
     T extends string ? ReverseString<T> : T extends unknown[] ? ReverseArray<T> : never;
+
+/**
+ * @zh 长度.
+ * 获取字符串或数组的长度
+ * @en Get the length of a string or an array
+ * @example Length<'abc'> // 3
+ * @example Length<[1, 2]> // 2
+ */
+export type Length<T extends string | unknown[]> =
+    T extends string ? StringLength<T> : T extends unknown[] ? ArrayLength<T> : never;
+

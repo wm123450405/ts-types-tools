@@ -29,4 +29,6 @@ type Status = TypesTools.IntRange<0, 5>;  // 0 | 1 | 2 | 3 | 4
 
 ### [Array](./docs/en/array/index.md)
 
+### [Object](./docs/en/object/index.md)
+
 ### [Mixins](./docs/en/mixins/index.md)
