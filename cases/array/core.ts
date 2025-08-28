@@ -1,8 +1,11 @@
 
 import type { Equal, Expect } from '@type-challenges/utils';
-import type { ReverseArray, ArrayLength, TakeArray, SkipArray, Slice, FillLeft, FillRight, GenerateArray } from '../../index';
+import type { IsEmptyArray, ReverseArray, ArrayLength, TakeArray, SkipArray, Slice, FillLeft, FillRight, GenerateArray } from '../../index';
 
 export type Cases = [
+	Expect<Equal<IsEmptyArray<[]> ,  true>>,
+	Expect<Equal<IsEmptyArray<[1, 2]> ,  false>>,
+	Expect<Equal<IsEmptyArray<unknown[]> ,  false>>,
 	Expect<Equal<ReverseArray<[1, 2]> ,  [2, 1]>>,
 	Expect<Equal<ArrayLength<[1,2,3]> ,  3>>,
 	Expect<Equal<ArrayLength<unknown[]> ,  number>>,

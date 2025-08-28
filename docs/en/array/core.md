@@ -1,4 +1,14 @@
 
+### Is an empty array `IsEmptyArray<unknown[]>`
+
+
+``` typescript
+IsEmptyArray<[]> // true
+IsEmptyArray<[1, 2]> // false
+IsEmptyArray<unknown[]> // false
+```
+
+			
 ### Reverse an array `ReverseArray<unknown[]>`
 
 

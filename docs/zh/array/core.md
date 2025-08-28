@@ -1,4 +1,14 @@
 
+### 是否空数组 `IsEmptyArray<unknown[]>`
+
+
+``` typescript
+IsEmptyArray<[]> // true
+IsEmptyArray<[1, 2]> // false
+IsEmptyArray<unknown[]> // false
+```
+
+			
 ### 反转数组 `ReverseArray<unknown[]>`
  * 反转一个数组
 

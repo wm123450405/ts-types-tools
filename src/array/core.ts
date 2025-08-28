@@ -2,6 +2,16 @@ import type { DistributeUnions } from "../core";
 import type { GreatThenOrEquals, MinusOne } from "../number";
 
 /**
+ * @zh 是否空数组.
+ * @en Is an empty array.
+ * @example IsEmptyArray<[]> // true
+ * @example IsEmptyArray<[1, 2]> // false
+ * @example IsEmptyArray<unknown[]> // false
+ */
+export type IsEmptyArray<T extends unknown[]> =
+		T extends [] ? true : false;
+
+/**
  * @zh 反转数组.
  * 反转一个数组
  * @en Reverse an array
