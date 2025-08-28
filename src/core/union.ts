@@ -113,7 +113,8 @@ export type DistributeUnions<T> = Normalize<Distribute<T>>;
  * @example ArrayToUnion<[ true, false ]> // boolean
  */
 export type ArrayToUnion<A extends unknown[]> =
-	A extends [ infer F, ...infer R ] ? F | ArrayToUnion<R> : never;
+    A[number];
+	// A extends [ infer F, ...infer R ] ? F | ArrayToUnion<R> : never;
 
 
 type SimpleUnionToArray<A, C = A> =

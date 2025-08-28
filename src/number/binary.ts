@@ -57,7 +57,7 @@ type Binarys = [
  * @en Binary format
  * @example Binary // [boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean]
  */
-export type Binary = GenerateArray<BinaryType, ArrayLength<Binarys>>;
+export type Binary = GenerateArray<BinaryType, BinarySize>;
 
 type SimpleNumberToBinary<N extends number, BS extends number[] = Binarys> = 
 	BS extends [ infer H extends number, ...infer L extends number[] ] ?
@@ -104,6 +104,8 @@ type SimpleNumberToBinaryString<B extends Binary | number, L extends boolean[] =
 
 /**
  * @zh 二进制转二进制字符串
+ * @example NumberToBinaryString<0> // '0b00000000000000000000000000000000'
+ * @example NumberToBinaryString<1> // '0b00000000000000000000000000000001'
  */
 export type NumberToBinaryString<B extends Binary | number> =
 	DistributeUnions<[B]> extends [infer Bi extends B] ? Bi extends Bi ? SimpleNumberToBinaryString<Bi> : never : never;
@@ -125,6 +127,9 @@ type SimpleBinaryStringToBinary<T extends string, R extends boolean[] = []> =
 
 /**
  * @zh 二进制字符串转为数字
+ * @example BinaryStringToNumber<'0b00000000000000000000000000000001'> // 1
+ * @example BinaryStringToNumber<'0b00000000000000000000000000000000'> // 0
  */
 export type BinaryStringToNumber<T extends string> = 
 	DistributeUnions<[T]> extends [infer Ti extends T] ? Ti extends Ti ? BinaryToNumber<SimpleBinaryStringToBinary<T>> : never : never;
+
