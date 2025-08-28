@@ -1,5 +1,5 @@
 import type { DistributeUnions } from "../core";
-import type { GreatThenOrEquals, Max, Min, MinusOne } from "../number";
+import type { GreatThenOrEquals, Min, MinusOne } from "../number";
 
 /**
  * @zh 是否空数组.
