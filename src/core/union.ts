@@ -126,3 +126,23 @@ type SimpleUnionToArray<A, C = A> =
  */
 export type UnionToArray<A> =
 	SimpleUnionToArray<A>;
+
+/**
+ * @zh 将联合类型转化成交叉类型
+ * @example UnionToIntersection< { a: number } | { b: 1 }> // { a: number } & { b: 1 }
+ */
+export type UnionToIntersection<U> =
+    (U extends U ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never
+
+type OneOfUnion<T> =
+    UnionToIntersection<T extends T ? () => T : never> extends () => (infer R) ? R : never
+
+type SimpleUnionToTuple<T, L = OneOfUnion<T>> =
+    [T] extends [never] ? [] : [...SimpleUnionToTuple<Exclude<T, L>>, L]
+
+/**
+ * @zh 将联合类型转化成元组类型.
+ * 顺序随机
+ */
+export type UnionToTuple<T> =
+    SimpleUnionToTuple<T>;

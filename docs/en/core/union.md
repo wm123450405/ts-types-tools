@@ -19,3 +19,19 @@ UnionToArray<1 | 2 | 3> // [1, 2, 3] | [1, 3, 2] | [2, 1, 3] | [2, 3, 1] | [3, 1
 ```
 
 			
+###  `UnionToIntersection<U>`
+
+
+``` typescript
+UnionToIntersection< { a: number } | { b: 1 }> // { a: number } & { b: 1 }
+```
+
+			
+###  `UnionToTuple<T>`
+
+
+``` typescript
+
+```
+
+			
