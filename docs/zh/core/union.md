@@ -10,3 +10,12 @@ ArrayToUnion<[ true, false ]> // boolean
 ```
 
 			
+### 将联合类型转化成数组类型 `UnionToArray<A>`
+
+
+``` typescript
+UnionToArray<1 | 2> // [1, 2] | [2, 1]
+UnionToArray<1 | 2 | 3> // [1, 2, 3] | [1, 3, 2] | [2, 1, 3] | [2, 3, 1] | [3, 1, 2] | [3, 2, 1]
+```
+
+			
