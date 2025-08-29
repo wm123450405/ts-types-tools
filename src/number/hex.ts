@@ -1,18 +1,12 @@
-import type { ArrayLength, FillLeft, GenerateArray, Slice } from "../array";
+import type { ArrayLength, FillLeft, Slice } from "../array";
 import type { DistributeUnions } from "../core";
 import type { Binary, BinarySize, BinaryToNumber, BinaryType, NumberToBinary } from "./binary";
-import type { GreatThenOrEquals, GreatThen } from "./compare";
-import type { AddInt, AddOne, IntChars, IntEnumerate, MinusInt } from "./int";
+import type { GreatThen } from "./compare";
+import type { IntChars, MinusInt } from "./int";
 
 export type HexChars = [...IntChars, 'A', 'B', 'C', 'D', 'E', 'F']
 
 export type HexChar = HexChars[number];
-
-type HexSize = 8;
-
-type HexValue = IntEnumerate<ArrayLength<HexChars>>;
-
-type Hex = GenerateArray<HexChar, HexSize>;
 
 type HexBinary = [BinaryType, BinaryType, BinaryType, BinaryType];
 
