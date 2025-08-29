@@ -1,118 +1,88 @@
-// import type { ArrayLength, FillLeft, GenerateArray, Slice } from "../array";
-// import type { ArrayToUnion, DistributeUnions } from "../core";
-// import type { GreatThenOrEquals, GreatThen } from "./compare";
-// import type { AddInt, IntChars, IntEnumerate, MinusInt } from "./int";
+import type { ArrayLength, FillLeft, GenerateArray, Slice } from "../array";
+import type { DistributeUnions } from "../core";
+import type { Binary, BinarySize, BinaryToNumber, BinaryType, NumberToBinary } from "./binary";
+import type { GreatThenOrEquals, GreatThen } from "./compare";
+import type { AddInt, AddOne, IntChars, IntEnumerate, MinusInt } from "./int";
 
-// export type HexSize = 8;
+export type HexChars = [...IntChars, 'A', 'B', 'C', 'D', 'E', 'F']
 
-// export type HexChars = [...IntChars, 'A', 'B', 'C', 'D', 'E', 'F']
+export type HexChar = HexChars[number];
 
-// export type HexChar = HexChars[number];
+type HexSize = 8;
 
-// export type HexValue = IntEnumerate<ArrayLength<HexChars>>;
+type HexValue = IntEnumerate<ArrayLength<HexChars>>;
 
-// type Hexes = [
-// 	0x10000000, 
-// 	0x1000000, 
-// 	0x100000, 
-// 	0x10000, 
-// 	0x1000, 
-// 	0x100, 
-// 	0x10, 
-// 	0x1
-// ];
+type Hex = GenerateArray<HexChar, HexSize>;
 
+type HexBinary = [BinaryType, BinaryType, BinaryType, BinaryType];
 
-// export type Hex = GenerateArray<HexChar, HexSize>;
+type HexCharToBinary<C extends HexChar> =
+	C extends '0' ? [ false, false, false, false ] :
+	C extends '1' ? [ false, false, false, true ] :
+	C extends '2' ? [ false, false, true, false ] :
+	C extends '3' ? [ false, false, true, true ] :
+	C extends '4' ? [ false, true, false, false ] :
+	C extends '5' ? [ false, true, false, true ] :
+	C extends '6' ? [ false, true, true, false ] :
+	C extends '7' ? [ false, true, true, true ] :
+	C extends '8' ? [ true, false, false, false ] :
+	C extends '9' ? [ true, false, false, true ] :
+	C extends 'A' ? [ true, false, true, false ] :
+	C extends 'B' ? [ true, false, true, true ] :
+	C extends 'C' ? [ true, true, false, false ] :
+	C extends 'D' ? [ true, true, false, true ] :
+	C extends 'E' ? [ true, true, true, false ] :
+	C extends 'F' ? [ true, true, true, true ] :
+	never;
 
-// type HexCharToValue<C extends HexChar> =
-// 	C extends 'A' ? 10 :
-// 	C extends 'B' ? 11 :
-// 	C extends 'C' ? 12 :
-// 	C extends 'D' ? 13 :
-// 	C extends 'E' ? 14 :
-// 	C extends 'F' ? 15 :
-// 	C extends `${infer N extends HexValue}` ? N :
-// 	never;
+type BinaryToHexChar<H extends HexBinary> =
+	H extends [ false, false, false, false ] ? '0' :
+	H extends [ false, false, false, true ] ? '1' :
+	H extends [ false, false, true, false ] ? '2' :
+	H extends [ false, false, true, true ] ? '3' :
+	H extends [ false, true, false, false ] ? '4' :
+	H extends [ false, true, false, true ] ? '5' :
+	H extends [ false, true, true, false ] ? '6' :
+	H extends [ false, true, true, true ] ? '7' :
+	H extends [ true, false, false, false ] ? '8' :
+	H extends [ true, false, false, true ] ? '9' :
+	H extends [ true, false, true, false ] ? 'A' :
+	H extends [ true, false, true, true ] ? 'B' :
+	H extends [ true, true, false, false ] ? 'C' :
+	H extends [ true, true, false, true ] ? 'D' :
+	H extends [ true, true, true, false ] ? 'E' :
+	H extends [ true, true, true, true ] ? 'F' :
+	never;
 
-// type HexValueToChar<C extends HexValue> = 
-// 	C extends 10 ? 'A' :
-// 	C extends 11 ? 'B' :
-// 	C extends 12 ? 'C' :
-// 	C extends 13 ? 'D' :
-// 	C extends 14 ? 'E' :
-// 	C extends 15 ? 'F' :
-// 	`${C}` extends HexChar ? `${C}` : never;
-
-
-// type SimpleNumberToHex<N extends number, BS extends number[] = Hexes> = 
-// 	BS extends [ infer H extends number, ...infer L extends number[] ] ?
-// 		GreatThenOrEquals<N, H> extends true ?
-// 			[ true, ...SimpleNumberToHex<MinusInt<N, H>, L> ]
-// 		:
-// 			[ false, ...SimpleNumberToHex<N, L> ]
-// 	: []
-
-// /**
-//  * @zh 数字转十六进制格式
-//  * @en Number to binary
-//  * @example NumberToHex<0> // []
-//  */
-// export type NumberToHex<N extends number> =
-// 	DistributeUnions<[N]> extends [infer Ni extends N] ? Ni extends Ni ? SimpleNumberToHex<Ni> : never : never;
-
-// type SimpleHexToNumber<B extends Hex, L extends HexChar[] = B, BS extends number[] = Hexes, R extends number = 0> = 
-// 	L extends [ infer F extends HexChar, ...infer RL extends HexChar[] ] ?
-// 		BS extends [ infer H extends number, ...infer RB extends number[] ] ?
-// 			F extends true ?
-// 				RL extends [] ? AddInt<R, H> : SimpleHexToNumber<B, RL, RB, AddInt<R, H>>
-// 			:
-// 				RL extends [] ? R : SimpleHexToNumber<B, RL, RB, R>
-// 		: R
-// 	: R ;
-
-// /** 
-//  * @zh 十六进制转化为数字
-//  */
-// export type HexToNumber<B extends Hex> = 
-// 	DistributeUnions<[B]> extends [infer Bi extends B] ? Bi extends Bi ? SimpleHexToNumber<Bi> : never : never;
-
-// type SimpleNumberToHexString<B extends Hex | number, L extends HexChar[] = B extends number ? NumberToHex<B> : B, R extends string = ''> =
-// 	L extends [ infer F extends HexChar, ...infer Rest extends HexChar[] ] ?
-// 		Rest extends [] ?
-// 			`${R}${F extends true ? 1 : 0}`
-// 		:
-// 			R extends '' ? 
-// 				SimpleNumberToHexString<B, Rest, `0x${F extends true ? 1 : 0}`>
-// 			:
-// 				SimpleNumberToHexString<B, Rest, `${R}${F extends true ? 1 : 0}`>
-// 	: never;
-
-// /**
-//  * @zh 十六进制转十六进制字符串
-//  * @example NumberToHexString<0> // '0x00000000'
-//  * @example NumberToHexString<1> // '0x00000001'
-//  */
-// export type NumberToHexString<B extends Hex | number> =
-// 	DistributeUnions<[B]> extends [infer Bi extends B] ? Bi extends Bi ? SimpleNumberToHexString<Bi> : never : never;
-
-// type SimpleHexStringToHex<T extends string, R extends HexValue[] = []> = 
-// 	T extends `0x${infer RT extends string}` ?
-// 		SimpleHexStringToHex<RT>
-// 	:
-// 		T extends `${infer F extends HexChar}${infer O extends string}` ?
-// 			SimpleHexStringToHex<O, [...R, HexCharToValue<F>]>
-// 		:
-// 			GreatThen<ArrayLength<R>, HexSize> extends true ?
-// 				Slice<R, MinusInt<ArrayLength<R>, HexSize>, ArrayLength<R>>
-// 			: FillLeft<R, HexSize, '0'>;
+type SimpleBinaryToHexString<B extends BinaryType[]> =
+	B extends [infer F0 extends BinaryType, infer F1 extends BinaryType, infer F2 extends BinaryType, infer F3 extends BinaryType, ...infer R extends BinaryType[]] ?
+		`${BinaryToHexChar<[ F0, F1, F2, F3 ]>}${SimpleBinaryToHexString<R>}` : '';
 		
 
-// /**
-//  * @zh 十六进制字符串转为数字
-//  * @example HexStringToNumber<'0x00000001'> // 1
-//  * @example HexStringToNumber<'0x00000000'> // 0
-//  */
-// export type HexStringToNumber<T extends string> = 
-// 	DistributeUnions<[T]> extends [infer Ti extends T] ? Ti extends Ti ? HexToNumber<SimpleHexStringToHex<T>> : never : never;
+/**
+ * @zh 十六进制转十六进制字符串
+ * @example NumberToHexString<0> // '0x00000000'
+ * @example NumberToHexString<35646> // '0x00008B3E'
+ */
+export type NumberToHexString<H extends number> =
+	DistributeUnions<[H]> extends [infer Hi extends H] ? NumberToBinary<Hi> extends infer Bi extends Binary ? `0x${SimpleBinaryToHexString<Bi>}` : never : never;
 
+type SimpleHexStringToBinary<T extends string, R extends BinaryType[] = []> = 
+	T extends `0x${infer RT extends string}` ?
+		SimpleHexStringToBinary<RT>
+	:
+		T extends `${infer F extends HexChar}${infer O extends string}` ?
+			SimpleHexStringToBinary<O, [...R, ...HexCharToBinary<F>]>
+		:
+			GreatThen<ArrayLength<R>, BinarySize> extends true ?
+				Slice<R, MinusInt<ArrayLength<R>, BinarySize>, ArrayLength<R>>
+			: FillLeft<R, BinarySize, '0'>;
+		
+
+/**
+ * @zh 十六进制字符串转为数字
+ * @example HexStringToNumber<'0x00008B3E'> // 35646
+ * @example HexStringToNumber<'0x00000000'> // 0
+ */
+export type HexStringToNumber<T extends string> = 
+	DistributeUnions<[T]> extends [infer Ti extends T] ? SimpleHexStringToBinary<Ti> extends infer Bi extends Binary ? BinaryToNumber<Bi> : never : never;

@@ -10,4 +10,6 @@
 
 ## [Binary](./binary.md)
 
+## [Hex](./hex.md)
+
 				

@@ -14,4 +14,7 @@ import './compare';
 
 import './binary';	
 
+
+import './hex';	
+
 				

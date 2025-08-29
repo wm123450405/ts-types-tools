@@ -1,4 +1,5 @@
 import type { BinaryStringToNumber } from './binary';
+import type { HexStringToNumber } from './hex';
 
 export type Signal = -1 | 1;
 
@@ -14,6 +15,8 @@ export type DecimalStringToNumber<T extends string> =
 export type StringToNumber<T extends string> = 
 	T extends `0b${number}` ? 
 		BinaryStringToNumber<T>
+	: T extends `0x${string}` ? 
+		HexStringToNumber<T>
 	:
 		DecimalStringToNumber<T>;
 

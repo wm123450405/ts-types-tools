@@ -1,6 +1,8 @@
 # ts-types-tools
 TS中一些方便的类型工具
 
+[English](./README.en.md)
+
 ## 1. 安装
 
 ```shell

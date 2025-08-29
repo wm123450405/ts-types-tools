@@ -1,6 +1,8 @@
 # ts-types-tools
 some type tools for typescript
 
+[中文](./README.md)
+
 ## 1. Install
 
 ```shell

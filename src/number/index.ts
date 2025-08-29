@@ -23,3 +23,8 @@ export * from './compare'
  * @en Binary
  */
 export * from './binary';
+/**
+ * @zh 十六进制
+ * @en Hex
+ */
+export * from './hex';
