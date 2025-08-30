@@ -1,5 +1,5 @@
 
-### Is an empty array `IsEmptyArray<unknown[]>`
+### Is an empty array `IsEmptyArray<readonly unknown[]>`
 
 
 ``` typescript
@@ -9,7 +9,7 @@ IsEmptyArray<unknown[]> // false
 ```
 
 			
-### Reverse an array `ReverseArray<unknown[]>`
+### Reverse an array `ReverseArray<readonly unknown[]>`
 
 
 ``` typescript
@@ -17,7 +17,7 @@ ReverseArray<[1, 2]> // [2, 1]
 ```
 
 			
-### Get the length of an array `ArrayLength<unknown[]>`
+### Get the length of an array `ArrayLength<readonly unknown[]>`
 
 
 ``` typescript
@@ -26,7 +26,7 @@ ArrayLength<unknown[]> // number
 ```
 
 			
-### A new array type composed of the first N items `TakeArray<unknown[], number>`
+### A new array type composed of the first N items `TakeArray<readonly unknown[], number>`
 
 
 ``` typescript
@@ -34,7 +34,7 @@ TakeArray<[1, 2, 3], 2> // [1, 2]
 ```
 
 			
-### A new array type composed of the items after N `SkipArray<unknown[], number>`
+### A new array type composed of the items after N `SkipArray<readonly unknown[], number>`
 
 
 ``` typescript
@@ -42,7 +42,7 @@ SkipArray<[1, 2, 3], 2> // [3]
 ```
 
 			
-### A new array type composed of the items from N to S `Slice<unknown[], number, number>`
+### A new array type composed of the items from N to S `Slice<readonly unknown[], number, number>`
 
 
 ``` typescript
@@ -76,7 +76,7 @@ GenerateArray<boolean, 1> // [boolean]
 ```
 
 			
-### Sort an array `SortArray<number[]>`
+### Sort an array `SortArray<readonly number[]>`
 
 
 ``` typescript

@@ -8,7 +8,7 @@ import type { GreatThenOrEquals, Min, MinusOne } from "../number";
  * @example IsEmptyArray<[1, 2]> // false
  * @example IsEmptyArray<unknown[]> // false
  */
-export type IsEmptyArray<T extends unknown[]> =
+export type IsEmptyArray<T extends readonly unknown[]> =
 		T extends [] ? true : false;
 
 /**
@@ -17,7 +17,7 @@ export type IsEmptyArray<T extends unknown[]> =
  * @en Reverse an array
  * @example ReverseArray<[1, 2]> // [2, 1]
  */
-export type ReverseArray<T extends unknown[]> = 
+export type ReverseArray<T extends readonly unknown[]> = 
 		T extends [ infer F, ...infer Rest ] ? [ ...ReverseArray<Rest>, F ] : [];
 
 /**
@@ -27,9 +27,9 @@ export type ReverseArray<T extends unknown[]> =
  * @example ArrayLength<[1,2,3]> // 3
  * @example ArrayLength<unknown[]> // number
  */
-export type ArrayLength<A extends unknown[]> = A['length'];
+export type ArrayLength<A extends readonly unknown[]> = A['length'];
 
-type SimpleTakeArray<A extends unknown[], N extends number> =
+type SimpleTakeArray<A extends readonly unknown[], N extends number> =
 	A extends { length: N } ? A : A extends [ ...infer P, unknown ] ? SimpleTakeArray<P, N> : never;
 
 /**
@@ -38,11 +38,11 @@ type SimpleTakeArray<A extends unknown[], N extends number> =
  * @en A new array type composed of the first N items
  * @example TakeArray<[1, 2, 3], 2> // [1, 2]
  */
-export type TakeArray<A extends unknown[], N extends number> =
+export type TakeArray<A extends readonly unknown[], N extends number> =
     DistributeUnions<[A, N]> extends [infer Ai extends A, infer Ni extends N] ? 
         Ai extends Ai ? Ni extends Ni ? SimpleTakeArray<Ai, Ni> : never : never : never;
 
-type SimpleSkipArray<A extends unknown[], N extends number> =
+type SimpleSkipArray<A extends readonly unknown[], N extends number> =
 	N extends 0 ? A : A extends [ unknown, ...infer S ] ? SimpleSkipArray<S, MinusOne<N>> : never;
 
 /**
@@ -51,7 +51,7 @@ type SimpleSkipArray<A extends unknown[], N extends number> =
  * @en A new array type composed of the items after N
  * @example SkipArray<[1, 2, 3], 2> // [3]
  */
-export type SkipArray<A extends unknown[], N extends number> =
+export type SkipArray<A extends readonly unknown[], N extends number> =
     DistributeUnions<[A, N]> extends [infer Ai extends A, infer Ni extends N] ? 
         Ai extends Ai ? Ni extends Ni ? SimpleSkipArray<Ai, Ni> : never : never : never;
 
@@ -61,11 +61,11 @@ export type SkipArray<A extends unknown[], N extends number> =
  * @en A new array type composed of the items from N to S
  * @example Slice<[1, 2, 3, 4, 5], 1, 3> // [2, 3]
  */
-export type Slice<A extends unknown[], B extends number, E extends number> =
+export type Slice<A extends readonly unknown[], B extends number, E extends number> =
 	SkipArray<TakeArray<A, E>, B>;
 
 
-type SimpleFillLeft<T extends V[], L extends number, I extends V, V = unknown, R extends V[] = T> = 
+type SimpleFillLeft<T extends readonly V[], L extends number, I extends V, V = unknown, R extends readonly V[] = T> = 
 	GreatThenOrEquals<ArrayLength<R>, L> extends true ? R : SimpleFillLeft<T, L, I, V, [I, ...R]>;
 
 /**
@@ -75,7 +75,7 @@ type SimpleFillLeft<T extends V[], L extends number, I extends V, V = unknown, R
  * @usage FillLeft<unknown[], number, unknown>
  * @example FillLeft<[1, 2], 5, 0> // [0, 0, 0, 1, 2]
  */
-export type FillLeft<T extends V[], L extends number, I extends V, V = unknown> = 
+export type FillLeft<T extends readonly V[], L extends number, I extends V, V = unknown> = 
 	DistributeUnions<[T, L, I]> extends [infer Ti extends T, infer Li extends L, infer Ii extends I] ? 
         Ti extends Ti ? Li extends Li ? 
 			boolean extends Ii ? SimpleFillLeft<Ti, Li, Ii> :
@@ -83,7 +83,7 @@ export type FillLeft<T extends V[], L extends number, I extends V, V = unknown> 
 		 : never : never : never;
 
 		
-type SimpleFillRight<T extends V[], L extends number, I extends V, V = unknown, R extends V[] = T> = 
+type SimpleFillRight<T extends readonly V[], L extends number, I extends V, V = unknown, R extends readonly V[] = T> = 
 	GreatThenOrEquals<ArrayLength<R>, L> extends true ? R : SimpleFillRight<T, L, I, V, [...R, I]>;
 
 /**
@@ -92,7 +92,7 @@ type SimpleFillRight<T extends V[], L extends number, I extends V, V = unknown, 
  * @usage FillRight<unknown[], number, unknown>
  * @example FillRight<[1, 2], 5, 0> // [1, 2, 0, 0, 0]
  */
-export type FillRight<T extends V[], L extends number, I extends V, V = unknown> = 
+export type FillRight<T extends readonly V[], L extends number, I extends V, V = unknown> = 
 	DistributeUnions<[T, L, I]> extends [infer Ti extends T, infer Li extends L, infer Ii extends I] ? 
         Ti extends Ti ? Li extends Li ? 
 			boolean extends Ii ? SimpleFillLeft<Ti, Li, Ii> :
@@ -117,7 +117,7 @@ export type GenerateArray<T, L extends number> =
 	DistributeUnions<[L]> extends [infer Li extends L] ? 
 		Li extends Li ? SimpleGenerateArray<T, Li> : never : never;
 
-type SimpleSortArray<T extends number[], L extends number[] = [], M extends number = Min<T>> =
+type SimpleSortArray<T extends readonly number[], L extends number[] = [], M extends number = Min<T>> =
 	T extends [M, ...infer R extends number[]] ? [M, ...SimpleSortArray<[...L, ...R], []>] : 
 	T extends [infer F extends number, ...infer R extends number[]] ? SimpleSortArray<R, [...L, F], M> :
 	[];
@@ -128,6 +128,6 @@ type SimpleSortArray<T extends number[], L extends number[] = [], M extends numb
  * @example SortArray<[2, 1, 3]> // [1, 2, 3]
  * @example SortArray<[2, 1, 3, 2, 1, 3]> // [1, 1, 2, 2, 3, 3]
  */
-export type SortArray<T extends number[]> =
+export type SortArray<T extends readonly number[]> =
 	DistributeUnions<[T]> extends [infer Ti extends T] ? 
 		Ti extends Ti ? SimpleSortArray<Ti> : never : never

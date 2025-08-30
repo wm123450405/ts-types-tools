@@ -1,5 +1,5 @@
 
-###  `ArrayToUnion<unknown[]>`
+###  `ArrayToUnion<readonly unknown[]>`
 
 
 ``` typescript

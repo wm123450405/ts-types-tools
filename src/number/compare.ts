@@ -173,14 +173,14 @@ export type NE<A extends number, B extends number> = NotEquals<A, B>;
  * @example Max<[1, 23, 5]> // 23
  * @example Max<[]> // never
  */
-export type Max<A extends number | number[], B extends (A extends number ? number : never) = never> =
+export type Max<A extends number | readonly number[], B extends (A extends number ? number : never) = never> =
 	A extends number ?
 		B extends number ? 
 			GreatThenOrEquals<A, B> extends true ? A : B
 		: A :
 	A extends [] ? 
 		B :
-	A extends [ infer F extends number, ...infer R extends number[] ] ?
+	A extends [ infer F extends number, ...infer R extends readonly number[] ] ?
 		R extends [] ? F : Max<Max<R>, F> 
 	: never ;
 
@@ -196,13 +196,13 @@ export type Max<A extends number | number[], B extends (A extends number ? numbe
  * @example Min<[8, 23, 5]> // 5
  * @example Min<[]> // never
  */
-export type Min<A extends number | number[], B extends (A extends number ? number : never) = never> =
+export type Min<A extends number | readonly number[], B extends (A extends number ? number : never) = never> =
 	A extends number ?
 		B extends number ? 
 			GreatThenOrEquals<A, B> extends true ? B : A
 		: A :
 	A extends [] ? 
 		B :
-	A extends [ infer F extends number, ...infer R extends number[] ] ?
+	A extends [ infer F extends number, ...infer R extends readonly number[] ] ?
 		R extends [] ? F : Min<Min<R>, F> 
 	: never ;

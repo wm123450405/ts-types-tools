@@ -7,11 +7,11 @@ type PickKeyValues<T, K extends keyof T, V> = [V extends V ? {[K1 in K]: V} : ne
 
 type DistributeObj<T, K extends keyof T = keyof T> = (Intersection<K extends K ? PickKeyValues<T, K, Distribute<T[K]>> : never> & [unknown])[0];
 
-type DistributeArr<A extends unknown[], R extends unknown[] = []> = A extends [infer F, ...infer T]
+type DistributeArr<A extends readonly unknown[], R extends unknown[] = []> = A extends [infer F, ...infer T]
     ? Distribute<F> extends infer Fi ? boolean extends Fi ? DistributeArr<T, [...R, Fi]> : Fi extends Fi ? DistributeArr<T, [...R, Fi]> : never : never
     : R;
 
-type Distribute<T> = T extends unknown[] ? DistributeArr<T> : T extends object ? DistributeObj<T> : T;
+type Distribute<T> = T extends readonly unknown[] ? DistributeArr<T> : T extends object ? DistributeObj<T> : T;
 
 type Normalize<T> = T extends object ? {[K in keyof T]: Normalize<T[K]>} : T;
 
@@ -112,7 +112,7 @@ export type DistributeUnions<T> = Normalize<Distribute<T>>;
  * @example ArrayToUnion<[ boolean, number, false, null ]> // boolean | number | null
  * @example ArrayToUnion<[ true, false ]> // boolean
  */
-export type ArrayToUnion<A extends unknown[]> =
+export type ArrayToUnion<A extends readonly unknown[]> =
     A[number];
 	// A extends [ infer F, ...infer R ] ? F | ArrayToUnion<R> : never;
 
