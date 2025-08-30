@@ -130,6 +130,7 @@ MultipyInt<550, 5> // 2750
 DivideInt<0, 0> // never
 DivideInt<10, 20> // 0
 DivideInt<550, 5> // 110
+DivideInt<550, 45> // 12
 ```
 
 			
@@ -140,6 +141,7 @@ DivideInt<550, 5> // 110
 ModInt<0, 0> // never
 ModInt<10, 20> // 10
 ModInt<550, 5> // 0
+ModInt<550, 45> // 10
 ```
 
 			

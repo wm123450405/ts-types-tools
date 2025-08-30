@@ -46,8 +46,10 @@ export type Cases = [
 	Expect<Equal<DivideInt<0, 0> ,  never>>,
 	Expect<Equal<DivideInt<10, 20> ,  0>>,
 	Expect<Equal<DivideInt<550, 5> ,  110>>,
+	Expect<Equal<DivideInt<550, 45> ,  12>>,
 	Expect<Equal<ModInt<0, 0> ,  never>>,
 	Expect<Equal<ModInt<10, 20> ,  10>>,
-	Expect<Equal<ModInt<550, 5> ,  0>>
+	Expect<Equal<ModInt<550, 5> ,  0>>,
+	Expect<Equal<ModInt<550, 45> ,  10>>
 ];
 			

@@ -689,6 +689,7 @@ type DivideIntString<A extends string, B extends number, F extends string = ''> 
  * @example DivideInt<0, 0> // never
  * @example DivideInt<10, 20> // 0
  * @example DivideInt<550, 5> // 110
+ * @example DivideInt<550, 45> // 12
  */
 export type DivideInt<A extends number, B extends number> =
 	B extends 0 ? never : 
@@ -704,6 +705,7 @@ export type DivideInt<A extends number, B extends number> =
  * @example ModInt<0, 0> // never
  * @example ModInt<10, 20> // 10
  * @example ModInt<550, 5> // 0
+ * @example ModInt<550, 45> // 10
  */
 export type ModInt<A extends number, B extends number> =
 	B extends 0 ? never : 
