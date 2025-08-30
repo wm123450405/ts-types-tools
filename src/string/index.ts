@@ -8,3 +8,8 @@ export * from './core';
  * @en Concat
  */
 export * from './concat';
+/**
+ * @zh 拆分
+ * @en Break
+ */
+export * from './break';
