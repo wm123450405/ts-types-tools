@@ -22,3 +22,5 @@ export type DecimalPart<N extends number> =
 	NumberToString<N> extends `${number | '' | '-'}.${number}` ? 
 		NumberToString<N> extends `${number | '' | '-'}.${infer D}` ? StringToNumber<`0.${D}`> : 0 :
 	0;
+
+

@@ -1,6 +1,6 @@
 
 import type { Equal, Expect } from '@type-challenges/utils';
-import type { IsInt, AsInt, IsUInt, AsUInt, IntEnumerate, IntRange, AddOne, MinusOne, IntList, AddInt, MinusInt } from '../../index';
+import type { IsInt, AsInt, IsUInt, AsUInt, IntEnumerate, IntRange, AddOne, MinusOne, IntList, AddInt, MinusInt, MultipyInt } from '../../index';
 
 export type Cases = [
 	Expect<Equal<IsInt<123> ,  true>>,
@@ -39,6 +39,9 @@ export type Cases = [
 	Expect<Equal<AddInt<5, 550> ,  555>>,
 	Expect<Equal<MinusInt<0, 0> ,  0>>,
 	Expect<Equal<MinusInt<10, 20> ,  -10>>,
-	Expect<Equal<MinusInt<550, 5> ,  545>>
+	Expect<Equal<MinusInt<550, 5> ,  545>>,
+	Expect<Equal<MultipyInt<0, 0> ,  0>>,
+	Expect<Equal<MultipyInt<10, 20> ,  200>>,
+	Expect<Equal<MultipyInt<550, 5> ,  2750>>
 ];
 			

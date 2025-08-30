@@ -1,5 +1,5 @@
 import type { DistributeUnions } from "../core";
-import type { GreatThenOrEquals } from "../number";
+import type { GreatThenOrEquals, IsNegative, MinusInt, MinusOne } from "../number";
 import type { StringLength } from "./core";
     
 type SimplePadLeft<T extends string, L extends number, C extends string = ' '> = 
@@ -44,3 +44,20 @@ type SimplePadRight<T extends string, L extends number, C extends string = ' '> 
 export type PadRight<T extends string, L extends number, C extends string = ' '> = 
     DistributeUnions<[T, L, C]> extends [infer Ti extends T, infer Li extends L, infer Ci extends C] ? 
         SimplePadRight<Ti, Li, Ci> : never;
+
+type SimpleRepeatString<T extends string, N extends number> = 
+	IsNegative<N> extends true ? never : N extends 0 ? '' : `${T}${SimpleRepeatString<T, MinusOne<N>>}`;
+
+/**
+ * @zh 重复字符串.
+ * 生成内容重复指定次数的字符串
+ * @en Repeat string.
+ * @param S - 待重复的字符串
+ * @param N - 重复的次数
+ * @example RepeatString<'5', 3> // '555'
+ */
+export type RepeatString<T extends string, N extends number> = 
+	DistributeUnions<[T, N]> extends [infer Ti extends T, infer Ni extends N] ?
+		Ni extends Ni ? Ti extends Ti ? SimpleRepeatString<Ti, Ni> : never : never : never;
+
+type c = RepeatString<'5', -3>;

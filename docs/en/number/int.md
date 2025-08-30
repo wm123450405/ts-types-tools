@@ -113,3 +113,13 @@ MinusInt<550, 5> // 545
 ```
 
 			
+### Multipy of two integers `MultipyInt<number, number>`
+
+
+``` typescript
+MultipyInt<0, 0> // 0
+MultipyInt<10, 20> // 200
+MultipyInt<550, 5> // 2750
+```
+
+			

@@ -21,3 +21,11 @@ PadRight<'55555', 3> // '55555'
 ```
 
 			
+### 重复字符串 `RepeatString<string, number>`
+ * 生成内容重复指定次数的字符串
+
+``` typescript
+RepeatString<'5', 3> // '555'
+```
+
+			

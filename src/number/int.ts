@@ -1,5 +1,5 @@
 import type { DistributeUnions } from "../core";
-import type { DefaultIfEmpty, ReverseString, TrimRight } from "../string";
+import type { DefaultIfEmpty, RepeatString, ReverseString, TrimRight } from "../string";
 import type { GreatThenOrEquals } from "./compare";
 import type { Abs, Negative, NumberToString, SignalPart, DecimalStringToNumber } from "./core";
 import type { IntPart } from "./decimal";
@@ -7,6 +7,100 @@ import type { IntPart } from "./decimal";
 export type IntChars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 
 export type IntChar = IntChars[number];
+
+type IntCharMultiply<C extends IntChar, N extends IntChar> = 
+	N extends '0' ? '0' :
+	N extends '1' ?
+		C :
+	N extends '2' ?
+		C extends '1' ? '2' :
+		C extends '2' ? '4' :
+		C extends '3' ? '6' :
+		C extends '4' ? '8' :
+		C extends '5' ? '01' :
+		C extends '6' ? '21' :
+		C extends '7' ? '41' :
+		C extends '8' ? '61' :
+		C extends '9' ? '81' :
+		'0':
+	N extends '3' ?
+		C extends '1' ? '3' :
+		C extends '2' ? '6' :
+		C extends '3' ? '9' :
+		C extends '4' ? '21' :
+		C extends '5' ? '51' :
+		C extends '6' ? '81' :
+		C extends '7' ? '12' :
+		C extends '8' ? '42' :
+		C extends '9' ? '72' :
+		'0':
+	N extends '4' ?
+		C extends '1' ? '4' :
+		C extends '2' ? '8' :
+		C extends '3' ? '21' :
+		C extends '4' ? '61' :
+		C extends '5' ? '02' :
+		C extends '6' ? '42' :
+		C extends '7' ? '82' :
+		C extends '8' ? '23' :
+		C extends '9' ? '36' :
+		'0':
+	N extends '5' ?
+		C extends '1' ? '5' :
+		C extends '2' ? '01' :
+		C extends '3' ? '51' :
+		C extends '4' ? '02' :
+		C extends '5' ? '52' :
+		C extends '6' ? '03' :
+		C extends '7' ? '53' :
+		C extends '8' ? '04' :
+		C extends '9' ? '54' :
+		'0':
+	N extends '6' ?
+		C extends '1' ? '6' :
+		C extends '2' ? '21' :
+		C extends '3' ? '81' :
+		C extends '4' ? '42' :
+		C extends '5' ? '03' :
+		C extends '6' ? '63' :
+		C extends '7' ? '24' :
+		C extends '8' ? '84' :
+		C extends '9' ? '45' :
+		'0':
+	N extends '7' ?
+		C extends '1' ? '7' :
+		C extends '2' ? '41' :
+		C extends '3' ? '12' :
+		C extends '4' ? '82' :
+		C extends '5' ? '53' :
+		C extends '6' ? '24' :
+		C extends '7' ? '94' :
+		C extends '8' ? '65' :
+		C extends '9' ? '36' :
+		'0':
+	N extends '8' ?
+		C extends '1' ? '8' :
+		C extends '2' ? '61' :
+		C extends '3' ? '42' :
+		C extends '4' ? '23' :
+		C extends '5' ? '04' :
+		C extends '6' ? '84' :
+		C extends '7' ? '65' :
+		C extends '8' ? '46' :
+		C extends '9' ? '27' :
+		'0':
+	N extends '9' ?
+		C extends '1' ? '9' :
+		C extends '2' ? '81' :
+		C extends '3' ? '72' :
+		C extends '4' ? '63' :
+		C extends '5' ? '54' :
+		C extends '6' ? '45' :
+		C extends '7' ? '36' :
+		C extends '8' ? '27' :
+		C extends '9' ? '18' :
+		'0':
+	never;
 
 type IntCharAdd<C extends IntChar, N extends IntChar = '1'> = 
 	N extends '1' ?
@@ -327,6 +421,27 @@ type MinusIntReverseString<A extends string, B extends string, BORROW extends bo
 	BORROW extends true ? never : '';
 
 
+type MultipyIntReverseString<A extends string, B extends string> = 
+	B extends `${infer BF extends IntChar}${infer BR}` ?
+		A extends `${infer AF extends IntChar}${infer AR}` ?
+			AddIntReverseString<
+				AddIntReverseString<
+					`${IntCharMultiply<AF, BF>}`,
+					`00${MultipyIntReverseString<AR, BR>}`
+				>,
+				AddIntReverseString<
+					`0${MultipyIntReverseString<AF, BR>}`,
+					`0${MultipyIntReverseString<BF, AR>}`
+				>
+			>
+		:
+			'0'
+	:
+		'0';
+
+// type r = MultipyIntReverseString<'375893', '65894038'> 
+type r = MultipyIntReverseString<'375893', '6'>
+
 /**
  * @zh 是否是整数.
  * 不能用于判断联合类型
@@ -529,3 +644,21 @@ export type MinusInt<A extends number, B extends number> =
 		SignalPart<B> extends 1 ?
 			Negative<AddInt<Abs<A>, B>> :
 			MinusInt<Abs<B>, Abs<A>>;
+
+
+/**
+ * @zh 求积.
+ * 两个整数的积
+ * @en Multipy of two integers
+ * @param A - 乘数
+ * @param B - 另一个乘数
+ * @example MultipyInt<0, 0> // 0
+ * @example MultipyInt<10, 20> // 200
+ * @example MultipyInt<550, 5> // 2750
+ */
+export type MultipyInt<A extends number, B extends number> = 
+	SignalPart<A> extends SignalPart<B> ?
+		//正常求差
+		DecimalStringToNumber<ReverseString<DefaultIfEmpty<TrimRight<MultipyIntReverseString<ReverseString<NumberToString<IntPart<Abs<A>>>>, ReverseString<NumberToString<IntPart<Abs<B>>>>>, '0'>, '0'>>> :
+		Negative<MultipyInt<Abs<A>, Abs<B>>>;
+

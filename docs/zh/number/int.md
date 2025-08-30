@@ -113,3 +113,13 @@ MinusInt<550, 5> // 545
 ```
 
 			
+### 求积 `MultipyInt<number, number>`
+ * 两个整数的积
+
+``` typescript
+MultipyInt<0, 0> // 0
+MultipyInt<10, 20> // 200
+MultipyInt<550, 5> // 2750
+```
+
+			

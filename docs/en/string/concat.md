@@ -21,3 +21,11 @@ PadRight<'55555', 3> // '55555'
 ```
 
 			
+### Repeat string `RepeatString<string, number>`
+
+
+``` typescript
+RepeatString<'5', 3> // '555'
+```
+
+			
