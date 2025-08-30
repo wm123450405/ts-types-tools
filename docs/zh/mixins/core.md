@@ -1,5 +1,5 @@
 
-### 反转 `Reverse<string | readonly unknown[]>`
+### 反转 `Reverse<string | unknown[]>`
  * 反转一个字符串或数组
 
 ``` typescript
@@ -8,7 +8,7 @@ Reverse<[1, 2]> // [2, 1]
 ```
 
 			
-### 长度 `Length<string | readonly unknown[]>`
+### 长度 `Length<string | unknown[]>`
  * 获取字符串或数组的长度
 
 ``` typescript

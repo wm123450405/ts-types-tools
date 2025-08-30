@@ -8,7 +8,7 @@ Not<false> // true
 ```
 
 			
-### Or `Or<boolean | readonly boolean[], (boolean ? boolean : never) = never>`
+### Or `Or<boolean[]>` `Or<boolean, boolean>`
  * For boolean
 
 ``` typescript
@@ -22,7 +22,7 @@ Or<[false, false, false]> // false
 ```
 
 			
-### And `And<boolean | readonly boolean[], (boolean ? boolean : never) = never>`
+### And `And<boolean[]>` `And<boolean, boolean>`
  * For boolean
 
 ``` typescript

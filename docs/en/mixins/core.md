@@ -1,5 +1,5 @@
 
-### Reverse a string or an array `Reverse<string | readonly unknown[]>`
+### Reverse a string or an array `Reverse<string | unknown[]>`
 
 
 ``` typescript
@@ -8,7 +8,7 @@ Reverse<[1, 2]> // [2, 1]
 ```
 
 			
-### Get the length of a string or an array `Length<string | readonly unknown[]>`
+### Get the length of a string or an array `Length<string | unknown[]>`
 
 
 ``` typescript

@@ -13,6 +13,8 @@ export type Not<T extends boolean> =
  * @zh 或.
  * @en Or.
  * For boolean
+ * @usage Or<boolean[]>
+ * @usage Or<boolean, boolean>
  * @example Or<true, true> // true
  * @example Or<true, false> // true
  * @example Or<false, true> // true
@@ -37,6 +39,8 @@ export type Or<A extends boolean | readonly boolean[], B extends (A extends bool
  * @zh 与.
  * @en And.
  * For boolean
+ * @usage And<boolean[]>
+ * @usage And<boolean, boolean>
  * @example And<true, true> // true
  * @example And<true, false> // false
  * @example And<false, true> // false

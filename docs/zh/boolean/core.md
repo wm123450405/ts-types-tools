@@ -8,7 +8,7 @@ Not<false> // true
 ```
 
 			
-### 或 `Or<boolean | readonly boolean[], (boolean ? boolean : never) = never>`
+### 或 `Or<boolean[]>` `Or<boolean, boolean>`
 
 
 ``` typescript
@@ -22,7 +22,7 @@ Or<[false, false, false]> // false
 ```
 
 			
-### 与 `And<boolean | readonly boolean[], (boolean ? boolean : never) = never>`
+### 与 `And<boolean[]>` `And<boolean, boolean>`
 
 
 ``` typescript

@@ -157,7 +157,7 @@ ${subModules.map(({ desc, module }) => `
 				// const examples = notes?.split(notesSpliter)?.filter(line => line && line.startsWith('@example'))?.map(line => line.replace('@example', ''));
 				const examples = findNotes(notes, 'example');
 				const usages = findNotes(notes, 'usage');
-				const declares = usages?.length ? usages : [match.groups?.['declares']?.replaceAll(/\w+?[0-9a-zA-Z]*?\s+extends\s+/ig, '')].filter(d => !!d) as string[];
+				const declares = usages?.length ? usages : [match.groups?.['declares']?.replaceAll(/\w+?[0-9a-zA-Z]*?\s+extends\s+/ig, '')?.replaceAll(/readonly\s+/ig, '')].filter(d => !!d) as string[];
 				const type = declares?.[0]?.split(/</ig)?.[0];
 				const desc = findNotes(notes, language).join('\r\n').split('\r\n');
 				// const desc = notes?.split(notesSpliter)?.filter(line => line && line.startsWith(`@${language}`))?.map(line => line.replace(`@${language}`, '').trim());
