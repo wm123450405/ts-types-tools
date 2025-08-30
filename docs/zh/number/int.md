@@ -123,3 +123,23 @@ MultipyInt<550, 5> // 2750
 ```
 
 			
+### 求商 `DivideInt<number, number>`
+ * 两个整数的商
+
+``` typescript
+DivideInt<0, 0> // never
+DivideInt<10, 20> // 0
+DivideInt<550, 5> // 110
+```
+
+			
+### 求余 `ModInt<number, number>`
+ * 两个整数的余
+
+``` typescript
+ModInt<0, 0> // never
+ModInt<10, 20> // 10
+ModInt<550, 5> // 0
+```
+
+			

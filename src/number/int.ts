@@ -1,7 +1,8 @@
+import type { ArrayLength } from "../array";
 import type { DistributeUnions } from "../core";
-import type { DefaultIfEmpty, RepeatString, ReverseString, TrimRight } from "../string";
+import type { DefaultIfEmpty, RepeatString, ReverseString, TrimLeft, TrimRight } from "../string";
 import type { GreatThenOrEquals } from "./compare";
-import type { Abs, Negative, NumberToString, SignalPart, DecimalStringToNumber } from "./core";
+import type { Abs, Negative, NumberToString, SignalPart, DecimalStringToNumber, StringToNumber } from "./core";
 import type { IntPart } from "./decimal";
 
 export type IntChars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
@@ -662,3 +663,49 @@ export type MultipyInt<A extends number, B extends number> =
 		DecimalStringToNumber<ReverseString<DefaultIfEmpty<TrimRight<MultipyIntReverseString<ReverseString<NumberToString<IntPart<Abs<A>>>>, ReverseString<NumberToString<IntPart<Abs<B>>>>>, '0'>, '0'>>> :
 		Negative<MultipyInt<Abs<A>, Abs<B>>>;
 
+type SimpleDivideInt<A extends number, B extends number, D extends unknown[] = []> = 
+	GreatThenOrEquals<A, B> extends true ? 
+		SimpleDivideInt<MinusInt<A, B>, B, [...D, unknown]> :
+		[ArrayLength<D>, A];
+
+type DivideIntString<A extends string, B extends number, F extends string = ''> =
+	B extends 0 ? never : 
+	A extends `${F}${infer C}${infer R}` ?
+		SimpleDivideInt<DecimalStringToNumber<`${F}${C}`>, B> extends [infer D extends number, infer M extends number] ?
+			M extends 0 ?
+				DivideIntString<`${R}`, B> extends [infer DS extends string, infer DM extends number] ?
+					[`${D}${DS}`, DM] : never :
+				DivideIntString<`${M}${R}`, B, NumberToString<M>> extends [infer DS extends string, infer DM extends number] ?
+					[`${D}${DS}`, DM] : never : 
+		never :
+	A extends '' ? ['', 0] : ['', DecimalStringToNumber<A>];
+
+/**
+ * @zh 求商.
+ * 两个整数的商
+ * @en Divide of two integers
+ * @param A - 被除数
+ * @param B - 除数
+ * @example DivideInt<0, 0> // never
+ * @example DivideInt<10, 20> // 0
+ * @example DivideInt<550, 5> // 110
+ */
+export type DivideInt<A extends number, B extends number> =
+	B extends 0 ? never : 
+	DivideIntString<NumberToString<A>, B> extends [infer D extends string, number] ?
+		DecimalStringToNumber<TrimLeft<D, '0'>> : never;
+
+/**
+ * @zh 求余.
+ * 两个整数的余
+ * @en Mod of two integers
+ * @param A - 被除数
+ * @param B - 除数
+ * @example ModInt<0, 0> // never
+ * @example ModInt<10, 20> // 10
+ * @example ModInt<550, 5> // 0
+ */
+export type ModInt<A extends number, B extends number> =
+	B extends 0 ? never : 
+	DivideIntString<NumberToString<A>, B> extends [string, infer M extends number] ?
+		M : never;

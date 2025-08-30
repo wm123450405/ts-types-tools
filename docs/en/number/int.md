@@ -123,3 +123,23 @@ MultipyInt<550, 5> // 2750
 ```
 
 			
+### Divide of two integers `DivideInt<number, number>`
+
+
+``` typescript
+DivideInt<0, 0> // never
+DivideInt<10, 20> // 0
+DivideInt<550, 5> // 110
+```
+
+			
+### Mod of two integers `ModInt<number, number>`
+
+
+``` typescript
+ModInt<0, 0> // never
+ModInt<10, 20> // 10
+ModInt<550, 5> // 0
+```
+
+			
