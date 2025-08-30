@@ -17,3 +17,18 @@ Length<[1, 2]> // 2
 ```
 
 			
+### 是否为空 `IsEmpty<T>`
+ * 判断数据是否为空
+
+``` typescript
+IsEmpty<undefined> // true
+IsEmpty<null> // true
+IsEmpty<''> // true
+IsEmpty<[]> // true
+IsEmpty<{}> // true
+IsEmpty<'fads'> // false
+IsEmpty<[1]> // false
+IsEmpty<{a:1}> // false
+```
+
+			

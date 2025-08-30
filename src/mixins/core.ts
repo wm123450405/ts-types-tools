@@ -23,6 +23,18 @@ export type Reverse<T extends string | readonly unknown[]> =
 export type Length<T extends string | readonly unknown[]> =
     T extends string ? StringLength<T> : T extends readonly unknown[] ? ArrayLength<T> : never;
 
-
+/**
+ * @zh 是否为空.
+ * 判断数据是否为空
+ * @en Is a data empty.
+ * @example IsEmpty<undefined> // true
+ * @example IsEmpty<null> // true
+ * @example IsEmpty<''> // true
+ * @example IsEmpty<[]> // true
+ * @example IsEmpty<{}> // true
+ * @example IsEmpty<'fads'> // false
+ * @example IsEmpty<[1]> // false
+ * @example IsEmpty<{a:1}> // false
+ */
 export type IsEmpty<T> = 
-    T extends undefined | null | '' | 0 ? true : T extends readonly unknown[] ? IsEmptyArray<T> : T extends object ? IsEmptyObject<T> : false;
+    T extends undefined | null | '' ? true : T extends readonly unknown[] ? IsEmptyArray<T> : T extends object ? IsEmptyObject<T> : false;

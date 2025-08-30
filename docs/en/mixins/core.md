@@ -17,3 +17,18 @@ Length<[1, 2]> // 2
 ```
 
 			
+### Is a data empty `IsEmpty<T>`
+
+
+``` typescript
+IsEmpty<undefined> // true
+IsEmpty<null> // true
+IsEmpty<''> // true
+IsEmpty<[]> // true
+IsEmpty<{}> // true
+IsEmpty<'fads'> // false
+IsEmpty<[1]> // false
+IsEmpty<{a:1}> // false
+```
+
+			
