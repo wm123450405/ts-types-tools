@@ -11,12 +11,19 @@ npm install ts-types-tools --save-dev
 
 ## 2. Usage
 
+Import types from `ts-types-tools`.
+Use it in your code.
+
 ```typescript
-import type { TypesTools } from 'ts-types-tools';
+import type { IntRange } from 'ts-types-tools';
+
+type Status = IntRange<0, 5>;  // 0 | 1 | 2 | 3 | 4
 ```
 
 ```typescript
-type Status = TypesTools.IntRange<0, 5>;  // 0 | 1 | 2 | 3 | 4
+import type { NumberToString } from 'ts-types-tools';
+
+type Status = NumberToString<'156' | '32'>;  // 156 | 32
 ```
 
 ## 3. Api
@@ -32,5 +39,7 @@ type Status = TypesTools.IntRange<0, 5>;  // 0 | 1 | 2 | 3 | 4
 ### [Array](./docs/en/array/index.md)
 
 ### [Object](./docs/en/object/index.md)
+
+### [Function](./docs/zh/function/index.md)
 
 ### [Mixins](./docs/en/mixins/index.md)

@@ -11,12 +11,19 @@ npm install ts-types-tools --save-dev
 
 ## 2. 使用
 
+从`ts-types-tools`中引入
+直接在你的代码中使用
+
 ```typescript
 import type { IntRange } from 'ts-types-tools';
+
+type Status = IntRange<0, 5>;  // 0 | 1 | 2 | 3 | 4
 ```
 
 ```typescript
-type Status = IntRange<0, 5>;  // 0 | 1 | 2 | 3 | 4
+import type { NumberToString } from 'ts-types-tools';
+
+type Status = NumberToString<'156' | '32'>;  // 156 | 32
 ```
 
 ## 3. 文档
@@ -32,5 +39,7 @@ type Status = IntRange<0, 5>;  // 0 | 1 | 2 | 3 | 4
 ### [数组](./docs/zh/array/index.md)
 
 ### [对象](./docs/zh/object/index.md)
+
+### [函数](./docs/zh/function/index.md)
 
 ### [综合](./docs/zh/mixins/index.md)
