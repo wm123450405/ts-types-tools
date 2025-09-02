@@ -112,3 +112,12 @@ Every<[2, 2, 2], (((v: 2) => true) & ((v: 1 | 3) => false))> // true
 ```
 
 			
+### Find index `FindIndex<unknown[], <T[number]>(v: V) => boolean>`
+
+
+``` typescript
+FindIndex<[1, 2, 3], (((v: 2) => true) & ((v: 1 | 3) => false))> // 1
+FindIndex<[2, 2, 2], (((v: 2) => true) & ((v: 1 | 3) => false))> // 0
+```
+
+			

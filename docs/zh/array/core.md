@@ -112,3 +112,12 @@ Every<[2, 2, 2], (((v: 2) => true) & ((v: 1 | 3) => false))> // true
 ```
 
 			
+### 寻找索引 `FindIndex<unknown[], <T[number]>(v: V) => boolean>`
+ * 寻找数组中满足某个条件的索引
+
+``` typescript
+FindIndex<[1, 2, 3], (((v: 2) => true) & ((v: 1 | 3) => false))> // 1
+FindIndex<[2, 2, 2], (((v: 2) => true) & ((v: 1 | 3) => false))> // 0
+```
+
+			

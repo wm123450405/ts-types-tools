@@ -1,5 +1,5 @@
 import type { DistributeUnions, Same } from "../core";
-import type { GreatThenOrEquals, Min, MinusOne } from "../number";
+import type { AddOne, GreatThenOrEquals, Min, MinusOne } from "../number";
 
 /**
  * @zh 是否空数组.
@@ -168,3 +168,19 @@ export type Every<T extends readonly unknown[], M extends <V extends T[number]>(
 	T extends [infer F extends T[number], ...infer R extends readonly unknown[]] ?
 		M extends ((v: F) => true) ? Every<R, M> : false :
 	true;
+
+type SimpleFindIndex<T extends readonly unknown[], M extends <V extends T[number]>(v: V) => boolean, I extends number = 0> =
+	T extends [infer F extends T[number], ...infer R extends readonly unknown[]] ?
+		M extends ((v: F) => true) ? I : SimpleFindIndex<R, M, AddOne<I>> :
+	-1;
+
+/**
+ * @zh 寻找索引.
+ * 寻找数组中满足某个条件的索引
+ * @en Find index.
+ * @example FindIndex<[1, 2, 3], (((v: 2) => true) & ((v: 1 | 3) => false))> // 1
+ * @example FindIndex<[2, 2, 2], (((v: 2) => true) & ((v: 1 | 3) => false))> // 0
+ */
+export type FindIndex<T extends readonly unknown[], M extends <V extends T[number]>(v: V) => boolean> =
+	DistributeUnions<[T]> extends [infer Ti extends T] ? 
+		Ti extends Ti ? SimpleFindIndex<Ti, M> : never : never;
