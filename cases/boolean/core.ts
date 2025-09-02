@@ -1,6 +1,6 @@
 
 import type { Equal, Expect } from '@type-challenges/utils';
-import type { Boolean, Not, Or, And } from '../../index';
+import type { Boolean, Not, Or, And, Xor } from '../../index';
 
 export type Cases = [
 	Expect<Equal<Boolean<true> ,  true>>,
@@ -22,12 +22,22 @@ export type Cases = [
 	Expect<Equal<Or<[true, true, true]> ,  true>>,
 	Expect<Equal<Or<[false, true, false]> ,  true>>,
 	Expect<Equal<Or<[false, false, false]> ,  false>>,
+	Expect<Equal<Or<boolean, true> ,  never>>,
 	Expect<Equal<And<true, true> ,  true>>,
 	Expect<Equal<And<true, false> ,  false>>,
 	Expect<Equal<And<false, true> ,  false>>,
 	Expect<Equal<And<false, false> ,  false>>,
 	Expect<Equal<And<[true, true, true]> ,  true>>,
 	Expect<Equal<And<[false, true, false]> ,  false>>,
-	Expect<Equal<And<[false, false, false]> ,  false>>
+	Expect<Equal<And<[false, false, false]> ,  false>>,
+	Expect<Equal<And<boolean, true> ,  never>>,
+	Expect<Equal<Xor<true, true> ,  true>>,
+	Expect<Equal<Xor<true, false> ,  false>>,
+	Expect<Equal<Xor<false, true> ,  false>>,
+	Expect<Equal<Xor<false, false> ,  true>>,
+	Expect<Equal<Xor<[true, true, true]> ,  true>>,
+	Expect<Equal<Xor<[false, true, false]> ,  true>>,
+	Expect<Equal<Xor<[false, false, false]> ,  false>>,
+	Expect<Equal<Xor<boolean, true> ,  never>>
 ];
 			

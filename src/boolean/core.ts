@@ -39,16 +39,23 @@ export type Not<T extends boolean> =
  * @example Or<[true, true, true]> // true
  * @example Or<[false, true, false]> // true
  * @example Or<[false, false, false]> // false
+ * @example Or<boolean, true> // never
  */
 export type Or<A extends boolean | readonly boolean[], B extends (A extends boolean ? boolean : never) = never> =
+	boolean extends A ?
+		never :
+	boolean extends B ?
+		never :
 	A extends boolean ?
 		B extends boolean ? 
-			A extends true ? true : B extends true ? true : false :
+			A extends true ? true : 
+			B extends true ? true : 
+			false :
 		A :
 	A extends [] ? 
 		B :
 	A extends [ infer F extends boolean, ...infer R extends readonly boolean[] ] ?
-		R extends [] ? F : Or<Or<R>, F> : 
+		R extends [] ? boolean extends F ? never : F : Or<Or<R>, F> : 
 	never ;
 
 
@@ -65,14 +72,51 @@ export type Or<A extends boolean | readonly boolean[], B extends (A extends bool
  * @example And<[true, true, true]> // true
  * @example And<[false, true, false]> // false
  * @example And<[false, false, false]> // false
+ * @example And<boolean, true> // never
  */
 export type And<A extends boolean | readonly boolean[], B extends (A extends boolean ? boolean : never) = never> =
+	boolean extends A ?
+		never :
+	boolean extends B ?
+		never :
 	A extends boolean ?
 		B extends boolean ? 
-			A extends false ? false : B extends false ? false : true :
+			A extends false ? false : 
+			B extends false ? false : 
+			true :
 		A :
 	A extends [] ? 
 		B :
 	A extends [ infer F extends boolean, ...infer R extends readonly boolean[] ] ?
-		R extends [] ? F : And<And<R>, F> : 
+		R extends [] ? boolean extends F ? never : F : And<And<R>, F> : 
+	never ;
+
+/**
+ * @zh 异或.
+ * @en Xor.
+ * For boolean
+ * @usage Xor<boolean[]>
+ * @usage Xor<boolean, boolean>
+ * @example Xor<true, true> // true
+ * @example Xor<true, false> // false
+ * @example Xor<false, true> // false
+ * @example Xor<false, false> // true
+ * @example Xor<[true, true, true]> // true
+ * @example Xor<[false, true, false]> // true
+ * @example Xor<[false, false, false]> // false
+ * @example Xor<boolean, true> // never
+ */
+export type Xor<A extends boolean | readonly boolean[], B extends (A extends boolean ? boolean : never) = never> =
+	boolean extends A ?
+		never :
+	boolean extends B ?
+		never :
+	A extends boolean ?
+		B extends boolean ? 
+			A extends B ? true : false :
+		A :
+	A extends [] ? 
+		B :
+	A extends [ infer F extends boolean, ...infer R extends readonly boolean[] ] ?
+		R extends [] ? boolean extends F ? never : F : Xor<Xor<R>, F> : 
 	never ;
