@@ -76,75 +76,12 @@ GenerateArray<boolean, 1> // [boolean]
 ```
 
 			
-### 数组排序 `SortArray<number[]>`
+### 数组排序 `ArraySort<number[]>`
 
 
 ``` typescript
-SortArray<[2, 1, 3]> // [1, 2, 3]
-SortArray<[2, 1, 3, 2, 1, 3]> // [1, 1, 2, 2, 3, 3]
-```
-
-			
-### 是否包含 `Includes<unknown[], V>`
- * 判断数组是否包含某个元素
-
-``` typescript
-Includes<[1, 2, 3], 2> // true
-Includes<[1, 2, 3], 4> // false
-```
-
-			
-### 是否有满足 `Some<unknown[], <T[number]>(v: V) => boolean>`
- * 判断数组是否至少有一个元素满足某个条件
-
-``` typescript
-Some<[1, 2, 3], (((v: 2) => true) & ((v: 1 | 3) => false))> // true
-Some<[3, 3, 3], (((v: 2) => true) & ((v: 1 | 3) => false))> // false
-```
-
-			
-### 是否都满足 `Every<unknown[], <T[number]>(v: V) => boolean>`
- * 判断数组是否都满足某个条件
-
-``` typescript
-Every<[1, 2, 3], (((v: 2) => true) & ((v: 1 | 3) => false))> // false
-Every<[2, 2, 2], (((v: 2) => true) & ((v: 1 | 3) => false))> // true
-```
-
-			
-### 寻找索引 `FindIndex<unknown[], <T[number]>(v: V) => boolean>`
- * 寻找数组中满足某个条件的索引
-
-``` typescript
-FindIndex<[1, 2, 3], (((v: 2) => true) & ((v: 1 | 3) => false))> // 1
-FindIndex<[2, 2, 2], (((v: 2) => true) & ((v: 1 | 3) => false))> // 0
-```
-
-			
-### 寻找最后索引 `FindLastIndex<unknown[], <T[number]>(v: V) => boolean>`
- * 寻找数组中满足某个条件的最后索引
-
-``` typescript
-FindLastIndex<[1, 2, 3], (((v: 2) => true) & ((v: 1 | 3) => false))> // 1
-FindLastIndex<[2, 2, 2], (((v: 2) => true) & ((v: 1 | 3) => false))> // 2
-```
-
-			
-### 索引 `IndexOf<unknown[], V>`
- * 获取数组中某个元素的索引
-
-``` typescript
-IndexOf<[1, 2, 3], 2> // 1
-IndexOf<[2, 2, 2], 2> // 0
-```
-
-			
-### 最后索引 `LastIndexOf<unknown[], V>`
- * 获取数组中某个元素的最后索引
-
-``` typescript
-LastIndexOf<[1, 2, 3], 2> // 1
-LastIndexOf<[2, 2, 2], 2> // 2
+ArraySort<[2, 1, 3]> // [1, 2, 3]
+ArraySort<[2, 1, 3, 2, 1, 3]> // [1, 1, 2, 2, 3, 3]
 ```
 
 			

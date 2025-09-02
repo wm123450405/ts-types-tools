@@ -1,6 +1,6 @@
 
 import type { Equal, Expect } from '@type-challenges/utils';
-import type { IsEmptyArray, ReverseArray, ArrayLength, TakeArray, SkipArray, Slice, FillLeft, FillRight, GenerateArray, SortArray, Includes, Some, Every, FindIndex, FindLastIndex, IndexOf, LastIndexOf } from '../../index';
+import type { IsEmptyArray, ReverseArray, ArrayLength, TakeArray, SkipArray, Slice, FillLeft, FillRight, GenerateArray, ArraySort } from '../../index';
 
 export type Cases = [
 	Expect<Equal<IsEmptyArray<[]> ,  true>>,
@@ -17,21 +17,7 @@ export type Cases = [
 	Expect<Equal<GenerateArray<unknown, 2> ,  [unknown, unknown]>>,
 	Expect<Equal<GenerateArray<unknown, 0> ,  []>>,
 	Expect<Equal<GenerateArray<boolean, 1> ,  [boolean]>>,
-	Expect<Equal<SortArray<[2, 1, 3]> ,  [1, 2, 3]>>,
-	Expect<Equal<SortArray<[2, 1, 3, 2, 1, 3]> ,  [1, 1, 2, 2, 3, 3]>>,
-	Expect<Equal<Includes<[1, 2, 3], 2> ,  true>>,
-	Expect<Equal<Includes<[1, 2, 3], 4> ,  false>>,
-	Expect<Equal<Some<[1, 2, 3], (((v: 2) => true) & ((v: 1 | 3) => false))> ,  true>>,
-	Expect<Equal<Some<[3, 3, 3], (((v: 2) => true) & ((v: 1 | 3) => false))> ,  false>>,
-	Expect<Equal<Every<[1, 2, 3], (((v: 2) => true) & ((v: 1 | 3) => false))> ,  false>>,
-	Expect<Equal<Every<[2, 2, 2], (((v: 2) => true) & ((v: 1 | 3) => false))> ,  true>>,
-	Expect<Equal<FindIndex<[1, 2, 3], (((v: 2) => true) & ((v: 1 | 3) => false))> ,  1>>,
-	Expect<Equal<FindIndex<[2, 2, 2], (((v: 2) => true) & ((v: 1 | 3) => false))> ,  0>>,
-	Expect<Equal<FindLastIndex<[1, 2, 3], (((v: 2) => true) & ((v: 1 | 3) => false))> ,  1>>,
-	Expect<Equal<FindLastIndex<[2, 2, 2], (((v: 2) => true) & ((v: 1 | 3) => false))> ,  2>>,
-	Expect<Equal<IndexOf<[1, 2, 3], 2> ,  1>>,
-	Expect<Equal<IndexOf<[2, 2, 2], 2> ,  0>>,
-	Expect<Equal<LastIndexOf<[1, 2, 3], 2> ,  1>>,
-	Expect<Equal<LastIndexOf<[2, 2, 2], 2> ,  2>>
+	Expect<Equal<ArraySort<[2, 1, 3]> ,  [1, 2, 3]>>,
+	Expect<Equal<ArraySort<[2, 1, 3, 2, 1, 3]> ,  [1, 1, 2, 2, 3, 3]>>
 ];
 			

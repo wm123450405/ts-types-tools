@@ -76,75 +76,12 @@ GenerateArray<boolean, 1> // [boolean]
 ```
 
 			
-### Sort an array `SortArray<number[]>`
+### Sort an array `ArraySort<number[]>`
 
 
 ``` typescript
-SortArray<[2, 1, 3]> // [1, 2, 3]
-SortArray<[2, 1, 3, 2, 1, 3]> // [1, 1, 2, 2, 3, 3]
-```
-
-			
-### Include `Includes<unknown[], V>`
-
-
-``` typescript
-Includes<[1, 2, 3], 2> // true
-Includes<[1, 2, 3], 4> // false
-```
-
-			
-### Whether there is a condition that is satisfied `Some<unknown[], <T[number]>(v: V) => boolean>`
-
-
-``` typescript
-Some<[1, 2, 3], (((v: 2) => true) & ((v: 1 | 3) => false))> // true
-Some<[3, 3, 3], (((v: 2) => true) & ((v: 1 | 3) => false))> // false
-```
-
-			
-### Whether all are satisfied `Every<unknown[], <T[number]>(v: V) => boolean>`
-
-
-``` typescript
-Every<[1, 2, 3], (((v: 2) => true) & ((v: 1 | 3) => false))> // false
-Every<[2, 2, 2], (((v: 2) => true) & ((v: 1 | 3) => false))> // true
-```
-
-			
-### Find index `FindIndex<unknown[], <T[number]>(v: V) => boolean>`
-
-
-``` typescript
-FindIndex<[1, 2, 3], (((v: 2) => true) & ((v: 1 | 3) => false))> // 1
-FindIndex<[2, 2, 2], (((v: 2) => true) & ((v: 1 | 3) => false))> // 0
-```
-
-			
-### Find last index `FindLastIndex<unknown[], <T[number]>(v: V) => boolean>`
-
-
-``` typescript
-FindLastIndex<[1, 2, 3], (((v: 2) => true) & ((v: 1 | 3) => false))> // 1
-FindLastIndex<[2, 2, 2], (((v: 2) => true) & ((v: 1 | 3) => false))> // 2
-```
-
-			
-### Index `IndexOf<unknown[], V>`
-
-
-``` typescript
-IndexOf<[1, 2, 3], 2> // 1
-IndexOf<[2, 2, 2], 2> // 0
-```
-
-			
-### Last index `LastIndexOf<unknown[], V>`
-
-
-``` typescript
-LastIndexOf<[1, 2, 3], 2> // 1
-LastIndexOf<[2, 2, 2], 2> // 2
+ArraySort<[2, 1, 3]> // [1, 2, 3]
+ArraySort<[2, 1, 3, 2, 1, 3]> // [1, 1, 2, 2, 3, 3]
 ```
 
 			

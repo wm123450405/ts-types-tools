@@ -1,5 +1,5 @@
-import type { DistributeUnions, Same } from "../core";
-import type { AddOne, GreatThenOrEquals, Min, MinusOne } from "../number";
+import type { DistributeUnions } from "../core";
+import type { GreatThenOrEquals, Min, MinusOne } from "../number";
 
 /**
  * @zh 是否空数组.
@@ -125,101 +125,9 @@ type SimpleSortArray<T extends readonly number[], L extends number[] = [], M ext
 /**
  * @zh 数组排序.
  * @en Sort an array.
- * @example SortArray<[2, 1, 3]> // [1, 2, 3]
- * @example SortArray<[2, 1, 3, 2, 1, 3]> // [1, 1, 2, 2, 3, 3]
+ * @example ArraySort<[2, 1, 3]> // [1, 2, 3]
+ * @example ArraySort<[2, 1, 3, 2, 1, 3]> // [1, 1, 2, 2, 3, 3]
  */
-export type SortArray<T extends readonly number[]> =
+export type ArraySort<T extends readonly number[]> =
 	DistributeUnions<[T]> extends [infer Ti extends T] ? 
 		Ti extends Ti ? SimpleSortArray<Ti> : never : never
-
-/**
- * @zh 是否包含.
- * 判断数组是否包含某个元素
- * @en Include.
- * @example Includes<[1, 2, 3], 2> // true
- * @example Includes<[1, 2, 3], 4> // false
- */
-export type Includes<T extends readonly unknown[], V> =
-	T extends [infer F, ...infer R extends readonly unknown[]] ?
-		Same<F, V> extends true ? true : Includes<R, V> :
-	false;
-	
-/**
- * @zh 是否有满足.
- * 判断数组是否至少有一个元素满足某个条件
- * @en Whether there is a condition that is satisfied
- * @example Some<[1, 2, 3], (((v: 2) => true) & ((v: 1 | 3) => false))> // true
- * @example Some<[3, 3, 3], (((v: 2) => true) & ((v: 1 | 3) => false))> // false
- */
-export type Some<T extends readonly unknown[], M extends <V extends T[number]>(v: V) => boolean> =
-	T extends [infer F extends T[number], ...infer R extends readonly unknown[]] ?
-		M extends ((v: F) => true) ? true : Some<R, M> :
-	false;
-
-
-/**
- * @zh 是否都满足.
- * 判断数组是否都满足某个条件
- * @en Whether all are satisfied
- * @example Every<[1, 2, 3], (((v: 2) => true) & ((v: 1 | 3) => false))> // false
- * @example Every<[2, 2, 2], (((v: 2) => true) & ((v: 1 | 3) => false))> // true
- */
-export type Every<T extends readonly unknown[], M extends <V extends T[number]>(v: V) => boolean> =
-	T extends [infer F extends T[number], ...infer R extends readonly unknown[]] ?
-		M extends ((v: F) => true) ? Every<R, M> : false :
-	true;
-
-type SimpleFindIndex<T extends readonly unknown[], M extends <V extends T[number]>(v: V) => boolean, I extends number = 0> =
-	T extends [infer F extends T[number], ...infer R extends readonly unknown[]] ?
-		M extends ((v: F) => true) ? I : SimpleFindIndex<R, M, AddOne<I>> :
-	-1;
-
-/**
- * @zh 寻找索引.
- * 寻找数组中满足某个条件的索引
- * @en Find index.
- * @example FindIndex<[1, 2, 3], (((v: 2) => true) & ((v: 1 | 3) => false))> // 1
- * @example FindIndex<[2, 2, 2], (((v: 2) => true) & ((v: 1 | 3) => false))> // 0
- */
-export type FindIndex<T extends readonly unknown[], M extends <V extends T[number]>(v: V) => boolean> =
-	DistributeUnions<[T]> extends [infer Ti extends T] ? 
-		Ti extends Ti ? SimpleFindIndex<Ti, M> : never : never;
-
-		
-type SimpleFindLastIndex<T extends readonly unknown[], M extends <V extends T[number]>(v: V) => boolean, I extends number = 0, L extends number = -1> =
-	T extends [infer F extends T[number], ...infer R extends readonly unknown[]] ?
-		M extends ((v: F) => true) ? SimpleFindLastIndex<R, M, AddOne<I>, I> : SimpleFindLastIndex<R, M, AddOne<I>, L> :
-	L;
-
-/**
- * @zh 寻找最后索引.
- * 寻找数组中满足某个条件的最后索引
- * @en Find last index.
- * @example FindLastIndex<[1, 2, 3], (((v: 2) => true) & ((v: 1 | 3) => false))> // 1
- * @example FindLastIndex<[2, 2, 2], (((v: 2) => true) & ((v: 1 | 3) => false))> // 2
- */
-export type FindLastIndex<T extends readonly unknown[], M extends <V extends T[number]>(v: V) => boolean> =
-	DistributeUnions<[T]> extends [infer Ti extends T] ? 
-		Ti extends Ti ? SimpleFindLastIndex<Ti, M> : never : never;
-
-
-/**
- * @zh 索引.
- * 获取数组中某个元素的索引
- * @en Index.
- * @example IndexOf<[1, 2, 3], 2> // 1
- * @example IndexOf<[2, 2, 2], 2> // 0
- */		
-export type IndexOf<T extends readonly unknown[], V> =
-	FindIndex<T, (((v: V) => true) & ((v: T[number]) => false))>;
-
-/**
- * @zh 最后索引.
- * 获取数组中某个元素的最后索引
- * @en Last index.
- * @example LastIndexOf<[1, 2, 3], 2> // 1
- * @example LastIndexOf<[2, 2, 2], 2> // 2
- */		
-export type LastIndexOf<T extends readonly unknown[], V> =
-	FindLastIndex<T, (((v: V) => true) & ((v: T[number]) => false))>;
-

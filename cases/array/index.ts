@@ -2,4 +2,7 @@
 
 import './core';	
 
+
+import './each';	
+
 				
