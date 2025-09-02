@@ -1,4 +1,3 @@
-
 /**
  * @zh 布尔值.
  * @en Boolean.
@@ -12,9 +11,14 @@
  * @example Boolean<'0'> // true
  * @example Boolean<{}> // true
  * @example Boolean<[]> // true
+ * @example Boolean<boolean> // boolean
+ * @example Boolean<number> // boolean
+ * @example Boolean<string> // boolean
+ * @example Boolean<object> // true
+ * @example Boolean<unknown[]> // true
  */
 export type Boolean<T> = 
-	T extends boolean ? T : T extends '' | 0 | undefined | null ? false : true;
+	T extends boolean ? T : T extends '' | 0 | undefined | null ? false : T extends object | unknown[] ? true : 0 extends T ? boolean : '' extends T ? boolean : true;
 
 /**
  * @zh 取否.
@@ -22,9 +26,12 @@ export type Boolean<T> =
  * For boolean
  * @example Not<true> // false
  * @example Not<false> // true
+ * @example Not<boolean> // never
  */
 export type Not<T extends boolean> =
-	T extends true ? false : true;
+	boolean extends T ? 
+		never :
+		T extends true ? false : true;
 
 /**
  * @zh 或.

@@ -13,6 +13,11 @@ Boolean<1> // true
 Boolean<'0'> // true
 Boolean<{}> // true
 Boolean<[]> // true
+Boolean<boolean> // boolean
+Boolean<number> // boolean
+Boolean<string> // boolean
+Boolean<object> // true
+Boolean<unknown[]> // true
 ```
 
 			
@@ -22,6 +27,7 @@ Boolean<[]> // true
 ``` typescript
 Not<true> // false
 Not<false> // true
+Not<boolean> // never
 ```
 
 			
