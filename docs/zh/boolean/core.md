@@ -1,4 +1,21 @@
 
+### 布尔值 `Boolean<T>`
+
+
+``` typescript
+Boolean<true> // true
+Boolean<false> // false
+Boolean<''> // false
+Boolean<0> // false
+Boolean<undefined> // false
+Boolean<null> // false
+Boolean<1> // true
+Boolean<'0'> // true
+Boolean<{}> // true
+Boolean<[]> // true
+```
+
+			
 ### 取否 `Not<boolean>`
 
 

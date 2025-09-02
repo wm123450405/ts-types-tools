@@ -1,5 +1,22 @@
 
 /**
+ * @zh 布尔值.
+ * @en Boolean.
+ * @example Boolean<true> // true
+ * @example Boolean<false> // false
+ * @example Boolean<''> // false
+ * @example Boolean<0> // false
+ * @example Boolean<undefined> // false
+ * @example Boolean<null> // false
+ * @example Boolean<1> // true
+ * @example Boolean<'0'> // true
+ * @example Boolean<{}> // true
+ * @example Boolean<[]> // true
+ */
+export type Boolean<T> = 
+	T extends boolean ? T : T extends '' | 0 | undefined | null ? false : true;
+
+/**
  * @zh 取否.
  * @en Not.
  * For boolean
