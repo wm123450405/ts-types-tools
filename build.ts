@@ -161,7 +161,7 @@ ${subModules.map(({ desc, module }) => `
 				const type = declares?.[0]?.split(/</ig)?.[0];
 				const desc = findNotes(notes, language).join('\r\n').split('\r\n');
 				// const desc = notes?.split(notesSpliter)?.filter(line => line && line.startsWith(`@${language}`))?.map(line => line.replace(`@${language}`, '').trim());
-				console.log(language, exports, type, declares, desc, examples);
+				// console.log(language, exports, type, declares, desc, examples);
 				if (exports && declares && type) {
 					types.push({
 						type,

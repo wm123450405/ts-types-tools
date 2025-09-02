@@ -92,3 +92,11 @@ export type ArrayIndexOf<T extends readonly unknown[], V> =
 export type ArrayLastIndexOf<T extends readonly unknown[], V> =
 	ArrayFindLastIndex<T, (((v: V) => true) & ((v: T[number]) => false))>;
 
+
+// /**
+//  * 
+//  */
+// type ArrayMap<T extends readonly unknown[], M extends <V extends T[number], D>(v: V) => D> =
+// 	T extends [infer F extends T[number], ...infer R extends readonly unknown[]] ?
+// 		M extends ((v: F) => infer O) ? [O, ...ArrayMap<R, M>] : [undefined, ...ArrayMap<R, M>] :
+// 	[];
