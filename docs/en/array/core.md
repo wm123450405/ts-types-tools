@@ -85,3 +85,30 @@ SortArray<[2, 1, 3, 2, 1, 3]> // [1, 1, 2, 2, 3, 3]
 ```
 
 			
+### Include `Includes<unknown[], V>`
+
+
+``` typescript
+Includes<[1, 2, 3], 2> // true
+Includes<[1, 2, 3], 4> // false
+```
+
+			
+### Whether there is a condition that is satisfied `Some<unknown[], <T[number]>(v: V) => boolean>`
+
+
+``` typescript
+Some<[1, 2, 3], (((v: 2) => true) & ((v: 1 | 3) => false))> // true
+Some<[3, 3, 3], (((v: 2) => true) & ((v: 1 | 3) => false))> // false
+```
+
+			
+### Whether all are satisfied `Every<unknown[], <T[number]>(v: V) => boolean>`
+
+
+``` typescript
+Every<[1, 2, 3], (((v: 2) => true) & ((v: 1 | 3) => false))> // false
+Every<[2, 2, 2], (((v: 2) => true) & ((v: 1 | 3) => false))> // true
+```
+
+			

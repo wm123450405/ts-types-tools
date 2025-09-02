@@ -85,3 +85,30 @@ SortArray<[2, 1, 3, 2, 1, 3]> // [1, 1, 2, 2, 3, 3]
 ```
 
 			
+### 是否包含 `Includes<unknown[], V>`
+ * 判断数组是否包含某个元素
+
+``` typescript
+Includes<[1, 2, 3], 2> // true
+Includes<[1, 2, 3], 4> // false
+```
+
+			
+### 是否有满足 `Some<unknown[], <T[number]>(v: V) => boolean>`
+ * 判断数组是否至少有一个元素满足某个条件
+
+``` typescript
+Some<[1, 2, 3], (((v: 2) => true) & ((v: 1 | 3) => false))> // true
+Some<[3, 3, 3], (((v: 2) => true) & ((v: 1 | 3) => false))> // false
+```
+
+			
+### 是否都满足 `Every<unknown[], <T[number]>(v: V) => boolean>`
+ * 判断数组是否都满足某个条件
+
+``` typescript
+Every<[1, 2, 3], (((v: 2) => true) & ((v: 1 | 3) => false))> // false
+Every<[2, 2, 2], (((v: 2) => true) & ((v: 1 | 3) => false))> // true
+```
+
+			

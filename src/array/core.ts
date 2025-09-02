@@ -1,4 +1,4 @@
-import type { DistributeUnions } from "../core";
+import type { DistributeUnions, Same } from "../core";
 import type { GreatThenOrEquals, Min, MinusOne } from "../number";
 
 /**
@@ -131,3 +131,40 @@ type SimpleSortArray<T extends readonly number[], L extends number[] = [], M ext
 export type SortArray<T extends readonly number[]> =
 	DistributeUnions<[T]> extends [infer Ti extends T] ? 
 		Ti extends Ti ? SimpleSortArray<Ti> : never : never
+
+/**
+ * @zh 是否包含.
+ * 判断数组是否包含某个元素
+ * @en Include.
+ * @example Includes<[1, 2, 3], 2> // true
+ * @example Includes<[1, 2, 3], 4> // false
+ */
+export type Includes<T extends readonly unknown[], V> =
+	T extends [infer F, ...infer R extends readonly unknown[]] ?
+		Same<F, V> extends true ? true : Includes<R, V> :
+	false;
+	
+/**
+ * @zh 是否有满足.
+ * 判断数组是否至少有一个元素满足某个条件
+ * @en Whether there is a condition that is satisfied
+ * @example Some<[1, 2, 3], (((v: 2) => true) & ((v: 1 | 3) => false))> // true
+ * @example Some<[3, 3, 3], (((v: 2) => true) & ((v: 1 | 3) => false))> // false
+ */
+export type Some<T extends readonly unknown[], M extends <V extends T[number]>(v: V) => boolean> =
+	T extends [infer F extends T[number], ...infer R extends readonly unknown[]] ?
+		M extends ((v: F) => true) ? true : Some<R, M> :
+	false;
+
+
+/**
+ * @zh 是否都满足.
+ * 判断数组是否都满足某个条件
+ * @en Whether all are satisfied
+ * @example Every<[1, 2, 3], (((v: 2) => true) & ((v: 1 | 3) => false))> // false
+ * @example Every<[2, 2, 2], (((v: 2) => true) & ((v: 1 | 3) => false))> // true
+ */
+export type Every<T extends readonly unknown[], M extends <V extends T[number]>(v: V) => boolean> =
+	T extends [infer F extends T[number], ...infer R extends readonly unknown[]] ?
+		M extends ((v: F) => true) ? Every<R, M> : false :
+	true;
