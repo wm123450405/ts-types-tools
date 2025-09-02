@@ -121,3 +121,30 @@ FindIndex<[2, 2, 2], (((v: 2) => true) & ((v: 1 | 3) => false))> // 0
 ```
 
 			
+### Find last index `FindLastIndex<unknown[], <T[number]>(v: V) => boolean>`
+
+
+``` typescript
+FindLastIndex<[1, 2, 3], (((v: 2) => true) & ((v: 1 | 3) => false))> // 1
+FindLastIndex<[2, 2, 2], (((v: 2) => true) & ((v: 1 | 3) => false))> // 2
+```
+
+			
+### Index `IndexOf<unknown[], V>`
+
+
+``` typescript
+IndexOf<[1, 2, 3], 2> // 1
+IndexOf<[2, 2, 2], 2> // 0
+```
+
+			
+### Last index `LastIndexOf<unknown[], V>`
+
+
+``` typescript
+LastIndexOf<[1, 2, 3], 2> // 1
+LastIndexOf<[2, 2, 2], 2> // 2
+```
+
+			

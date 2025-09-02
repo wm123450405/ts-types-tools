@@ -184,3 +184,42 @@ type SimpleFindIndex<T extends readonly unknown[], M extends <V extends T[number
 export type FindIndex<T extends readonly unknown[], M extends <V extends T[number]>(v: V) => boolean> =
 	DistributeUnions<[T]> extends [infer Ti extends T] ? 
 		Ti extends Ti ? SimpleFindIndex<Ti, M> : never : never;
+
+		
+type SimpleFindLastIndex<T extends readonly unknown[], M extends <V extends T[number]>(v: V) => boolean, I extends number = 0, L extends number = -1> =
+	T extends [infer F extends T[number], ...infer R extends readonly unknown[]] ?
+		M extends ((v: F) => true) ? SimpleFindLastIndex<R, M, AddOne<I>, I> : SimpleFindLastIndex<R, M, AddOne<I>, L> :
+	L;
+
+/**
+ * @zh 寻找最后索引.
+ * 寻找数组中满足某个条件的最后索引
+ * @en Find last index.
+ * @example FindLastIndex<[1, 2, 3], (((v: 2) => true) & ((v: 1 | 3) => false))> // 1
+ * @example FindLastIndex<[2, 2, 2], (((v: 2) => true) & ((v: 1 | 3) => false))> // 2
+ */
+export type FindLastIndex<T extends readonly unknown[], M extends <V extends T[number]>(v: V) => boolean> =
+	DistributeUnions<[T]> extends [infer Ti extends T] ? 
+		Ti extends Ti ? SimpleFindLastIndex<Ti, M> : never : never;
+
+
+/**
+ * @zh 索引.
+ * 获取数组中某个元素的索引
+ * @en Index.
+ * @example IndexOf<[1, 2, 3], 2> // 1
+ * @example IndexOf<[2, 2, 2], 2> // 0
+ */		
+export type IndexOf<T extends readonly unknown[], V> =
+	FindIndex<T, (((v: V) => true) & ((v: T[number]) => false))>;
+
+/**
+ * @zh 最后索引.
+ * 获取数组中某个元素的最后索引
+ * @en Last index.
+ * @example LastIndexOf<[1, 2, 3], 2> // 1
+ * @example LastIndexOf<[2, 2, 2], 2> // 2
+ */		
+export type LastIndexOf<T extends readonly unknown[], V> =
+	FindLastIndex<T, (((v: V) => true) & ((v: T[number]) => false))>;
+

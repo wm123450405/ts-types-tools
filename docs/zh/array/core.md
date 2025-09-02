@@ -121,3 +121,30 @@ FindIndex<[2, 2, 2], (((v: 2) => true) & ((v: 1 | 3) => false))> // 0
 ```
 
 			
+### 寻找最后索引 `FindLastIndex<unknown[], <T[number]>(v: V) => boolean>`
+ * 寻找数组中满足某个条件的最后索引
+
+``` typescript
+FindLastIndex<[1, 2, 3], (((v: 2) => true) & ((v: 1 | 3) => false))> // 1
+FindLastIndex<[2, 2, 2], (((v: 2) => true) & ((v: 1 | 3) => false))> // 2
+```
+
+			
+### 索引 `IndexOf<unknown[], V>`
+ * 获取数组中某个元素的索引
+
+``` typescript
+IndexOf<[1, 2, 3], 2> // 1
+IndexOf<[2, 2, 2], 2> // 0
+```
+
+			
+### 最后索引 `LastIndexOf<unknown[], V>`
+ * 获取数组中某个元素的最后索引
+
+``` typescript
+LastIndexOf<[1, 2, 3], 2> // 1
+LastIndexOf<[2, 2, 2], 2> // 2
+```
+
+			
