@@ -21,9 +21,9 @@ type Status = IntRange<0, 5>;  // 0 | 1 | 2 | 3 | 4
 ```
 
 ```typescript
-import type { NumberToString } from 'ts-types-tools';
+import type { StringToNumber } from 'ts-types-tools';
 
-type Status = NumberToString<'156' | '32'>;  // 156 | 32
+type Status = StringToNumber<'156' | '32'>;  // 156 | 32
 ```
 
 ## 3. 文档
